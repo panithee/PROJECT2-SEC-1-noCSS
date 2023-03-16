@@ -10,6 +10,7 @@ const showLoginOverlay = ref(false);
 
 <template>
   <Navbar></Navbar>
+  <DivideCost/>
 </template>
 <style scoped></style>
 
