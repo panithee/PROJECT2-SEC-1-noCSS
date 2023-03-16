@@ -1,13 +1,16 @@
 <script setup>
-import { ref } from 'vue'
-const loginStatus = ref(false);
+import { eventBus } from '../eventbus.vue'
+const loginStatus = ref(false)
 const loginToggle = () => {
-    loginStatus.value = !loginStatus.value;
+    loginStatus.value = !loginStatus.value
 }
+eventBus.$on('closeLoginOverlay', () => {
+    loginStatus.value = false
+})
 </script>
 
 <template>
-    <div class="navbar bg-base-100 bg-white">
+    <div class="navbar bg-base-100 ">
         <div class="flex-1">
             <a class="btn btn-ghost normal-case text-xl">NO CSS</a>
         </div>
