@@ -1,4 +1,5 @@
 <script setup>
+import { eventBus } from '../eventbus.vue'
 const closeLoginOverlay = () => {
     eventBus.$emit('closeLoginOverlay')
 }
@@ -64,4 +65,4 @@ const closeLoginOverlay = () => {
 .bg-gray-900 {
     background-color: rgba(0, 0, 0, 0.5);
 }
-</style>
+</style> -->
