@@ -97,48 +97,51 @@ const totalPercent = () => {
     </div>
 
 
-    <table class="w-3/5 mx-auto mt-4" v-if="page">
-      <thead>
-        <tr>
-          <th class="text-left">คนจ่าย</th>
-          <th class="text-end">ราคา</th>
-        </tr>
-      </thead>
-      <tbody>
+    <div class="w-3/5 h-96 mx-auto flex overflow-y-scroll p-4" v-if="page">
+      <table class="w-full mx-auto mt-4">
+        <thead>
+          <tr>
+            <th class="text-left">คนจ่าย</th>
+            <th class="text-right">ราคา</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-300" v-for="(person, index) in personsWhoEat" :key="index">
+            <td class="text-left text-xl">{{ person.name }}</td>
+            <td class="text-end text-xl">{{ avgPricePerPerson }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-        <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
-          <td class="text-left text-xl">{{ person.name }}</td>
-          <td class="text-end text-xl">{{ avgPricePerPerson }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="w-3/5 h-96 mx-auto flex overflow-y-scroll p-4" v-if="!page">
+      <table class="w-full mx-auto mt-4">
+        <thead>
+          <tr>
+            <th class="text-left">คนจ่าย</th>
+            <img src="../assets/MaterialSymbolsPercentSharp.svg" class="mx-auto" />
+            <th class="text-end">ราคา</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
+            <td class="text-left text-xl">{{ person.name }}</td>
+            <td class="text-center">
+              <input type="number" placeholder="0-100" min="0" max="100" class="bg-gray-200 w-20 text-center" />
+            </td>
+            <td class="text-end text-xl">{{ avgPricePerPerson }} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
 
+    <div class="w-3/5 mx-auto">
+      <button class="flex justify-center mt-10 text-xl mx-auto">Done</button>
+      <button class="flex justify-center mt-2 text-xl text-gray-400 underline mx-auto">Delete</button>
+      <p v-if="page" class="flex underline justify-end text-3xl">Total Price : {{ totalPrice }}</p>
+    </div>
 
-
-    <table class="w-3/5 mx-auto mt-4" v-if="!page">
-      <thead>
-        <tr>
-          <th class="text-left">คนจ่าย</th>
-          <img src="../assets/MaterialSymbolsPercentSharp.svg" class="mx-auto" />
-          <th class="text-end">ราคา</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
-          <td class="text-left text-xl">{{ person.name }}</td>
-          <td class="text-center">
-            <input type="number" placeholder="0-100" min="0" max="100" class="bg-gray-200 w-20 text-center" />
-          </td>
-          <td class="text-end text-xl">{{ avgPricePerPerson }} </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-    <button class="flex justify-center mt-10 text-xl w-fit mx-auto">Done</button>
-    <button class="flex justify-center mt-1 text-xl text-gray-400 underline w-fit mx-auto">Delete</button>
-    <p class="flex underline justify-center ml-96 w-fit text-2xl">Total : {{ totalPrice }}</p>
 
 
 
