@@ -1,12 +1,31 @@
 <script setup>
-import { eventBus } from '../eventbus.vue'
-const closeLoginOverlay = () => {
-    eventBus.$emit('closeLoginOverlay')
-}
+import { ref } from "vue";
+import { userLogin } from "../composable/loginFunctions.js";
+let username = ref("");
+let password = ref("");
+const emit = defineEmits(["close", "login"]);
+const checkLoginResult = async (username, password) => {
+
+    const result = await userLogin(username, password);
+    if (result === "Error: 404") {
+        alert("Wrong username ");
+    }
+    else if (result === "Error: 401") {
+        alert("Wrong password");
+    }
+    else if (result != null) {
+        console.log(result);
+        emit("login", { status: "login", data: result });
+    }
+    else {
+        alert("Unknown error");
+    }
+
+};
 </script>
 <template>
     <div class="fixed inset-0 z-50 flex items-center justify-center">
-        <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+        <div class="absolute inset-0 bg-gray-900 opacity-50" @click="$emit('close')"></div>
         <div class="container absolute h-full px-6 py-24 bg-white">
             <div class="flex flex-wrap items-center justify-center h-full lg:justify-between">
                 <!-- close button -->
@@ -19,42 +38,39 @@ const closeLoginOverlay = () => {
                         </svg>
                     </button>
                 </div>
-                <div class="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
-                    <img src="https://pixabay.com/get/g1a085859e3eaccea8d29c7c676d9110f5735d2b6c31bfbb6ddd5bebaf27d528dfdf20992df428b0a4f77297131f201a84e797e2a0e45154bde8bd6cb5f6b4aed70b92118ac4d4971dcddddbb353ce8b7_1920.jpg"
-                        class="w-full" alt="Food image" />
-                </div>
                 <div class="md:w-8/12 lg:ml-6 lg:w-5/12">
-                    <form>
-                        <!-- Email input -->
-                        <div class="max-w-md form-control basis-full">
-                            <label class="label">
-                                <span class="label-text">Username</span>
-                            </label>
-                            <input type="text" placeholder="Type here" class="w-full input input-bordered " />
-                            <label class="invisible label ">
-                                <span class="label-text-alt">Error</span>
-                            </label>
-                        </div>
-                        <!-- Password input -->
-                        <div class="max-w-md form-control basis-full">
-                            <label class="label ">
-                                <span class="label-text">Password</span>
-                            </label>
-                            <input type="text" placeholder="Type here" class="w-full input input-bordered" />
-                            <label class="invisible label ">
-                                <span class="label-text-alt">Error</span>
-                            </label>
-                        </div>
+                    <!-- Email input -->
+                    <div class="max-w-md form-control basis-full">
+                        <label class="label">
+                            <span class="label-text">Username</span>
+                        </label>
+                        <input type="text" placeholder="Type here" class="w-full input input-bordered "
+                            v-model="username" />
+                        <label class="invisible label ">
+                            <span class="label-text-alt">
+                            </span>
+                        </label>
+                    </div>
+                    <!-- Password input -->
+                    <div class="max-w-md form-control basis-full">
+                        <label class="label ">
+                            <span class="label-text">Password</span>
+                        </label>
+                        <input type="text" placeholder="Type here" class="w-full input input-bordered" v-model="password" />
+                        <label class="invisible label ">
+                            <span class="label-text-alt">
+                            </span>
+                        </label>
+                    </div>
 
 
-                        <div class="flex items-center justify-between max-w-md mb-6 basis-full">
+                    <div class="flex items-center justify-between max-w-md mb-6 basis-full">
 
-                        </div>
+                    </div>
 
-                        <!-- Submit button -->
-                        <button type="submit" class="w-full max-w-md btn"> Sign in</button>
+                    <!-- Submit button -->
+                    <button class="w-full max-w-md btn" @click="checkLoginResult(username, password)"> Sign in</button>
 
-                    </form>
                 </div>
             </div>
         </div>
@@ -65,4 +81,4 @@ const closeLoginOverlay = () => {
 .bg-gray-900 {
     background-color: rgba(0, 0, 0, 0.5);
 }
-</style> -->
+</style> 
