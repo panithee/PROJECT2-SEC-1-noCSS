@@ -139,12 +139,8 @@ const totalPercent = () => {
     <div class="w-3/5 mx-auto">
       <button class="flex justify-center mt-10 text-xl mx-auto">Done</button>
       <button class="flex justify-center mt-2 text-xl text-gray-400 underline mx-auto">Delete</button>
-      <p v-if="page" class="flex underline justify-end text-3xl">Total Price : {{ totalPrice }}</p>
+      <p class="flex underline justify-end text-3xl">Total Price : {{ totalPrice }}</p>
     </div>
-
-
-
-
 
   </div>
 </template>

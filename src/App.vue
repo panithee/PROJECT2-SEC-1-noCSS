@@ -1,6 +1,6 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
-import DivideCost from './components/DivideCost.vue'
+import DivideFoodCost from './components/DivideFoodCost.vue'
 import { ref } from 'vue'
 const showLoginOverlay = ref(false);
 </script>
@@ -10,7 +10,7 @@ const showLoginOverlay = ref(false);
 
 <template>
   <Navbar></Navbar>
-  <DivideCost/>
+  <DivideFoodCost/>
 </template>
 <style scoped></style>
 
