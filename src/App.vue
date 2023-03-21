@@ -57,7 +57,7 @@ provide('userData', userData);
     <Navbar @getUsername=setUsername @clearData=clearUserData />
     <div class="container mx-auto">
       <div class="flex flex-col items-center justify-center h-screen">
-        {{ userData }}
+
       </div>
     </div>
   </div>
