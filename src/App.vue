@@ -1,17 +1,67 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
-import { ref } from 'vue'
-import Group from './components/Group.vue';
-const showLoginOverlay = ref(false);
+import { onMounted, provide, ref } from 'vue'
+import { getUserGroups, findKey } from './composable/loginFunctions.js';
+
+const username = ref('');
+const userData = ref([]);
+
+const setUsername = (name) => {
+  console.log('setUsername: ' + name);
+  username.value = name;
+  fetchUserData();
+};
+const fetchUserData = async () => {
+  console.log('fetchUserData: ' + username.value);
+  if (!username.value) {
+    console.log('Username is empty');
+    userData.value = [];
+  } else {
+    const result = await getUserGroups(username.value);
+    console.log('Result: ', result);
+    userData.value = result;
+  }
+};
+const clearUserData = () => {
+  userData.value = [];
+};
+onMounted(async () => {
+  username.value = sessionStorage.getItem('username');
+  if (!username.value) {
+    console.log('Username is empty');
+    userData.value = [];
+  } else {
+    const userKey = await findKey(username.value);
+    const key = sessionStorage.getItem('key');
+    if (userKey !== key) {
+      console.log('Key is not a match');
+      console.log('userKey: ' + userKey);
+      console.log('key: ' + key);
+      sessionStorage.clear();
+      username.value = '';
+      userData.value = [];
+    } else {
+      username.value = sessionStorage.getItem('username');
+      userData.value = await getUserGroups(username.value);
+    }
+  }
+});
+
+
+
+provide('userData', userData);
 </script>
 
-
-
-
 <template>
-  <Navbar></Navbar>
-  <Group></Group>
+  <div class="w-screen h-screen overflow-hidden bg-slate-500">
+    <Navbar @getUsername=setUsername @clearData=clearUserData />
+    <div class="container mx-auto">
+      <div class="flex flex-col items-center justify-center h-screen">
+
+      </div>
+    </div>
+  </div>
 </template>
-<style scoped></style>
+
 
 
