@@ -1,46 +1,43 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import LoginOverlay from "./LoginOverlay.vue";
-
-
-
-const loginStatus = ref(false);
-if (sessionStorage.getItem("loginStatus") === "true") {
-    loginStatus.value = true;
+const isLoggedIn = ref(false);
+if (sessionStorage.getItem("isLoggedIn") === "true") {
+    isLoggedIn.value = true;
 }
 else {
-    loginStatus.value = false;
+    isLoggedIn.value = false;
 }
 const showLoginOverlay = ref(false);
-const loginOverlayToggle = () => {
-    console.log("loginOverlayToggle");
+const toggleLoginOverlay = () => {
+    console.log("toggleLoginOverlay");
     showLoginOverlay.value = !showLoginOverlay.value;
 };
-const emit = defineEmits(["getUsername", 'clearData']);
-const eventLogin = (payload) => {
-    console.log("eventLogin");
-    if (loginStatus.value) {
+const emitEvents = defineEmits(["getUsername", 'clearData']);
+const handleLoginEvent = (payload) => {
+    console.log("handleLoginEvent");
+    if (isLoggedIn.value) {
         console.log("logout");
-        localStorage.clear;
-        emit('clearData');
-        loginStatus.value = false;
+        sessionStorage.clear();
+        emitEvents('clearData');
+        isLoggedIn.value = false;
     }
     else if (payload.status === "login") {
         console.log("login");
-
-        localStorage.setItem("loginStatus", "true");
-        loginStatus.value = true;
+        sessionStorage.setItem("isLoggedIn", "true");
+        isLoggedIn.value = true;
         showLoginOverlay.value = false;
-        emit("getUsername", payload.data)
+        console.log("payload.data: " + payload.data);
+        emitEvents("getUsername", payload.data)
     }
     else {
-        loginOverlayToggle();
+        toggleLoginOverlay();
     }
 };
 onMounted(() => {
     console.log("Navbar mounted");
-    if (localStorage.getItem("loginStatus") === "true" && localStorage.getItem("username") !== null) {
-        loginStatus.value = true;
+    if (sessionStorage.getItem("isLoggedIn") === "true" && sessionStorage.getItem("username") !== null) {
+        isLoggedIn.value = true;
     }
 });
 </script>
@@ -54,9 +51,9 @@ onMounted(() => {
             <ul class="px-1 menu menu-horizontal">
                 <li><a>Meal</a></li>
                 <li><a>Group</a></li>
-                <li><a @click="eventLogin">Sign {{ loginStatus ? "out" : "in" }}</a></li>
+                <li><a @click="handleLoginEvent">Sign {{ isLoggedIn ? "out" : "in" }}</a></li>
             </ul>
         </div>
     </div>
-    <LoginOverlay v-if="showLoginOverlay" @close="loginOverlayToggle" @login=eventLogin />
+    <LoginOverlay v-if="showLoginOverlay" @close="toggleLoginOverlay" @login=handleLoginEvent />
 </template>

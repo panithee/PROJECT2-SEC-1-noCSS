@@ -1,7 +1,7 @@
-const checkUsernameIsAlready = async (username) => {
+const checkUsernameExists = async (username) => {
     if (username === undefined) { return false; }
     username = String(username).toLowerCase();
-    console.log('4: checkUsernameIsAlready ' + username);
+    console.log('4: checkUsernameExists ' + username);
     const response = await fetch(`http://localhost:5000/users?username=${username}`);
     console.log(`5: ${response} HI`);
     const user = await response.json();
@@ -14,7 +14,9 @@ const checkUsernameIsAlready = async (username) => {
 const registerUser = async (username, password) => {
     if (username === undefined || password === undefined) { return false; }
     username = String(username).toLowerCase();
-    const response = await fetch('http://localhost:5000/test', {
+    const check = await checkUsernameExists(username);
+    if (check) { return "Error Cannot Register"; }
+    const response = await fetch('http://localhost:5000/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -22,18 +24,19 @@ const registerUser = async (username, password) => {
         body: JSON.stringify({
             'username': username,
             'password': password,
-            'groups': []
+            'groups': [],
+            'key': ''
         })
     });
     const user = await response.json();
     return user;
 }
-const userLogin = async (username, password) => {
-    if (username === undefined || password === undefined) { return false; }
-    console.log('2:userLogin ' + username);
+const loginUser = async (username, password) => {
+    if (username === undefined || password === undefined) { return "Error Input"; }
+    console.log('2:loginUser ' + username);
     username = String(username).toLowerCase();
-    console.log('3: userLogin ' + username);
-    const check = await checkUsernameIsAlready(username);
+    console.log('3: loginUser ' + username);
+    const check = await checkUsernameExists(username);
     console.log(`7:check completed`);
     if (check) {
         console.log(`---> ${check}`);
@@ -42,9 +45,9 @@ const userLogin = async (username, password) => {
         const user = await response.json();
         console.log(user);
         if (user[0].password.localeCompare(password) === 0) {
-            const key = makeId(5);
+            const key = generateRandomId(5);
             // update key 
-            const response = await fetch(`http://localhost:5000/users/${user[0].id}`, {
+            await fetch(`http://localhost:5000/users/${user[0].id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,9 +56,9 @@ const userLogin = async (username, password) => {
                     'key': key
                 })
             });
-
-            localStorage.setItem('key', key);
-            localStorage.setItem('username', user[0].username);
+            console.log("password matches");
+            sessionStorage.setItem('key', key);
+            sessionStorage.setItem('username', user[0].username);
             console.log(user[0].username + " is logged in");
             return user[0].username;
         }
@@ -63,7 +66,7 @@ const userLogin = async (username, password) => {
     }
     return "Error: 404"
 }
-const getUsernameNow = async (username) => {
+const getUserGroups = async (username) => {
     try {
         const resp = await fetch(`http://localhost:5000/users?username=${username}`);
         const user = await resp.json();
@@ -77,7 +80,7 @@ const getUsernameNow = async (username) => {
         console.log(e);
     }
 }
-function makeId(length) {
+function generateRandomId(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
@@ -93,4 +96,18 @@ const findKey = async (username) => {
     const user = await response.json();
     return user[0].key;
 }
-export { checkUsernameIsAlready, registerUser, userLogin, getUsernameNow, findKey };
+const updateGroups = async (username, groups) => {
+    const response = await fetch(`http://localhost:5000/users?username=${username}`);
+    const user = await response.json();
+    await fetch(`http://localhost:5000/users/${user[0].id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'groups': groups
+        })
+    });
+}
+
+export { checkUsernameExists, registerUser, loginUser, getUserGroups, findKey };

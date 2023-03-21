@@ -1,65 +1,67 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
-import { onBeforeMount, onMounted, provide, ref } from 'vue'
-import { getUsernameNow, findKey } from './composable/loginFunctions.js';
-let username = ref('')
-const getUsername = (name) => {
-  console.log('name :' + name)
-  username.value = name
-  getData()
-}
-let data = ref([]);
-const getData = async () => {
-  console.log('username.value :' + username.value);
-  if (username.value == '') {
-    console.log('username.value is empty');
-    data.value = []
+import { onMounted, provide, ref } from 'vue'
+import { getUserGroups, findKey } from './composable/loginFunctions.js';
+
+const username = ref('');
+const userData = ref([]);
+
+const setUsername = (name) => {
+  console.log('setUsername: ' + name);
+  username.value = name;
+  fetchUserData();
+};
+const fetchUserData = async () => {
+  console.log('fetchUserData: ' + username.value);
+  if (!username.value) {
+    console.log('Username is empty');
+    userData.value = [];
+  } else {
+    const result = await getUserGroups(username.value);
+    console.log('Result: ', result);
+    userData.value = result;
   }
-  else {
-    const result = await getUsernameNow(username.value)
-    console.log(result);
-    data.value = result
-  }
-}
+};
+const clearUserData = () => {
+  userData.value = [];
+};
 onMounted(async () => {
-  username.value = localStorage.getItem('username');
-  if (username.value == '') {
-    console.log('username.value is empty');
-    data.value = []
-  }
-  else {
+  username.value = sessionStorage.getItem('username');
+  if (!username.value) {
+    console.log('Username is empty');
+    userData.value = [];
+  } else {
     const userKey = await findKey(username.value);
-    const key = localStorage.getItem("key");
+    const key = sessionStorage.getItem('key');
     if (userKey !== key) {
-      console.log('key is not match');
-      console.log('userKey :' + userKey);
-      console.log('key :' + key);
-      localStorage.clear();
+      console.log('Key is not a match');
+      console.log('userKey: ' + userKey);
+      console.log('key: ' + key);
+      sessionStorage.clear();
       username.value = '';
-      data.value = [];
-    }
-    else {
-      username.value = localStorage.getItem('username');
-      data.value = await getUsernameNow(username.value)
+      userData.value = [];
+    } else {
+      username.value = sessionStorage.getItem('username');
+      userData.value = await getUserGroups(username.value);
     }
   }
-})
-const clearData = () => {
-  data.value = []
-}
-provide('data', data);
+});
+
+
+
+provide('userData', userData);
 </script>
 
-
-
-
 <template>
-  <Navbar @getUsername=getUsername @clearData="clearData" />
-  <div class="container mx-auto">
-    <div class="flex flex-col items-center justify-center h-screen">
-      {{ data }}
+  <div class="w-screen h-screen overflow-hidden bg-slate-500">
+    <Navbar @getUsername=setUsername @clearData=clearUserData />
+    <div class="container mx-auto">
+      <div class="flex flex-col items-center justify-center h-screen">
+        {{ userData }}
+      </div>
     </div>
   </div>
 </template>
+
 
 
