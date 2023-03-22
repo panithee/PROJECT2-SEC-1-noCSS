@@ -74,6 +74,7 @@ const getUserGroups = async (username) => {
         if (user.length === 0) {
             return ' ';
         }
+        console.log("add", user[0].groups);
         return user[0].groups;
     }
     catch (e) {
@@ -96,10 +97,28 @@ const findKey = async (username) => {
     const user = await response.json();
     return user[0].key;
 }
-const updateGroups = async (username, groups) => {
+const checkKey = async (username, key) => {
     const response = await fetch(`http://localhost:5000/users?username=${username}`);
     const user = await response.json();
-    await fetch(`http://localhost:5000/users/${user[0].id}`, {
+    if (user[0].key.localeCompare(key) === 0) {
+        return true;
+    }
+    return false;
+}
+const updateGroups = async (username, groups) => {
+    if (username === undefined || groups === undefined || username === '' || groups === '') { return false; }
+    const response = await fetch(`http://localhost:5000/users?username=${username}`);
+    if (!response.ok) {
+        console.log("error" + response);
+        return false;
+    }
+    if (checkKey(username, sessionStorage.getItem('key')) === false) {
+        console.log("key does not match");
+        return false;
+    }
+    const user = await response.json();
+    console.log(user);
+    const res = await fetch(`http://localhost:5000/users/${user[0].id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -108,6 +127,13 @@ const updateGroups = async (username, groups) => {
             'groups': groups
         })
     });
+    if (res.ok) {
+        console.log("updated groups");
+        return true;
+    }
 }
+// can you rewrite oprimize update groups here
 
-export { checkUsernameExists, registerUser, loginUser, getUserGroups, findKey };
+
+
+export { checkUsernameExists, registerUser, loginUser, getUserGroups, findKey, updateGroups };

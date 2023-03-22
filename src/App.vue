@@ -1,10 +1,9 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
-import { onMounted, provide, ref } from 'vue'
-import { getUserGroups, findKey } from './composable/loginFunctions.js';
-
+import { onMounted, ref, watch } from 'vue'
+import { getUserGroups, findKey, updateGroups } from './composable/loginFunctions.js';
 const username = ref('');
-const userData = ref([]);
+const userData = ref();
 
 const setUsername = (name) => {
   console.log('setUsername: ' + name);
@@ -43,24 +42,35 @@ onMounted(async () => {
     } else {
       username.value = sessionStorage.getItem('username');
       userData.value = await getUserGroups(username.value);
+      sessionStorage.setItem('data', JSON.stringify(userData.value));
+      userData.value[1].name = 'test';
+      userData.value[1].name = 'test2';
     }
   }
 });
+watch(() => userData.value, (newVal, oldVal) => {
+  console.log('watch: ' + newVal);
+  sessionStorage.setItem('data', JSON.stringify(newVal));
+  if (sessionStorage.getItem('username') !== null) {
 
+    updateGroups(username.value, newVal);
+  }
+});
 
+// watch
 
-provide('userData', userData);
+const updated = (data) => {
+  console.log('updatedate: ' + data);
+  userData.value = data;
+};
 </script>
 
 <template>
-  <div class="w-screen h-screen overflow-hidden bg-slate-500">
-    <Navbar @getUsername=setUsername @clearData=clearUserData />
-    <div class="container mx-auto">
-      <div class="flex flex-col items-center justify-center h-screen">
+  <Navbar @getUsername=setUsername @clearData=clearUserData />
+  <router-view :userData="userData" @updateData=updated></router-view>
+  <!-- <div class="w-screen h-screen overflow-hidden bg-slate-500">
 
-      </div>
-    </div>
-  </div>
+                          </div> -->
 </template>
 
 
