@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 const testArr = ref([]);
 
 const memberList = ref([])
@@ -13,6 +13,10 @@ const emit = defineEmits(['updateData'])
 watch(() => props.userData, (newVal, oldVal) => {
   console.log('watch: ', newVal);
   testArr.value = newVal
+});
+onBeforeMount(() => {
+  testArr.value = props.userData
+  console.log('onBeforeMount: ', testArr.value);
 });
 // show pop-up
 const showGroupPopUp = ref(false);
