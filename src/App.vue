@@ -2,6 +2,7 @@
 import Navbar from './components/Navbar.vue'
 import { onMounted, provide, ref } from 'vue'
 import { getUserGroups, findKey } from './composable/loginFunctions.js';
+import Group from './components/Group.vue';
 
 const username = ref('');
 const userData = ref([]);
@@ -49,18 +50,16 @@ onMounted(async () => {
 
 
 
-provide('userData', userData);
+provide('userData', {userData});
+console.log(userData);
 </script>
 
 <template>
-  <div class="w-screen h-screen overflow-hidden bg-slate-500">
-    <Navbar @getUsername=setUsername @clearData=clearUserData />
-    <div class="container mx-auto">
-      <div class="flex flex-col items-center justify-center h-screen">
-
-      </div>
-    </div>
+  <div class="w-screen h-screen overflow-hidden">
+    <Navbar @getUsername=setUsername @clearData=clearUserData />   
+    <Group></Group>
   </div>
+  <div>{{ userData }}</div>
 </template>
 
 
