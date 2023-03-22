@@ -49,8 +49,10 @@ onMounted(() => {
         </div>
         <div class="flex-none">
             <ul class="px-1 menu menu-horizontal">
-                <li><a>Meal</a></li>
-                <li><a>Group</a></li>
+                <li>
+                    <router-link to="/">Meal</router-link>
+                </li>
+                <li><router-link to="/groups">Group</router-link></li>
                 <li><a @click="handleLoginEvent">Sign {{ isLoggedIn ? "out" : "in" }}</a></li>
             </ul>
         </div>

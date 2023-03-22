@@ -1,11 +1,9 @@
 <script setup>
 import Navbar from './components/Navbar.vue'
-import { onMounted, provide, ref } from 'vue'
-import { getUserGroups, findKey } from './composable/loginFunctions.js';
-import Group from './components/Group.vue';
-
+import { onMounted, ref, watch } from 'vue'
+import { getUserGroups, findKey, updateGroups } from './composable/loginFunctions.js';
 const username = ref('');
-const userData = ref([]);
+const userData = ref();
 
 const setUsername = (name) => {
   console.log('setUsername: ' + name);
@@ -44,22 +42,35 @@ onMounted(async () => {
     } else {
       username.value = sessionStorage.getItem('username');
       userData.value = await getUserGroups(username.value);
+      sessionStorage.setItem('data', JSON.stringify(userData.value));
+      userData.value[1].name = 'test';
+      userData.value[1].name = 'test2';
     }
   }
 });
+watch(() => userData.value, (newVal, oldVal) => {
+  console.log('watch: ' + newVal);
+  sessionStorage.setItem('data', JSON.stringify(newVal));
+  if (sessionStorage.getItem('username') !== null) {
 
+    updateGroups(username.value, newVal);
+  }
+});
 
+// watch
 
-provide('userData', {userData});
-console.log(userData);
+const updated = (data) => {
+  console.log('updatedate: ' + data);
+  userData.value = data;
+};
 </script>
 
 <template>
-  <div class="w-screen h-screen overflow-hidden">
-    <Navbar @getUsername=setUsername @clearData=clearUserData />   
-    <Group></Group>
-  </div>
-  <div>{{ userData }}</div>
+  <Navbar @getUsername=setUsername @clearData=clearUserData />
+  <router-view :userData="userData" @updateData=updated></router-view>
+  <!-- <div class="w-screen h-screen overflow-hidden bg-slate-500">
+
+                          </div> -->
 </template>
 
 
