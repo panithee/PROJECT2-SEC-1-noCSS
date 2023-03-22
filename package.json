@@ -11,7 +11,8 @@
   "dependencies": {
     "daisyui": "^2.51.4",
     "json-server": "^0.17.2",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
