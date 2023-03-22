@@ -1,6 +1,6 @@
 <script setup>
 import { onBeforeMount, ref, watch } from "vue";
-const testArr = ref([]);
+const myGroupArr = ref([]);
 
 const memberList = ref([])
 const props = defineProps({
@@ -12,11 +12,11 @@ const props = defineProps({
 const emit = defineEmits(['updateData'])
 watch(() => props.userData, (newVal, oldVal) => {
   console.log('watch: ', newVal);
-  testArr.value = newVal
+ myGroupArr.value = newVal
 });
 onBeforeMount(() => {
-  testArr.value = props.userData
-  console.log('onBeforeMount: ', testArr.value);
+ myGroupArr.value = props.userData
+  console.log('onBeforeMount: ', myGroupArr.value);
 });
 // show pop-up
 const showGroupPopUp = ref(false);
@@ -29,15 +29,15 @@ const showInsertGroupPopUp = (event) => {
 const inputGroupName = ref("")
 const inputMembers = ref("")
 const addGroup = () => {
-  testArr.value.push({
+ myGroupArr.value.push({
     name: inputGroupName.value,
     members: memberList.value,
     meals: []
   })
   inputGroupName.value = ""
   memberList.value = []
-  console.log(testArr.value);
-  emit('updateData', testArr.value);
+  console.log (myGroupArr.value);
+  emit('updateData', myGroupArr.value);
   showInsertGroupPopUp()
 }
 
@@ -76,7 +76,7 @@ const showMemberLists = () => {
       <h1>รายชื่อกลุ่ม</h1>
     </div>
     <div>
-      <div v-for="(group, index) in testArr" key="index">
+      <div v-for="(group, index) in myGroupArr" key="index">
         <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
           <p>{{ group.name }}</p>
           <button :id="index" v-if="showMembers" @click="showMemberLists" class="flex justify-end pr-5"><img
