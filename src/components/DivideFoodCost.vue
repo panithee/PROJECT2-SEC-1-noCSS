@@ -65,11 +65,12 @@ const setPercentOfPerson = () => {
 
 }
 
-const totalPercent = () => {
-  const result = personsWhoEat.value.reduce((total, person) => {
-    total + person.percent
-  }, 0)
-}
+
+const totalPercent = computed(() => {
+  return this.personsWhoEat.reduce((acc, person) => acc + person.percent, 0);
+}) 
+
+
 
 
 
@@ -77,7 +78,7 @@ const totalPercent = () => {
 
 <template>
   <div class="w-full h-full">
-    <p class="flex text-3xl" @click="">Back</p>
+    <button class="flex text-3xl ml-10" >Back</button>
     <p class="flex justify-center text-4xl pt-5">น้ำตก</p>
     <p class="flex justify-center text-lg mt-5 text-gray-600">Average by</p>
     <div class="flex justify-center">
@@ -124,13 +125,16 @@ const totalPercent = () => {
           </tr>
         </thead>
         <tbody>
-          <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
-            <td class="text-left text-xl">{{ person.name }}</td>
-            <td class="text-center">
-              <input type="number" placeholder="0-100" min="0" max="100" class="bg-gray-200 w-20 text-center" />
-            </td>
-            <td class="text-end text-xl">{{ avgPricePerPerson }} </td>
-          </tr>
+            <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
+              <td class="text-left text-xl">{{ person.name }}</td>
+              <td class="text-center">
+                <input type="number" placeholder="0-100" 
+                
+                min="100" 
+                max="0" class="bg-gray-200 w-20 text-center" />
+              </td>
+              <td class="text-end text-xl">{{ avgPricePerPerson }} </td>
+            </tr>
         </tbody>
       </table>
     </div>
@@ -141,6 +145,8 @@ const totalPercent = () => {
       <button class="flex justify-center mt-2 text-xl text-gray-400 underline mx-auto">Delete</button>
       <p class="flex underline justify-end text-3xl">Total Price : {{ totalPrice }}</p>
     </div>
+
+   
 
   </div>
 </template>
