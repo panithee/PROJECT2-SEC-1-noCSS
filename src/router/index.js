@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/groups',
       name: 'groups',
-      component: () => import('../views/groupView.vue')
+      component: () => import('../components/Group.vue')
     }
   ]
 })

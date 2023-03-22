@@ -1,13 +1,22 @@
 <script setup>
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, watch } from "vue";
 const testArr = ref([
-  {groupName: "Eve", member:["Eve","Mo","Nt"]},
-  {groupName: "โมอายร้ายแรง", member:["Eve","Mo","Nt"]},
-  {groupName: "นตขี้เหล้า", member:["Eve","Mo","Nt"]}
+  { groupName: "Eve", member: ["Eve", "Mo", "Nt"] },
+  { groupName: "โมอายร้ายแรง", member: ["Eve", "Mo", "Nt"] },
+  { groupName: "นตขี้เหล้า", member: ["Eve", "Mo", "Nt"] }
 ]);
 
 const memberList = ref([])
-
+const props = defineProps({
+  userData: {
+    type: Array,
+    required: true,
+  }
+});
+watch(() => props.userData, (newVal, oldVal) => {
+  console.log('watch: ', newVal);
+  testArr.value = newVal
+});
 // show pop-up
 const showGroupPopUp = ref(false);
 const showInsertGroupPopUp = (event) => {
@@ -19,18 +28,18 @@ const showInsertGroupPopUp = (event) => {
 const inputGroupName = ref("")
 const inputMembers = ref("")
 const addGroup = () => {
-        testArr.value.push({
-            groupName: inputGroupName.value,
-            member: memberList.value
-        })
+  testArr.value.push({
+    groupName: inputGroupName.value,
+    member: memberList.value
+  })
 
-        showInsertGroupPopUp()
-    }
-  
+  showInsertGroupPopUp()
+}
+
 const addMember = () => {
-        memberList.value.push(inputMembers.value)
-        inputMembers.value = ""
-    }
+  memberList.value.push(inputMembers.value)
+  inputMembers.value = ""
+}
 
 // show member   
 const showMembers = ref(true);
@@ -39,8 +48,7 @@ const showMemberLists = () => {
   console.log(showMembers.value);
 }
 
-const {userData} = inject('userData')
-console.log(userData);
+
 
 // if (modeTarget.value === "add") {
 //       foodLists.value.push({
@@ -60,54 +68,50 @@ console.log(userData);
       <h1>รายชื่อกลุ่ม</h1>
     </div>
     <div>
-      <div
-        v-for="(group,index) in testArr"
-        key="index">
-        <div class="grid grid-cols-2 m-auto border border-black mt-5 rounded-md w-3/5 py-2 pl-14">
-            <p>{{ group.groupName }}</p>
-            <button :id= "index" v-if="showMembers" @click="showMemberLists" class="flex justify-end pr-5"><img src="../icons/arrow-down.svg"></button>
-            <button :id= "index" v-else="showMembers" @click="showMemberLists" class="flex justify-end pr-5"><img src="../icons/arrow-up.svg"></button>
+      <div v-for="(group, index) in testArr" key="index">
+        <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
+          <p>{{ group.name }}</p>
+          <button :id="index" v-if="showMembers" @click="showMemberLists" class="flex justify-end pr-5"><img
+              src="../icons/arrow-down.svg"></button>
+          <button :id="index" v-else="showMembers" @click="showMemberLists" class="flex justify-end pr-5"><img
+              src="../icons/arrow-up.svg"></button>
         </div>
-        <div v-show="showMembers" :id= "index" class="m-auto border border-black rounded-md w-3/5 py-2 pl-14">
-          {{group.member}}
+        <div v-show="showMembers" :id="index" class="w-3/5 py-2 m-auto border border-black rounded-md pl-14">
+          {{ group.members }}
         </div>
       </div>
     </div>
-    <div class="text-center mt-5 bg-white">
-      <button
-        @click="showInsertGroupPopUp"
-        class="rounded-full bg-black text-white px-8 py-3"
-      >
+    <div class="mt-5 text-center bg-white">
+      <button @click="showInsertGroupPopUp" class="px-8 py-3 text-white bg-black rounded-full">
         เพิ่มกลุ่ม
       </button>
     </div>
 
     <!-- pop-up -->
-    <div
-      v-show="showGroupPopUp"
-      class="fixed inset-0 z-50 flex items-center justify-center"
-    >
+    <div v-show="showGroupPopUp" class="fixed inset-0 z-50 flex items-center justify-center">
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
-      <div class="container absolute h-96 w-3/5 px-2 pt-2 rounded-lg bg-white">
+      <div class="container absolute w-3/5 px-2 pt-2 bg-white rounded-lg h-96">
         <div class="flex justify-end pb-4">
-          <button @click = "showInsertGroupPopUp"><img src="../icons/close.svg"></button>
+          <button @click="showInsertGroupPopUp"><img src="../icons/close.svg"></button>
         </div>
-        <div class="border border-black py-4 pl-5 rounded-lg w-5/6">
-            <input v-model="inputGroupName" class="border border-b-black" type="text" placeholder="Add your group name">
+        <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
+          <input v-model="inputGroupName" class="border border-b-black" type="text" placeholder="Add your group name">
         </div>
-        <div class="text-xl ml-20 mt-4">
-            <p>Member lists</p>
+        <div class="mt-4 ml-20 text-xl">
+          <p>Member lists</p>
         </div>
         <div></div>
         <div>
           <div class="ml-24">
-            <span v-for="member in memberList" class="border border-black text-xl ml-3 mt-4 px-3 rounded-full">{{ member }}</span>
+            <span v-for="member in memberList" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{ member
+            }}</span>
           </div>
-            <input v-model = "inputMembers" class="border border-b-black text-xl ml-24 mt-4" type="text" placeholder="+ Add a member">
-            <button @click="addMember" class="text-black border border-black text-xl rounded-full px-2">add</button>
+          <input v-model="inputMembers" class="mt-4 ml-24 text-xl border border-b-black" type="text"
+            placeholder="+ Add a member">
+          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">add</button>
         </div>
-        <div class="text-center mt-10">
-        <button @click="addGroup" class="bg-black px-6 py-5 text-white rounded-full">Done</button>
+        <div class="mt-10 text-center">
+          <button @click="addGroup" class="px-6 py-5 text-white bg-black rounded-full">Done</button>
         </div>
       </div>
     </div>
