@@ -1,10 +1,6 @@
 <script setup>
-import { ref, computed, inject, watch } from "vue";
-const testArr = ref([
-  { groupName: "Eve", member: ["Eve", "Mo", "Nt"] },
-  { groupName: "โมอายร้ายแรง", member: ["Eve", "Mo", "Nt"] },
-  { groupName: "นตขี้เหล้า", member: ["Eve", "Mo", "Nt"] }
-]);
+import { ref, watch } from "vue";
+const testArr = ref([]);
 
 const memberList = ref([])
 const props = defineProps({
@@ -13,6 +9,7 @@ const props = defineProps({
     required: true,
   }
 });
+const emit = defineEmits(['updateData'])
 watch(() => props.userData, (newVal, oldVal) => {
   console.log('watch: ', newVal);
   testArr.value = newVal
@@ -29,15 +26,22 @@ const inputGroupName = ref("")
 const inputMembers = ref("")
 const addGroup = () => {
   testArr.value.push({
-    groupName: inputGroupName.value,
-    member: memberList.value
+    name: inputGroupName.value,
+    members: memberList.value,
+    meals: []
   })
-
+  inputGroupName.value = ""
+  memberList.value = []
+  console.log(testArr.value);
+  emit('updateData', testArr.value);
   showInsertGroupPopUp()
 }
 
 const addMember = () => {
-  memberList.value.push(inputMembers.value)
+  memberList.value.push({
+    "name": inputMembers.value,
+    "price": 0,
+  })
   inputMembers.value = ""
 }
 
@@ -77,7 +81,9 @@ const showMemberLists = () => {
               src="../icons/arrow-up.svg"></button>
         </div>
         <div v-show="showMembers" :id="index" class="w-3/5 py-2 m-auto border border-black rounded-md pl-14">
-          {{ group.members }}
+          <span v-for="member in group.members" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{
+            member.name
+          }}</span>
         </div>
       </div>
     </div>
@@ -103,7 +109,8 @@ const showMemberLists = () => {
         <div></div>
         <div>
           <div class="ml-24">
-            <span v-for="member in memberList" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{ member
+            <span v-for="member in memberList" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{
+              member.name
             }}</span>
           </div>
           <input v-model="inputMembers" class="mt-4 ml-24 text-xl border border-b-black" type="text"

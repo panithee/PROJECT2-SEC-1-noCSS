@@ -4,10 +4,10 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "HFUS9",
+      "key": "hw8j0",
       "groups": [
         {
-          "name": "fetchs",
+          "name": "fetch",
           "members": [
             {
               "id": 1,
@@ -107,6 +107,16 @@
               ]
             }
           ]
+        },
+        {
+          "name": "a",
+          "members": [
+            {
+              "name": "a",
+              "price": 0
+            }
+          ],
+          "meals": []
         }
       ]
     },

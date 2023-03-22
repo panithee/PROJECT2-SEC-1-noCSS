@@ -3,7 +3,7 @@ import Navbar from './components/Navbar.vue'
 import { onMounted, ref, watch } from 'vue'
 import { getUserGroups, findKey, updateGroups } from './composable/loginFunctions.js';
 const username = ref('');
-const userData = ref();
+const userData = ref([]);
 
 const setUsername = (name) => {
   console.log('setUsername: ' + name);
@@ -62,6 +62,7 @@ watch(() => userData.value, (newVal, oldVal) => {
 const updated = (data) => {
   console.log('updatedate: ' + data);
   userData.value = data;
+  updateGroups(username.value, data);
 };
 </script>
 
@@ -70,7 +71,7 @@ const updated = (data) => {
   <router-view :userData="userData" @updateData=updated></router-view>
   <!-- <div class="w-screen h-screen overflow-hidden bg-slate-500">
 
-                          </div> -->
+                              </div> -->
 </template>
 
 
