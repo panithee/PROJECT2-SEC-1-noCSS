@@ -93,9 +93,14 @@ const addMember = () => {
 };
 
 // show member
-const grouptarget = ref("");
-const showGroupDetails = (group) => {
-  grouptarget.value = group;
+const grouptarget = ref([]);
+const showGroupDetails = (index) => {
+  grouptarget.value.push(index);
+  // console.log(grouptarget.value);
+};
+const unshowGroupDetails = (index) => {
+  grouptarget.value.splice(grouptarget.value.indexOf(index), 1);
+  // console.log(grouptarget.value);
 };
 </script>
 
@@ -112,22 +117,25 @@ const showGroupDetails = (group) => {
           <p>{{ group.name }}</p>
           <button
             :id="index"
-            v-if="grouptarget === index"
-            @click="grouptarget = ''"
+            v-if="grouptarget.includes(index)"
+            @click="unshowGroupDetails(index)"
             class="flex justify-end pr-5"
           >
             <img src="../icons/arrow-down.svg" />
           </button>
           <button
             :id="index"
-            v-else="!grouptarget === index"
+            v-else
             @click="showGroupDetails(index)"
             class="flex justify-end pr-5"
           >
             <img src="../icons/arrow-up.svg" />
           </button>
         </div>
-        <div class="w-3/5 py-2 m-auto border border-black rounded-md pl-14" v-if="grouptarget === index">
+        <div
+          class="w-3/5 py-2 m-auto border border-black rounded-md pl-14"
+          v-if="grouptarget.includes(index)"
+        >
           <p class="text-xl py-2">Member Lists</p>
           <div :id="index">
             <span
