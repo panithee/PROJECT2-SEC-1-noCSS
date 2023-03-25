@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, watch } from "vue"
 
 const page = ref(true)
 
@@ -10,18 +10,23 @@ const switchMenu = (type) => {
     page.value = false
   }
 }
+// const props = defineProps({
+//     userData: {
+//         type: Array,
+//         required: true
+//     }
+// })
 
-const foodList = ref([{ foodname: "น้ำตก", price: 293 }])
+let food = ref([{ foodname: "น้ำตก", price: 300 }])
+// let food = ref();
 
-
+const personsWhoEat = ref([])
 const personList = ref([{ name: "John", status: false, price: 0, percent: 0 }, { name: "Three", status: false, price: 0, percent: 0 },
 { name: "Eve", status: false, price: 0, percent: 0 }, { name: "Mo", status: false, price: 0, percent: 0 }, { name: "A", status: false, price: 0, percent: 0 },
 { name: "B", status: false, price: 0, percent: 0 }, { name: "C", status: false, price: 0, percent: 0 },
 { name: "e", status: false, price: 0, percent: 0 }, { name: "d", status: false, price: 0, percent: 0 },
 { name: "F", status: false, price: 0, percent: 0 }, { name: "G", status: false, price: 0, percent: 0 },
 { name: "H", status: false, price: 0, percent: 0 }, { name: "I", status: false, price: 0, percent: 0 }])
-
-const personsWhoEat = ref([])
 
 
 
@@ -40,46 +45,60 @@ const togglePersonWhoEat = (event) => {
   }
 }
 
-const priceEachPerson = ref(0)
 
 const avgPricePerPerson = computed(() => {
   if (personsWhoEat.value.length <= 0) {
     return 0
   }
-  const price = foodList.value[0].price
+  const price = food.value[0].price
   const numPersons = personsWhoEat.value.length
   const result = price / numPersons
   return Math.ceil(result * 100) / 100
 });
 
 
-const totalPrice = computed(() => foodList.value[0].price)
+const calculatePriceByPercent = (event, index) => {
+  const percent = event.target.value
+  if (!isNaN(percent)) {
+    personsWhoEat.value[index].percent = Number(percent)
+  }
+  const foodPrice = parseFloat((food.value[0].price * percent) / 100).toFixed(2)
+  console.log(personsWhoEat.value[index].percent)
+  personsWhoEat.value[index].price = foodPrice
+  console.log(personsWhoEat)
+  console.log(foodPrice)
+  return foodPrice
+}
 
-const props = defineProps({
-  percent: Number,
-  default: 0
-})
+const calculateTotalPercent = () => {
+  let totalPercent = personsWhoEat.value.reduce((totalPercent, currentPercent) => {
+    return totalPercent + currentPercent.percent
+  }, 0)
+  return totalPercent
+}
 
-
-const setPercentOfPerson = () => {
-
+const checkPercent = () => {
+  const totalPercent = calculateTotalPercent()
+  if (totalPercent <= 100) {
+    return `ขาดอีก : ${100 - totalPercent}%`
+  } else if (totalPercent > 100) {
+    return `เกินมา : ${totalPercent - 100}%`
+  }
 }
 
 
-const totalPercent = computed(() => {
-  return this.personsWhoEat.reduce((acc, person) => acc + person.percent, 0);
-}) 
 
 
 
-
+// const totalPrice = computed(() => food .value[0].price)
 
 </script>
 
 <template>
+  <br>
   <div class="w-full h-full">
-    <button class="flex text-3xl ml-10" >Back</button>
-    <p class="flex justify-center text-4xl pt-5">น้ำตก</p>
+    <button class="flex text-3xl ml-10">Back</button>
+    <p class="flex justify-center text-4xl pt-5">{{ food[0].foodname }}</p>
     <p class="flex justify-center text-lg mt-5 text-gray-600">Average by</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
@@ -125,28 +144,35 @@ const totalPercent = computed(() => {
           </tr>
         </thead>
         <tbody>
-            <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
-              <td class="text-left text-xl">{{ person.name }}</td>
-              <td class="text-center">
-                <input type="number" placeholder="0-100" 
-                
-                min="100" 
-                max="0" class="bg-gray-200 w-20 text-center" />
-              </td>
-              <td class="text-end text-xl">{{ avgPricePerPerson }} </td>
-            </tr>
+          <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
+            <td class="text-left text-xl">{{ person.name }}</td>
+            <td class="text-center">
+              <input type="number" placeholder="0-100" @input="calculatePriceByPercent($event, index)" min="100" max="0"
+                class="bg-gray-200 w-20 text-center" />
+            </td>
+            <td class="text-end text-xl">{{ person.price }} </td>
+          </tr>
         </tbody>
       </table>
     </div>
 
 
-    <div class="w-3/5 mx-auto">
-      <button class="flex justify-center mt-10 text-xl mx-auto">Done</button>
-      <button class="flex justify-center mt-2 text-xl text-gray-400 underline mx-auto">Delete</button>
-      <p class="flex underline justify-end text-3xl">Total Price : {{ totalPrice }}</p>
+
+    <div class="w-3/5 mx-auto grid grid-cols-3 gap-x-6 mt-10 items-center">
+      <p class="col-span-1 text-2xl">Done</p>
+      <div class="col-span-1">
+        <p v-if="!page" class="flex flex-col">เปอร์เซ็นต์ทั้งหมด : {{ calculateTotalPercent() }}%</p>
+        <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
+      </div>
+      <p class="underline col-span-1 text-3xl">ราคาอาหาร: {{ food[0].price }}</p>
+      <p class="col-span-3 text-2xl mt-3 justify-self-center">Delete</p>
     </div>
 
-   
+
+
+
+
+
 
   </div>
 </template>

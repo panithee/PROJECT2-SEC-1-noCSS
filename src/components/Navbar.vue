@@ -52,7 +52,7 @@ onMounted(() => {
                 <li>
                     <router-link to="/">Meal</router-link>
                 </li>
-                <li><router-link to="/groups">Group</router-link></li>
+                <li><router-link to="/testDiv">Group</router-link></li>
                 <li><a @click="handleLoginEvent">Sign {{ isLoggedIn ? "out" : "in" }}</a></li>
             </ul>
         </div>

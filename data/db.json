@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "07L2q",
+      "key": "ynsL7",
       "groups": [
         {
           "name": "fetchs",
@@ -32,7 +32,10 @@
                   "consumers": [
                     {
                       "id": 1,
-                      "percentage": 100
+                      "name": "mo",
+                      "status": false,
+                      "price": 0,
+                      "percent": 0
                     }
                   ],
                   "split_mode": "equal"
@@ -44,11 +47,17 @@
                   "consumers": [
                     {
                       "id": 1,
-                      "percentage": 50
+                      "name": "mo",
+                      "status": false,
+                      "price": 0,
+                      "percent": 0
                     },
                     {
                       "id": 2,
-                      "percentage": 50
+                      "name": "eve",
+                      "status": false,
+                      "price": 0,
+                      "percent": 0
                     }
                   ],
                   "split_mode": "percentage"
