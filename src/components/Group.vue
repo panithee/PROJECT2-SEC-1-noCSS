@@ -1,73 +1,102 @@
 <script setup>
 import { onBeforeMount, ref, watch } from "vue";
 const myGroupArr = ref([]);
+const memberList = ref([]);
+const checkInputMember = ref(false);
+const errorMembers = ref("");
+const checkInputGroupName = ref(false);
+const errorGroupName = ref("");
 
-const memberList = ref([])
 const props = defineProps({
   userData: {
     type: Array,
     required: true,
+  },
+});
+const emit = defineEmits(["updateData"]);
+watch(
+  () => props.userData,
+  (newVal, oldVal) => {
+    // console.log("watch: ", newVal);
+    myGroupArr.value = newVal;
   }
-});
-const emit = defineEmits(['updateData'])
-watch(() => props.userData, (newVal, oldVal) => {
-  console.log('watch: ', newVal);
- myGroupArr.value = newVal
-});
+);
 onBeforeMount(() => {
- myGroupArr.value = props.userData
-  console.log('onBeforeMount: ', myGroupArr.value);
+  myGroupArr.value = props.userData;
+  // console.log("onBeforeMount: ", myGroupArr.value);
 });
+
 // show pop-up
 const showGroupPopUp = ref(false);
 const showInsertGroupPopUp = (event) => {
+  errorMembers.value = "";
+  errorGroupName.value = "";
+  memberList.value = [];
   showGroupPopUp.value = !showGroupPopUp.value;
-  console.log(showGroupPopUp.value);
+  // console.log(showGroupPopUp.value);
 };
 
 // add value
-const inputGroupName = ref("")
-const inputMembers = ref("")
+const inputGroupName = ref("");
+const inputMembers = ref("");
 const addGroup = () => {
- myGroupArr.value.push({
-    name: inputGroupName.value,
-    members: memberList.value,
-    meals: []
-  })
-  inputGroupName.value = ""
-  memberList.value = []
-  console.log (myGroupArr.value);
-  emit('updateData', myGroupArr.value);
-  showInsertGroupPopUp()
-}
+  let groupNameExists = "";
+  for (const group of myGroupArr.value) {
+    if (group.name === inputGroupName.value) {
+      groupNameExists = group.name;
+    }
+  }
+  if (inputGroupName.value === "") {
+    errorGroupName.value = "Please add a group name";
+    checkInputGroupName.value = true;
+  } else if (inputGroupName.value === groupNameExists) {
+    errorGroupName.value = "Group name already exists";
+    checkInputGroupName.value = true;
+  } else if (
+    inputGroupName.value !== "" &&
+    inputGroupName.value !== groupNameExists
+  ) {
+    myGroupArr.value.push({
+      name: inputGroupName.value,
+      members: memberList.value,
+      meals: [],
+    });
+    inputGroupName.value = "";
+    memberList.value = [];
+    // console.log(myGroupArr.value);
+    emit("updateData", myGroupArr.value);
+    showInsertGroupPopUp();
+  }
+};
 
 const addMember = () => {
-  memberList.value.push({
-    "name": inputMembers.value,
-    "price": 0,
-  })
-  inputMembers.value = ""
-}
+  let memberExists = "";
+  for (const member of memberList.value) {
+    if (member.name === inputMembers.value) {
+      memberExists = member.name;
+      errorMembers.value = "Member already exits";
+      checkInputMember.value = true;
+    }
+  }
 
-// show member   
-const showMembers = ref(true);
-const showMemberLists = () => {
-  showMembers.value = !showMembers.value
-  console.log(showMembers.value);
-}
+  if (inputMembers.value === "") {
+    errorMembers.value = "Please add your member";
+    checkInputMember.value = true;
+  } else if (inputMembers.value !== "" && inputMembers.value !== memberExists) {
+    errorMembers.value = "";
+    memberList.value.push({
+      name: inputMembers.value,
+      price: 0,
+    });
+  }
+  inputMembers.value = "";
+};
 
-
-
-// if (modeTarget.value === "add") {
-//       foodLists.value.push({
-//         name: foodName.value,
-//         price: price.value,
-//         person: personFood.value,
-//       });
-//       foodName.value = "";
-//       price.value = 0;
-//       personFood.value = [];
-//     } 
+// show member
+const grouptarget = ref("");
+const showGroupDetails = (group) => {
+  grouptarget.value = group;
+};
 </script>
 
 <template>
@@ -77,35 +106,70 @@ const showMemberLists = () => {
     </div>
     <div>
       <div v-for="(group, index) in myGroupArr" key="index">
-        <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
+        <div
+          class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14"
+        >
           <p>{{ group.name }}</p>
-          <button :id="index" v-if="showMembers" @click="showMemberLists" class="flex justify-end pr-5"><img
-              src="../icons/arrow-down.svg"></button>
-          <button :id="index" v-else="showMembers" @click="showMemberLists" class="flex justify-end pr-5"><img
-              src="../icons/arrow-up.svg"></button>
+          <button
+            :id="index"
+            v-if="grouptarget === index"
+            @click="grouptarget = ''"
+            class="flex justify-end pr-5"
+          >
+            <img src="../icons/arrow-down.svg" />
+          </button>
+          <button
+            :id="index"
+            v-else="!grouptarget === index"
+            @click="showGroupDetails(index)"
+            class="flex justify-end pr-5"
+          >
+            <img src="../icons/arrow-up.svg" />
+          </button>
         </div>
-        <div v-show="showMembers" :id="index" class="w-3/5 py-2 m-auto border border-black rounded-md pl-14">
-          <span v-for="member in group.members" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{
-            member.name
-          }}</span>
+        <div class="w-3/5 py-2 m-auto border border-black rounded-md pl-14" v-if="grouptarget === index">
+          <p class="text-xl py-2">Member Lists</p>
+          <div :id="index">
+            <span
+              v-for="member in group.members"
+              key="index"
+              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
+              >{{ member.name }}</span
+            >
+          </div>
         </div>
       </div>
     </div>
     <div class="mt-5 text-center bg-white">
-      <button @click="showInsertGroupPopUp" class="px-8 py-3 text-white bg-black rounded-full">
+      <button
+        @click="showInsertGroupPopUp"
+        class="px-8 py-3 text-white bg-black rounded-full"
+      >
         เพิ่มกลุ่ม
       </button>
     </div>
 
     <!-- pop-up -->
-    <div v-show="showGroupPopUp" class="fixed inset-0 z-50 flex items-center justify-center">
+    <div
+      v-show="showGroupPopUp"
+      class="fixed inset-0 z-50 flex items-center justify-center"
+    >
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
       <div class="container absolute w-3/5 px-2 pt-2 bg-white rounded-lg h-96">
         <div class="flex justify-end pb-4">
-          <button @click="showInsertGroupPopUp"><img src="../icons/close.svg"></button>
+          <button @click="showInsertGroupPopUp">
+            <img src="../icons/close.svg" />
+          </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input v-model="inputGroupName" class="border border-b-black" type="text" placeholder="Add your group name">
+          <input
+            v-model="inputGroupName"
+            class="border border-b-black"
+            type="text"
+            placeholder="Add your group name"
+          />
+          <img src="../icons/pen.svg" class="inline mx-3" />
+          <span class="text-lg text-red-600"> {{ errorGroupName }}</span>
         </div>
         <div class="mt-4 ml-20 text-xl">
           <p>Member lists</p>
@@ -113,16 +177,34 @@ const showMemberLists = () => {
         <div></div>
         <div>
           <div class="ml-24">
-            <span v-for="member in memberList" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{
-              member.name
-            }}</span>
+            <span
+              v-for="member in memberList"
+              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
+            >
+              {{ member.name }}
+            </span>
           </div>
-          <input v-model="inputMembers" class="mt-4 ml-24 text-xl border border-b-black" type="text"
-            placeholder="+ Add a member">
-          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">add</button>
+          <input
+            v-model="inputMembers"
+            class="mt-4 ml-24 text-xl border border-b-black"
+            type="text"
+            placeholder="+ Add a member"
+          />
+          <button
+            @click="addMember"
+            class="px-2 text-xl text-black border border-black rounded-full"
+          >
+            add</button
+          ><br />
+          <span class="text-lg ml-24 text-red-600"> {{ errorMembers }}</span>
         </div>
-        <div class="mt-10 text-center">
-          <button @click="addGroup" class="px-6 py-5 text-white bg-black rounded-full">Done</button>
+        <div class="mt-10 flex justify-center">
+          <button
+            @click="addGroup"
+            class="fixed px-6 py-5 text-white bg-black rounded-full"
+          >
+            Done
+          </button>
         </div>
       </div>
     </div>
