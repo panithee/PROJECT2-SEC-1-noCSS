@@ -4,19 +4,19 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "BMLbw",
+      "key": "sT6Wg",
       "groups": [
         {
           "name": "momo2",
           "members": [
             {
               "id": 1,
-              "name": "mo",
+              "name": "a",
               "price": 100
             },
             {
               "id": 2,
-              "name": "eve",
+              "name": "b",
               "price": 200
             }
           ],
@@ -32,10 +32,11 @@
                   "consumers": [
                     {
                       "id": 1,
+                      "name": "food",
                       "percentage": 100
                     }
                   ],
-                  "split_mode": "equal"
+                  "splitMode": "equal"
                 },
                 {
                   "id": 2,
@@ -44,14 +45,16 @@
                   "consumers": [
                     {
                       "id": 1,
+                      "name": "a",
                       "percentage": 50
                     },
                     {
                       "id": 2,
+                      "name": "b",
                       "percentage": 50
                     }
                   ],
-                  "split_mode": "percentage"
+                  "splitMode": "percentage"
                 }
               ]
             }

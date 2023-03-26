@@ -6,14 +6,17 @@
 </template>
 
 <script setup>
-defineProps({
+import { defineProps, onMounted } from 'vue'
+const props = defineProps({
   userData: {
     type: Array,
     default: []
   }
 })
+onMounted(() => {
+  console.log(props.userData.value)
+})
+console.log(props.userData.value)
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
