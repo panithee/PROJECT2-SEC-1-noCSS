@@ -3,7 +3,7 @@ import { ref, computed } from "vue"
 
 const page = ref(true)
 
-
+defineEmits(['sendAllData'])
 
 const switchMenu = (type) => {
   if (type === "equal") {
@@ -52,7 +52,8 @@ const avgPricePerPerson = computed(() => {
   if (personsWhoEat.value.length <= 0) {
     return 0
   }
-  const price = food.value[0].price
+  // const price = food.value[0].price
+  const price = 1
   const numPersons = personsWhoEat.value.length
   const result = price / numPersons
   return Math.ceil(result * 100) / 100
@@ -64,7 +65,7 @@ const calculatePriceByPercent = (event, index) => {
   if (!isNaN(percent)) {
     personsWhoEat.value[index].percent = Number(percent)
   }
-  const foodPrice = parseFloat((food.value[0].price * percent) / 100).toFixed(2)
+  const foodPrice = parseFloat((1 * percent) / 100).toFixed(2)
   console.log(personsWhoEat.value[index].percent)
   personsWhoEat.value[index].price = foodPrice
   console.log(personsWhoEat)
@@ -89,7 +90,8 @@ const checkPercent = () => {
 }
 
 
-
+const foodName = ref('')
+const foodPrice = ref()
 
 
 // const totalPrice = computed(() => food .value[0].price)
@@ -101,7 +103,7 @@ const checkPercent = () => {
   <div class="w-full h-full">
     <button class="flex text-3xl ml-10">Back</button>
     <!-- <p class="flex justify-center text-4xl pt-5">{{ food[0].foodname }}</p> -->
-    <input type="text" placeholder="Add your food name" class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
+    <input type="text" placeholder="Add your food name" v-model="foodName"  class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
     <p class="flex justify-center text-lg mt-5 text-gray-600">Average by</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
@@ -162,12 +164,12 @@ const checkPercent = () => {
 
 
     <div class="w-3/5 mx-auto grid grid-cols-3 gap-x-6 mt-10 items-center">
-      <p class="col-span-1 text-2xl">Done</p>
+      <p @click="$emit('sendAllData',foodName, foodPrice, personsWhoEat)" class="col-span-1 text-2xl">Done</p>
       <div class="col-span-1">
         <p v-if="!page" class="flex flex-col">เปอร์เซ็นต์ทั้งหมด : {{ calculateTotalPercent() }}%</p>
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
-      <p class="underline col-span-1 text-3xl">ราคาอาหาร: {{ food[0].price }}</p>
+      <input v-model="foodPrice" placeholder="add your food price" class="border border-gray-500 text-right rounded-lg text-3xl">
       <p class="col-span-3 text-2xl mt-3 justify-self-center">Delete</p>
     </div>
 
