@@ -19,11 +19,11 @@ const props = defineProps({
     required: true,
   },
 });
-const emit = defineEmits(["updateData"]);
+
 watch(
   () => props.userData,
   (newVal, oldVal) => {
-    // console.log("watch: ", newVal);
+    console.log("watch: ", newVal);
     myGroupArr.value = newVal;
   }
 );
@@ -38,8 +38,9 @@ const showInsertGroupPopUp = (event) => {
   errorMembers.value = "";
   errorGroupName.value = "";
   memberList.value = [];
+  inputGroupName.value = ""
   showGroupPopUp.value = !showGroupPopUp.value;
-  // console.log(showGroupPopUp.value);
+  console.log(showGroupPopUp.value);
 };
 
 // add value
@@ -67,11 +68,11 @@ const addGroup = () => {
       members: memberList.value,
       meals: [],
     });
+    emit("updateData", myGroupArr.value);
+    showInsertGroupPopUp();
     inputGroupName.value = "";
     memberList.value = [];
     // console.log(myGroupArr.value);
-    emit("updateData", myGroupArr.value);
-    showInsertGroupPopUp();
   }
 };
 
