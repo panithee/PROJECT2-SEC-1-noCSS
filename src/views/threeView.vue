@@ -1,11 +1,5 @@
-<template>
-  <div class="threeView">
-    <h1>threeView</h1>
-    {{ userData }}
-  </div>
-</template>
-
 <script setup>
+import DivideFoodCost from '../components/DivideFoodCost.vue';
 defineProps({
   userData: {
     type: Array,
@@ -13,6 +7,14 @@ defineProps({
   }
 })
 </script>
+<template>
+  <div class="threeView">
+    <h1>threeView</h1>
+    <DivideFoodCost :userData="userData"></DivideFoodCost>
+  </div>
+</template>
+
+
 
 <style scoped>
 

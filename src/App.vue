@@ -39,6 +39,7 @@ onMounted(async () => {
       userData.value = [];
       return;
     }
+    loginAlready.value = false;
     const userKey = await findKey(storedUsername);
     const key = sessionStorage.getItem('key');
     if (userKey !== key) {
@@ -50,13 +51,13 @@ onMounted(async () => {
       username.value = storedUsername;
       userData.value = await getUserGroups(storedUsername);
     }
-    setInterval(async () => {
-          const newData = await getUserGroups(username.value);
-          if (newData !== userData.value) {
-            userData.value = newData;
-          }
-        }
-        , 1000)
+    // setInterval(async () => {
+    //       const newData = await getUserGroups(username.value);
+    //       if (newData !== userData.value) {
+    //         userData.value = newData;
+    //       }
+    //     }
+    //     , 1000)
   } catch (error) {
     console.error(error);
   }
