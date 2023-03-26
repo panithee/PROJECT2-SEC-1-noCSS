@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "J3dlp",
+      "key": "trqXg",
       "groups": [
         {
           "name": "momo2",
@@ -59,6 +59,81 @@
               ]
             }
           ]
+        },
+        {
+          "name": "a",
+          "members": [
+            {
+              "name": "a",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "อีสัสมาร์คหัวควย",
+          "members": [
+            {
+              "name": "มาร์ค",
+              "price": 0
+            },
+            {
+              "name": "หิน",
+              "price": 0
+            },
+            {
+              "name": "เขาไม่รัก",
+              "price": 0
+            },
+            {
+              "name": "ว้าย",
+              "price": 200
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "joijidsjci🤣",
+          "members": [
+            {
+              "name": "กแผ",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "Eve",
+          "members": [
+            {
+              "name": "eve",
+              "price": 0
+            },
+            {
+              "name": "mo",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "Name",
+          "members": [],
+          "meals": []
+        },
+        {
+          "name": "อีฟรักเนม",
+          "members": [
+            {
+              "name": "อีฟ",
+              "price": 0
+            },
+            {
+              "name": "เนม",
+              "price": 0
+            }
+          ],
+          "meals": []
         }
       ]
     },
