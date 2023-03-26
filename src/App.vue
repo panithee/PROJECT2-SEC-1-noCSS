@@ -2,7 +2,7 @@
 import Navbar from './components/Navbar.vue'
 import { onMounted, ref, watch } from 'vue'
 import { getUserGroups, findKey, updateGroups } from './composable/loginFunctions.js';
-import {AvgPerPerson} from './components/AvgPerPerson.vue'
+import  AvgPerPerson  from './components/AvgPerPerson.vue'
 const username = ref('');
 const userData = ref();
 
