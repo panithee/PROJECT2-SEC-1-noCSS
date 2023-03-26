@@ -1,7 +1,9 @@
 <script setup>
-import { ref, computed, watch } from "vue"
+import { ref, computed } from "vue"
 
 const page = ref(true)
+
+
 
 const switchMenu = (type) => {
   if (type === "equal") {
@@ -98,7 +100,8 @@ const checkPercent = () => {
   <br>
   <div class="w-full h-full">
     <button class="flex text-3xl ml-10">Back</button>
-    <p class="flex justify-center text-4xl pt-5">{{ food[0].foodname }}</p>
+    <!-- <p class="flex justify-center text-4xl pt-5">{{ food[0].foodname }}</p> -->
+    <input type="text" placeholder="Add your food name" class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
     <p class="flex justify-center text-lg mt-5 text-gray-600">Average by</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
