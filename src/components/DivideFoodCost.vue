@@ -1,49 +1,43 @@
 <script setup>
-import { ref, computed, onBeforeUpdate } from "vue"
+import { ref, computed, onBeforeUpdate, watchEffect } from "vue"
 const props = defineProps({
   userData: {
     type: Array,
     default: []
   }
 })
-const page = computed(() => {
-  if (food?.value?.splitMode === "equal") {
-    return true
-  }
-  return false
-})
 
+const page = ref(true);
 const switchMenu = (type) => {
   if (type === "equal") {
     page.value = true
   } else if (type === "percentage") {
-    console.log(personList)
+    console.log(personsList)
     page.value = false
     calculatePriceByPercent();
   }
 }
 let food = ref({});
 const personsWhoEat = ref()
-onBeforeUpdate(() => {
-  food.value = props.userData[0]?.meals[0].foods[1]
-  personsWhoEat.value = food.value?.consumers ?? [];
-})
-const personList = computed(() => {
-  return props.userData[0]?.members ?? []
-})
+const personsList = ref()
 
-
+watchEffect(() => {
+  food.value = props?.userData[0].meals[0]
+  // personsWhoEat.value = food.value?.personsWhoEat
+  // personsList.value = props?.userData[0].persons
+  // console.log("watchEffect", food.value)
+})
 
 const togglePersonWhoEat = (event) => {
   const index = event.target.id;
-  if (!checkPersonEating(personList.value[index].id)) {
+  if (!checkPersonEating(personsList.value[index].id)) {
     console.log("donthave.value")
-    personsWhoEat.value.push(personList.value[index])
+    personsWhoEat.value.push(personsList.value[index])
     console.log(personsWhoEat.value)
   }
   else {
     console.log("have.value")
-    personsWhoEat.value = personsWhoEat.value.filter((person) => person !== personList.value[index])
+    personsWhoEat.value = personsWhoEat.value.filter((person) => person !== personsList.value[index])
     console.log(personsWhoEat.value)
   }
 }
@@ -122,7 +116,7 @@ const checkPersonEating = (id) => {
 
     <p class="flex justify-center mt-5 text-lg text-gray-600">Member</p>
     <div class="flex justify-center w-1/2 mx-auto bg-white">
-      <button class="px-2 mx-2 border border-black rounded-lg" v-for="(person, index) in personList" :key="index"
+      <button class="px-2 mx-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index"
         :id="index" @click="togglePersonWhoEat($event)" :class="
           checkPersonEating(person.id)
             ? 'bg-white hover:bg-gray-200  border-black text-black'
