@@ -67,7 +67,7 @@ const updated = (data) => {
 
 <template>
   <Navbar @getUsername=setUsername @clearData=clearUserData />
-  <router-view :userData="userData" @updateData=updated></router-view>
+  <router-view ></router-view>
   <!-- <div class="w-screen h-screen overflow-hidden bg-slate-500">
 
                           </div> -->

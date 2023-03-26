@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from "vue"
+import { ref, computed } from "vue"
 
 const page = ref(true)
 
@@ -8,18 +8,11 @@ const switchMenu = (type) => {
     page.value = true
   } else if (type === "percent") {
     page.value = false
+    calculatePriceByPercent();
   }
 }
-// const props = defineProps({
-//     userData: {
-//         type: Array,
-//         required: true
-//     }
-// })
 
 let food = ref([{ foodname: "น้ำตก", price: 300 }])
-// let food = ref();
-
 const personsWhoEat = ref([])
 const personList = ref([{ name: "John", status: false, price: 0, percent: 0 }, { name: "Three", status: false, price: 0, percent: 0 },
 { name: "Eve", status: false, price: 0, percent: 0 }, { name: "Mo", status: false, price: 0, percent: 0 }, { name: "A", status: false, price: 0, percent: 0 },
@@ -36,6 +29,7 @@ const togglePersonWhoEat = (event) => {
 
   if (personList.value[index].status === true) {
     if (!personsWhoEat.value.includes(personList.value[index])) {
+      console.log("personList.value")
       personsWhoEat.value.push(personList.value[index])
       console.log(personsWhoEat.value)
     }
@@ -47,27 +41,28 @@ const togglePersonWhoEat = (event) => {
 
 
 const avgPricePerPerson = computed(() => {
-  if (personsWhoEat.value.length <= 0) {
-    return 0
-  }
-  const price = food.value[0].price
-  const numPersons = personsWhoEat.value.length
-  const result = price / numPersons
-  return Math.ceil(result * 100) / 100
+  console.log("ji")
+  const avg=Math.ceil( 300 /  personsWhoEat.value.length) * 100 /100
+  personsWhoEat.value = personsWhoEat.value.map((a)=>{
+    a.price=avg;
+    return a
+  })
+  return Math.ceil( 300 /  personsWhoEat.value.length) * 100 /100
 });
 
 
-const calculatePriceByPercent = (event, index) => {
+const calculatePriceByPercent = () => {
+ 
+  console.log("pers");
+    personsWhoEat.value.map((person) => {
+      person.price = parseFloat((food.value[0].price * person.percent) / 100).toFixed(2)
+      return person;
+    }) 
+}
+const inputPercent = (event, index) => {
   const percent = event.target.value
-  if (!isNaN(percent)) {
-    personsWhoEat.value[index].percent = Number(percent)
-  }
-  const foodPrice = parseFloat((food.value[0].price * percent) / 100).toFixed(2)
-  console.log(personsWhoEat.value[index].percent)
-  personsWhoEat.value[index].price = foodPrice
-  console.log(personsWhoEat)
-  console.log(foodPrice)
-  return foodPrice
+  personsWhoEat.value[index].percent = Number( percent);
+  calculatePriceByPercent();
 }
 
 const calculateTotalPercent = () => {
@@ -85,13 +80,13 @@ const checkPercent = () => {
     return `เกินมา : ${totalPercent - 100}%`
   }
 }
-
-
-
-
-
-// const totalPrice = computed(() => food .value[0].price)
-
+const showPercentplaceholder = (index) => {
+ const percent =personsWhoEat.value[index].percent;
+ if(percent > 0 && percent <=100) {
+  return percent;
+ }
+ return '0-100'
+}
 </script>
 
 <template>
@@ -147,7 +142,7 @@ const checkPercent = () => {
           <tr class="border-b border-gray-300 " v-for="(person, index) in personsWhoEat" :key="index">
             <td class="text-left text-xl">{{ person.name }}</td>
             <td class="text-center">
-              <input type="number" placeholder="0-100" @input="calculatePriceByPercent($event, index)" min="100" max="0"
+              <input type="number" :placeholder="showPercentplaceholder(index)" @input="inputPercent($event, index)" min="100" max="0"
                 class="bg-gray-200 w-20 text-center" />
             </td>
             <td class="text-end text-xl">{{ person.price }} </td>
