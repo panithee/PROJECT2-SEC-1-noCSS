@@ -68,7 +68,7 @@ const addGroup = () => {
       members: memberList.value,
       meals: [],
     });
-    emit("updateData", myGroupArr.value);
+    // emit("updateData", myGroupArr.value);
     showInsertGroupPopUp();
     inputGroupName.value = "";
     memberList.value = [];
@@ -112,8 +112,8 @@ const unshowGroupDetails = (index) => {
   // console.log(grouptarget.value);
 };
 
-const deleteGroup = (index) =>{
-  myGroupArr.value.splice(index,1)
+const deleteGroup = (index) => {
+  myGroupArr.value.splice(index, 1)
 }
 
 </script>
@@ -127,57 +127,42 @@ const deleteGroup = (index) =>{
       <div v-for="(group, index) in myGroupArr" key="index">
         <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
           <p>{{ group.name }}</p>
-          <button
-            :id="index" v-if="grouptarget.includes(index)"
-            @click="unshowGroupDetails(index)"
+          <button :id="index" v-if="grouptarget.includes(index)" @click="unshowGroupDetails(index)"
             class="flex justify-end pr-5">
-            
-          <ArrowDown></ArrowDown>
+
+            <ArrowDown></ArrowDown>
           </button>
-          <button
-            :id="index"
-            v-else
-            @click="showGroupDetails(index)"
-            class="flex justify-end pr-5"
-          >
-          <ArrowUp></ArrowUp>
+          <button :id="index" v-else @click="showGroupDetails(index)" class="flex justify-end pr-5">
+            <ArrowUp></ArrowUp>
           </button>
         </div>
         <div class="w-3/5 py-2 m-auto border border-black rounded-md" v-if="grouptarget.includes(index)">
-          <p class="text-xl py-2 pl-14">Member Lists</p>
+          <p class="py-2 text-xl pl-14">Member Lists</p>
           <div :id="index" class="pl-14">
-            <span
-              v-for="member in group.members"
-              key="index"
-              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
-              >{{ member.name }}
+            <span v-for="member in group.members" key="index"
+              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{ member.name }}
             </span>
           </div>
-          <div class="text-center text-xl grid grid-cols-2">
-          <span class="">จำนวนคน: {{ group.members.length }}</span>
-          <span class="">ราคาทั้งหมด: {{ totalPrice }}</span>
+          <div class="grid grid-cols-2 text-xl text-center">
+            <span class="">จำนวนคน: {{ group.members.length }}</span>
+            <span class="">ราคาทั้งหมด: {{ totalPrice }}</span>
           </div>
-          <div class="text-right text-xl ">
-            <button :id = "index" class="mr-4 border border-b-black border-x-white border-t-white">edit</button>
-            <button :id = "index" @click = "deleteGroup(index)" class="mr-5 border border-b-black border-x-white border-t-white">delete</button>
+          <div class="text-xl text-right ">
+            <button :id="index" class="mr-4 border border-b-black border-x-white border-t-white">edit</button>
+            <button :id="index" @click="deleteGroup(index)"
+              class="mr-5 border border-b-black border-x-white border-t-white">delete</button>
           </div>
         </div>
       </div>
     </div>
     <div class="mt-5 text-center bg-white">
-      <button
-        @click="showInsertGroupPopUp"
-        class="px-8 py-3 text-white bg-black rounded-full"
-      >
+      <button @click="showInsertGroupPopUp" class="px-8 py-3 text-white bg-black rounded-full">
         เพิ่มกลุ่ม
       </button>
     </div>
 
     <!-- pop-up -->
-    <div
-      v-show="showGroupPopUp"
-      class="fixed inset-0 z-50 flex items-center justify-center"
-    >
+    <div v-show="showGroupPopUp" class="fixed inset-0 z-50 flex items-center justify-center">
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
       <div class="container absolute w-3/5 px-2 pt-2 bg-white rounded-lg h-96">
         <div class="flex justify-end pb-4">
@@ -186,12 +171,7 @@ const deleteGroup = (index) =>{
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input
-            v-model="inputGroupName"
-            class="border border-b-black"
-            type="text"
-            placeholder="Add your group name"
-          />
+          <input v-model="inputGroupName" class="border border-b-black" type="text" placeholder="Add your group name" />
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ errorGroupName }}</span>
         </div>
@@ -200,32 +180,18 @@ const deleteGroup = (index) =>{
         </div>
         <div>
           <div class="ml-24">
-            <span
-              v-for="member in memberList"
-              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
-            >
+            <span v-for="member in memberList" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
               {{ member.name }}
             </span>
           </div>
-          <input
-            v-model="inputMembers"
-            class="mt-4 ml-24 text-xl border border-b-black"
-            type="text"
-            placeholder="+ Add a member"
-          />
-          <button
-            @click="addMember"
-            class="px-2 text-xl text-black border border-black rounded-full"
-          >
-            add</button
-          ><br />
-          <span class="text-lg ml-24 text-red-600"> {{ errorMembers }}</span>
+          <input v-model="inputMembers" class="mt-4 ml-24 text-xl border border-b-black" type="text"
+            placeholder="+ Add a member" />
+          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
+            add</button><br />
+          <span class="ml-24 text-lg text-red-600"> {{ errorMembers }}</span>
         </div>
-        <div class="mt-10 flex justify-center">
-          <button
-            @click="addGroup"
-            class="fixed px-6 py-5 text-white bg-black rounded-full"
-          >
+        <div class="flex justify-center mt-10">
+          <button @click="addGroup" class="fixed px-6 py-5 text-white bg-black rounded-full">
             Done
           </button>
         </div>
