@@ -1,11 +1,17 @@
 <script setup>
-import { onBeforeMount, ref, watch } from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
+import ArrowDown from "./icons/arrowDown.vue";
+import ArrowUp from "./icons/arrowUp.vue";
+import Close from "./icons/close.vue";
+import Pen from "./icons/pen.vue";
 const myGroupArr = ref([]);
 const memberList = ref([]);
 const checkInputMember = ref(false);
 const errorMembers = ref("");
 const checkInputGroupName = ref(false);
 const errorGroupName = ref("");
+
+// console.log(myGroupArr.value);
 
 const props = defineProps({
   userData: {
@@ -92,6 +98,8 @@ const addMember = () => {
   inputMembers.value = "";
 };
 
+const totalPrice = ref(0)
+
 // show member
 const grouptarget = ref([]);
 const showGroupDetails = (index) => {
@@ -102,6 +110,11 @@ const unshowGroupDetails = (index) => {
   grouptarget.value.splice(grouptarget.value.indexOf(index), 1);
   // console.log(grouptarget.value);
 };
+
+const deleteGroup = (index) =>{
+  myGroupArr.value.splice(index,1)
+}
+
 </script>
 
 <template>
@@ -111,17 +124,14 @@ const unshowGroupDetails = (index) => {
     </div>
     <div>
       <div v-for="(group, index) in myGroupArr" key="index">
-        <div
-          class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14"
-        >
+        <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
           <p>{{ group.name }}</p>
           <button
-            :id="index"
-            v-if="grouptarget.includes(index)"
+            :id="index" v-if="grouptarget.includes(index)"
             @click="unshowGroupDetails(index)"
-            class="flex justify-end pr-5"
-          >
-            <img src="../icons/arrow-down.svg" />
+            class="flex justify-end pr-5">
+            
+          <ArrowDown></ArrowDown>
           </button>
           <button
             :id="index"
@@ -129,21 +139,26 @@ const unshowGroupDetails = (index) => {
             @click="showGroupDetails(index)"
             class="flex justify-end pr-5"
           >
-            <img src="../icons/arrow-up.svg" />
+          <ArrowUp></ArrowUp>
           </button>
         </div>
-        <div
-          class="w-3/5 py-2 m-auto border border-black rounded-md pl-14"
-          v-if="grouptarget.includes(index)"
-        >
-          <p class="text-xl py-2">Member Lists</p>
-          <div :id="index">
+        <div class="w-3/5 py-2 m-auto border border-black rounded-md" v-if="grouptarget.includes(index)">
+          <p class="text-xl py-2 pl-14">Member Lists</p>
+          <div :id="index" class="pl-14">
             <span
               v-for="member in group.members"
               key="index"
               class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
-              >{{ member.name }}</span
-            >
+              >{{ member.name }}
+            </span>
+          </div>
+          <div class="text-center text-xl grid grid-cols-2">
+          <span class="">จำนวนคน: {{ group.members.length }}</span>
+          <span class="">ราคาทั้งหมด: {{ totalPrice }}</span>
+          </div>
+          <div class="text-right text-xl ">
+            <button :id = "index" class="mr-4 border border-b-black border-x-white border-t-white">edit</button>
+            <button :id = "index" @click = "deleteGroup(index)" class="mr-5 border border-b-black border-x-white border-t-white">delete</button>
           </div>
         </div>
       </div>
@@ -166,7 +181,7 @@ const unshowGroupDetails = (index) => {
       <div class="container absolute w-3/5 px-2 pt-2 bg-white rounded-lg h-96">
         <div class="flex justify-end pb-4">
           <button @click="showInsertGroupPopUp">
-            <img src="../icons/close.svg" />
+            <Close></Close>
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
@@ -176,13 +191,12 @@ const unshowGroupDetails = (index) => {
             type="text"
             placeholder="Add your group name"
           />
-          <img src="../icons/pen.svg" class="inline mx-3" />
+          <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ errorGroupName }}</span>
         </div>
         <div class="mt-4 ml-20 text-xl">
           <p>Member lists</p>
         </div>
-        <div></div>
         <div>
           <div class="ml-24">
             <span

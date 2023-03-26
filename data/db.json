@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "6mfNZ",
+      "key": "9TJjc",
       "groups": [
         {
           "name": "fetch",
@@ -135,7 +135,7 @@
             },
             {
               "name": "ว้าย",
-              "price": 0
+              "price": 200
             }
           ],
           "meals": []
@@ -145,6 +145,39 @@
           "members": [
             {
               "name": "กแผ",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "Eve",
+          "members": [
+            {
+              "name": "eve",
+              "price": 0
+            },
+            {
+              "name": "mo",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "Name",
+          "members": [],
+          "meals": []
+        },
+        {
+          "name": "อีฟรักเนม",
+          "members": [
+            {
+              "name": "อีฟ",
+              "price": 0
+            },
+            {
+              "name": "เนม",
               "price": 0
             }
           ],
