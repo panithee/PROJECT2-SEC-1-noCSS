@@ -2,6 +2,7 @@
 import Navbar from './components/Navbar.vue'
 import { onMounted, ref, watch } from 'vue'
 import { getUserGroups, findKey, updateGroups } from './composable/loginFunctions.js';
+import {AvgPerPerson} from './components/AvgPerPerson.vue'
 const username = ref('');
 const userData = ref();
 
@@ -67,10 +68,12 @@ const updated = (data) => {
 
 <template>
   <Navbar @getUsername=setUsername @clearData=clearUserData />
-  <router-view :userData="userData" @updateData=updated></router-view>
+  <!-- <router-view :userData="userData" @updateData=updated></router-view> -->
   <!-- <div class="w-screen h-screen overflow-hidden bg-slate-500">
 
                           </div> -->
+<AvgPerPerson />
+
 </template>
 
 
