@@ -4,61 +4,10 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "9TJjc",
+      "key": "HCzlq",
       "groups": [
         {
-          "name": "fetch",
-          "members": [
-            {
-              "id": 1,
-              "name": "mo",
-              "price": 100
-            },
-            {
-              "id": 2,
-              "name": "eve",
-              "price": 200
-            }
-          ],
-          "meals": [
-            {
-              "id": 1,
-              "name": "breakfast",
-              "foods": [
-                {
-                  "id": 1,
-                  "name": "rice",
-                  "price": 100,
-                  "consumers": [
-                    {
-                      "id": 1,
-                      "percentage": 100
-                    }
-                  ],
-                  "split_mode": "equal"
-                },
-                {
-                  "id": 2,
-                  "name": "noodle",
-                  "price": 200,
-                  "consumers": [
-                    {
-                      "id": 1,
-                      "percentage": 50
-                    },
-                    {
-                      "id": 2,
-                      "percentage": 50
-                    }
-                  ],
-                  "split_mode": "percentage"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "name": "test2",
+          "name": "momo2",
           "members": [
             {
               "id": 1,
@@ -186,32 +135,53 @@
       ]
     },
     {
-      "username": "mo",
-      "password": "1",
+      "username": "a",
+      "password": "a",
       "groups": [],
-      "key": "",
+      "key": "OQ3FG",
       "id": 2
     },
     {
-      "username": "mo2",
-      "password": "1",
+      "username": "a1",
+      "password": "a",
       "groups": [],
       "key": "",
       "id": 3
     },
     {
-      "username": "mo3",
-      "password": "1",
+      "username": "mo2",
+      "password": "123",
       "groups": [],
-      "key": "zZQyo",
+      "key": "",
       "id": 4
     },
     {
-      "username": "mark",
-      "password": "23",
+      "username": "a2",
+      "password": "a",
       "groups": [],
-      "key": "I8kpx",
+      "key": "",
       "id": 5
+    },
+    {
+      "username": "admin2",
+      "password": "1",
+      "groups": [],
+      "key": "",
+      "id": 6
+    },
+    {
+      "username": "22",
+      "password": "222",
+      "groups": [],
+      "key": "",
+      "id": 7
+    },
+    {
+      "username": "aa",
+      "password": "aa",
+      "groups": [],
+      "key": "",
+      "id": 8
     }
   ]
 }
