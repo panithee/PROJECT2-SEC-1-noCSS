@@ -91,7 +91,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
   {{ personsWhoEat }}
   <div class="w-full h-full">
     <button class="flex ml-10 text-3xl">Back</button>
-    <button class="flex justify-center pt-5 text-4xl">{{ food?.name }}</button>
+    <input type="text" placeholder="Add your food name" v-model="foodName"  class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
     <p class="flex justify-center mt-5 text-lg text-gray-600">Average by</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
