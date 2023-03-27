@@ -152,29 +152,21 @@ const unshowGroupDetails = (index) => {
 };
 
 // delete group
-const deleteGroupAndMembers = (index, groupOrMember) => {
-  console.log(index);
+const deleteGroupAndMembers = (text, groupOrMember) => {
+  console.log(text);
   if (groupOrMember === "group") {
-    myGroupArr.value.splice(index, 1);
+    myGroupArr.value.splice(text, 1);
   } else if (groupOrMember === "member") {
-    // for (const iterator of myGroupArr.value) {
-
-    //
-    // }
-    for (let i = 0; i < myGroupArr.value.length; i++) {
-      let test = myGroupArr.value[i];
-      for (let j = 0; j < test.members.length; j++) {
-        if (i === index) {
-          console.log(test.members[j]);
-          // successEditMembers.value = myGroupArr.value[i].members.splice(index, 1);
-          // console.log(successEditMembers.value);
+    const arr = myGroupArr.value
+    for (const i of arr) {
+      for (const j of i.members) {
+        if (j === text) {
+          let thisGroup = arr.indexOf(i)
+          let thisMember = arr[thisGroup].members.indexOf(j)
+          successEditMembers.value.push(arr[thisGroup].members.splice(thisMember , 1))
+          console.log(arr[thisGroup].members[thisMember]);
         }
       }
-      // console.log(myGroupArr.value);
-      // console.log(myGroupArr.value[i].members);
-    }
-
-    for (const iterator of object) {
       
     }
   }
@@ -295,7 +287,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
             >
               <button>
                 <Delete
-                  @click="deleteGroupAndMembers(index, 'member')"
+                  @click="deleteGroupAndMembers(member, 'member')"
                 ></Delete>
               </button>
               <span
