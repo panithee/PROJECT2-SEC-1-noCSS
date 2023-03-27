@@ -5,15 +5,13 @@ import ArrowUp from "./icons/arrowUp.vue";
 import Close from "./icons/close.vue";
 import Pen from "./icons/pen.vue";
 import Delete from "./icons/Delete.vue";
-const myGroupArr = ref([]);
+const allGroupArr = ref([]);
 const memberList = ref([]);
-const checkInputMember = ref(false);
 const textErrMember = ref("");
 const textError = ref("");
 //Edit
-const successEditMembers = ref([]);
 const showEditMembers = ref(false);
-const memberToShow = ref([]);
+const membersInGroupTarget = ref([]);
 const modeTarget = ref("");
 const targetGroup = ref("");
 
@@ -28,12 +26,12 @@ watch(
   () => props.userData,
   (newVal, oldVal) => {
     // console.log("watch: ", newVal);
-    myGroupArr.value = newVal;
+    allGroupArr.value = newVal;
   }
 );
 onBeforeMount(() => {
-  myGroupArr.value = props.userData;
-  // console.log("onBeforeMount: ", myGroupArr.value);
+  allGroupArr.value = props.userData;
+  // console.log("onBeforeMount: ", allGroupArr.value);
 });
 
 // show pop-up
@@ -49,49 +47,6 @@ const showInsertGroupPopUp = () => {
 const inputGroupName = ref("");
 const inputMembers = ref("");
 
-const DoneAddEditGroup = () => {
-  let groupNameExists = "";
-  if (modeTarget.value === "add") {
-    for (const group of myGroupArr.value) {
-      if (group.name === inputGroupName.value) {
-        groupNameExists = group.name;
-      }
-    }
-    if (inputGroupName.value === "") {
-      textError.value = "Please add a group name";
-    } else if (inputGroupName.value === groupNameExists) {
-      textError.value = "Group name already exists";
-    } else if (
-      inputGroupName.value !== "" &&
-      inputGroupName.value !== groupNameExists
-    ) {
-      myGroupArr.value.push({
-        name: inputGroupName.value,
-        members: memberList.value,
-        meals: [],
-      });
-      // emit("updateData", myGroupArr.value);
-      showInsertGroupPopUp();
-      inputGroupName.value = "";
-      memberList.value = [];
-      // console.log(myGroupArr.value);
-    }
-  }
-  if (modeTarget.value === "edit") {
-    showEditMembers.value = true;
-    let currentGroup = "";
-    for (let i = 0; i < myGroupArr.value.length; i++) {
-      if (i === index) {
-        currentGroup = myGroupArr.value[i];
-      }
-    }
-    inputGroupName.value = currentGroup.name;
-    memberToShow.value = currentGroup.members;
-    myGroupArr.value[index].name = inputGroupName.value;
-    // myGroupArr.value[index].members = successEditMembers.value;
-    showInsertGroupPopUp();
-  }
-};
 
 // add value
 
@@ -106,17 +61,53 @@ const eventAddEdit = (index, mode) => {
   if (mode === "edit") {
     modeTarget.value = "edit";
     showEditMembers.value = true;
-    for (let i = 0; i < myGroupArr.value.length; i++) {
+    for (let i = 0; i < allGroupArr.value.length; i++) {
       if (i === index) {
-        targetGroup.value = myGroupArr.value[i];
+        targetGroup.value = allGroupArr.value[i];
         console.log(targetGroup.value);
         inputGroupName.value = targetGroup.value.name;
-        memberToShow.value = targetGroup.value.members;
-        myGroupArr.value[index].name = inputGroupName.value;
+        membersInGroupTarget.value = targetGroup.value.members;
       }
     }
   }
   showInsertGroupPopUp();
+};
+
+const DoneAddEditGroup = () => {
+  let groupNameExists = "";
+  if (modeTarget.value === "add") {
+    for (const group of allGroupArr.value) {
+      if (group.name === inputGroupName.value) {
+        groupNameExists = group.name;
+      }
+    }
+    if (inputGroupName.value === "") {
+      textError.value = "Please add a group name";
+    } else if (inputGroupName.value === groupNameExists) {
+      textError.value = "Group name already exists";
+    } else if (
+      inputGroupName.value !== "" &&
+      inputGroupName.value !== groupNameExists
+    ) {
+      allGroupArr.value.push({
+        name: inputGroupName.value,
+        members: memberList.value,
+        meals: [],
+      });
+      // emit("updateData", allGroupArr.value);
+      showInsertGroupPopUp();
+      inputGroupName.value = "";
+      memberList.value = [];
+      // console.log(allGroupArr.value);
+    }
+  }
+  if (modeTarget.value === "edit") {
+    showEditMembers.value = true;
+    let currentGroup = targetGroup.value;
+    currentGroup.name =  inputGroupName.value;
+    currentGroup.members = membersInGroupTarget.value.concat(memberList.value);
+    showInsertGroupPopUp();
+  }
 };
 
 // addMember
@@ -126,7 +117,13 @@ const addMember = () => {
     if (member.name === inputMembers.value) {
       memberExists = member.name;
       textErrMember.value = "Member already exits";
-      checkInputMember.value = true;
+    }
+  }
+
+  for (const member of membersInGroupTarget.value) {
+    if (member.name === inputMembers.value) {
+      memberExists = member.name;
+      textErrMember.value = "Member already exits";
     }
   }
 
@@ -139,8 +136,8 @@ const addMember = () => {
       name: inputMembers.value,
       price: 0,
     });
-  }
-  inputMembers.value = "";
+}
+inputMembers.value = "";
 };
 
 const totalPrice = ref(0);
@@ -156,9 +153,9 @@ const unshowGroupDetails = (index) => {
 // delete group
 const deleteGroupAndMembers = (index, groupOrMember) => {
   if (groupOrMember === "group") {
-    myGroupArr.value.splice(index, 1);
+    allGroupArr.value.splice(index, 1);
   } else if (groupOrMember === "member") {
-    memberToShow.value.splice(index, 1);
+    membersInGroupTarget.value.splice(index, 1);
   }
 };
 </script>
@@ -169,11 +166,11 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
       <h1>รายชื่อกลุ่ม</h1>
     </div>
     <div>
-      <div v-for="(group, index) in myGroupArr" key="index">
+      <div v-for="(group, index) in allGroupArr" key="index">
         <div
           class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14"
         >
-          <p>{{ group.name }}</p>
+          <p> {{ group.name }} </p>
           <button
             :id="index"
             v-if="grouptarget.includes(index)"
@@ -271,7 +268,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
               <br v-show="showEditMembers" />
             </span>
             <div
-              v-for="(member, index) in memberToShow"
+              v-for="(member, index) in membersInGroupTarget"
               v-show="showEditMembers"
               key="index"
             >
@@ -297,8 +294,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
             @click="addMember"
             class="px-2 text-xl text-black border border-black rounded-full"
           >
-            add</button
-          ><br />
+            add</button><br />
           <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
         <div class="flex justify-center mt-10">
