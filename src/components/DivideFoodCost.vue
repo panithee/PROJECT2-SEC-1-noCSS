@@ -26,7 +26,7 @@ const personsList = ref([])
 const calculatePriceByPercent = () => {
   if (personsWhoEat.value?.length === undefined) return;
   personsWhoEat.value.map((person) => {
-    person.price = parseFloat((food.value.price * Number(person.percentage)) / 100).toFixed(2)
+    person.price = parseFloat((foodPrice * Number(person.percentage)) / 100).toFixed(2)
     return person;
   })
 }
@@ -57,12 +57,12 @@ const togglePersonWhoEat = (event) => {
 
 
 const avgPricePerPerson = computed(() => {
-  const avg = Math.ceil(300 / personsWhoEat.value.length) * 100 / 100
+  const avg = Math.ceil(foodPrice.value / personsWhoEat.value.length) * 100 / 100
   personsWhoEat.value = personsWhoEat.value.map((a) => {
     a.price = avg;
     return a
   })
-  return Math.ceil(300 / personsWhoEat.value.length) * 100 / 100
+  return Math.ceil(foodPrice.value / personsWhoEat.value.length) * 100 / 100
 });
 
 
@@ -149,7 +149,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
           <tr class="border-b border-gray-300" v-for="(person, index) in personsWhoEat" :key="index">
             <td class="text-xl text-left">{{ person.name }}</td>
             <td class="text-center">
-              <input type="number" placeholder="'0-100'" @input="inputPercent($event, index)" min="100" max="0"
+              <input type="number" placeholder="'0-100'" @input="inputPercent($event, index)" min="0" max="100"
                 class="w-20 text-center bg-gray-200" v-model="person.percentage" />
             </td>
             <td class="text-xl text-end">{{ person.price }}</td>
