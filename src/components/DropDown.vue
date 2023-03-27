@@ -1,40 +1,29 @@
 <script setup>
-const dropDownDetail = {
-    nameDropDown :'',
-    type:'type',
-    category :[]
+import { defineProps } from "vue";
+defineProps({
+  nameDropDown: String,
+  defaultOption: String,
+  selectedFn:String,
+  dataOption:Array
+});
+const selectedFnType = {
+  group:"selectedGroup",
+  meal:"selectedMeal",
+  member:"selectedMember",
 }
 
 </script>
- 
-<template>
-      <div class="grid">
-        <span>{{nameDropDown}}</span>
-        <div class="dropdown">
-          <label tabindex="0" class="btn space-x-2"
-            ><span>{{type}}</span>
-            <div>
-              <img
-                class="h-4 w-4"
-                src="./components/icons/DropDownArrow.svg"
-                alt=""
-              /></div
-          ></label>
-          <ul
-            tabindex="0"
-            class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-32"
-            v-for="(meals, index) in dropDownDetail.category"
-            :key="index"
-            
-          >
-            <li v-for="(meal, index) in meals.meals" :key="index">
-              <a>{{ meal.name }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-</template>
- 
-<style scoped>
 
-</style>
+<template>
+  <div>
+    <div class="text-md">{{nameDropDown}}</div>
+    <select class="text-lg h-12 w-32 border" v-model=selectedFn>
+      <option value="">{{ defaultOption }}</option>
+      <option v-for="(group, index) in dataOption" :key="index">
+        {{ group.name }}
+      </option>
+    </select>
+  </div>
+</template>
+
+<style scoped></style>
