@@ -91,7 +91,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
   {{ personsWhoEat }}
   <div class="w-full h-full">
     <button class="flex ml-10 text-3xl">Back</button>
-    <p class="flex justify-center pt-5 text-4xl">{{ food?.name }}</p>
+    <button class="flex justify-center pt-5 text-4xl">{{ food?.name }}</button>
     <p class="flex justify-center mt-5 text-lg text-gray-600">Average by</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
@@ -151,16 +151,15 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
       </table>
     </div>
 
-    <div class="grid items-center w-3/5 grid-cols-3 mx-auto mt-10 gap-x-6">
-      <p class="col-span-1 text-2xl">Done</p>
-      <div class="col-span-1">
+    <div class="flex items-center justify-between w-3/5 mx-auto mt-10">
+      <div class="flex flex-col justify-between">
         <p v-if="!page" class="flex flex-col">
           เปอร์เซ็นต์ทั้งหมด : {{ calculateTotalPercent() }}%
         </p>
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
-      <input v-model="foodPrice" placeholder="add your food price" class="border border-gray-500 text-right rounded-lg text-3xl">
-      <p class="col-span-3 mt-3 text-2xl justify-self-center">Delete</p>
+      <button class="flex justify-center text-2xl">Done</button>
+      <input v-model="foodPrice" type="number" placeholder="add your food price" class="border border-gray-500 text-right rounded-lg text-3xl">
     </div>
   </div>
 </template>
