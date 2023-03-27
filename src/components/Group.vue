@@ -15,6 +15,7 @@ const successEditMembers = ref([]);
 const showEditMembers = ref(false);
 const memberToShow = ref([]);
 const modeTarget = ref("");
+const targetGroup = ref("");
 
 const props = defineProps({
   userData: {
@@ -78,14 +79,14 @@ const DoneAddEditGroup = () => {
   }
   if (modeTarget.value === "edit") {
     showEditMembers.value = true;
-    let targetGroup = "";
+    let currentGroup = "";
     for (let i = 0; i < myGroupArr.value.length; i++) {
       if (i === index) {
-        targetGroup = myGroupArr.value[i];
+        currentGroup = myGroupArr.value[i];
       }
     }
-    inputGroupName.value = targetGroup.name;
-    memberToShow.value = targetGroup.members;
+    inputGroupName.value = currentGroup.name;
+    memberToShow.value = currentGroup.members;
     myGroupArr.value[index].name = inputGroupName.value;
     // myGroupArr.value[index].members = successEditMembers.value;
     showInsertGroupPopUp();
@@ -107,9 +108,10 @@ const eventAddEdit = (index, mode) => {
     showEditMembers.value = true;
     for (let i = 0; i < myGroupArr.value.length; i++) {
       if (i === index) {
-        let targetGroup = myGroupArr.value[i];
-        inputGroupName.value = targetGroup.name;
-        memberToShow.value = targetGroup.members;
+        targetGroup.value = myGroupArr.value[i];
+        console.log(targetGroup.value);
+        inputGroupName.value = targetGroup.value.name;
+        memberToShow.value = targetGroup.value.members;
         myGroupArr.value[index].name = inputGroupName.value;
       }
     }
@@ -152,23 +154,11 @@ const unshowGroupDetails = (index) => {
 };
 
 // delete group
-const deleteGroupAndMembers = (text, groupOrMember) => {
-  console.log(text);
+const deleteGroupAndMembers = (index, groupOrMember) => {
   if (groupOrMember === "group") {
-    myGroupArr.value.splice(text, 1);
+    myGroupArr.value.splice(index, 1);
   } else if (groupOrMember === "member") {
-    const arr = myGroupArr.value
-    for (const i of arr) {
-      for (const j of i.members) {
-        if (j === text) {
-          let thisGroup = arr.indexOf(i)
-          let thisMember = arr[thisGroup].members.indexOf(j)
-          successEditMembers.value.push(arr[thisGroup].members.splice(thisMember , 1))
-          console.log(arr[thisGroup].members[thisMember]);
-        }
-      }
-      
-    }
+    memberToShow.value.splice(index, 1);
   }
 };
 </script>
@@ -287,7 +277,7 @@ const deleteGroupAndMembers = (text, groupOrMember) => {
             >
               <button>
                 <Delete
-                  @click="deleteGroupAndMembers(member, 'member')"
+                  @click="deleteGroupAndMembers(index, 'member')"
                 ></Delete>
               </button>
               <span
