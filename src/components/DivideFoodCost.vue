@@ -11,6 +11,8 @@ const props = defineProps({
   }
 })
 
+defineEmits('sendAllData')
+let foodName = ""
 const page = ref(true);
 const switchMenu = (type) => {
   page.value = type === "equal";
@@ -158,7 +160,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
         </p>
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
-      <button class="flex justify-center text-2xl">Done</button>
+      <button @click="$emit('sendAllData',foodName, foodPrice, personsWhoEat)" class="flex justify-center text-2xl">Done</button>
       <input v-model="foodPrice" type="number" placeholder="add your food price" class="border border-gray-500 text-right rounded-lg text-3xl">
     </div>
   </div>
