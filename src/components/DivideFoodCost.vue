@@ -159,7 +159,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
         </p>
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
-      <p class="col-span-1 text-3xl underline">ราคาอาหาร: {{ food?.price }}</p>
+      <input v-model="foodPrice" placeholder="add your food price" class="border border-gray-500 text-right rounded-lg text-3xl">
       <p class="col-span-3 mt-3 text-2xl justify-self-center">Delete</p>
     </div>
   </div>
