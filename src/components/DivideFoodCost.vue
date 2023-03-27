@@ -26,7 +26,7 @@ const personsList = ref([])
 const calculatePriceByPercent = () => {
   if (personsWhoEat.value?.length === undefined) return;
   personsWhoEat.value.map((person) => {
-    person.price = parseFloat((foodPrice * Number(person.percentage)) / 100).toFixed(2)
+    person.price = parseFloat((foodPrice.value * Number(person.percentage)) / 100).toFixed(2)
     return person;
   })
 }
@@ -77,7 +77,7 @@ const inputPercent = (event, index) => {
 const calculateTotalPercent = () => {
   if (personsWhoEat.value?.length === undefined) return 0;
   let totalPercent = personsWhoEat.value.reduce((totalPercent, currentPercent) => {
-    return totalPercent + currentPercent.percentage
+    return totalPercent + Number(currentPercent.percentage)
   }, 0)
   return totalPercent
 }
