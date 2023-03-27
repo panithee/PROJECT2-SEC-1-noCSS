@@ -57,7 +57,7 @@ const updated = (data) => {
 
 <template>
   <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
-  <router-view v-if="username !== ''" :userData="userData" :updated="updated"></router-view>
+  <router-view v-if="username !== ''" :userData="userData"></router-view>
   <div v-show="loginAlready"> ช่วย Login pls</div>
 </template>
 

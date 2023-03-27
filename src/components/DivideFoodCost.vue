@@ -7,20 +7,22 @@ const props = defineProps({
   },
   mode: {
     type: String,
-    default: "edit"
+    default: "add"
   }
 })
 
 defineEmits('sendAllData')
-let foodName = ""
 const page = ref(true);
 const switchMenu = (type) => {
   page.value = type === "equal";
   if (!page.value) calculatePriceByPercent();
 };
 let food = ref({});
-const personsWhoEat = ref()
-const personsList = ref()
+const foodName= ref("");
+const foodPrice = ref()
+
+const personsWhoEat = ref([])
+const personsList = ref([])
 const calculatePriceByPercent = () => {
   if (personsWhoEat.value?.length === undefined) return;
   personsWhoEat.value.map((person) => {
@@ -29,11 +31,14 @@ const calculatePriceByPercent = () => {
   })
 }
 watchEffect(() => {
+  if(props.mode === 'edit'){
   food.value = props?.userData[0]?.meals[0].foods[1] || {};
   personsWhoEat.value = props?.userData[0]?.meals[0].foods[1]?.consumers || [];
   page.value = props?.userData[0]?.meals[0].foods[1]?.splitMode === "equal";
-  personsList.value = props?.userData[0]?.members || [];
-});
+  
+}
+personsList.value = props?.userData[0]?.members || [];}
+);
 const togglePersonWhoEat = (event) => {
   const index = event.target.id;
   if (!checkPersonEating(personsList.value[index].id)) {
