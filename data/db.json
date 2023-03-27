@@ -5,9 +5,11 @@
       "username": "admin",
       "password": "1",
       "key": "07L2q",
+     
       "groups": [
         {
           "name": "fetchs",
+          
           "members": [
             {
               "id": 1,
@@ -20,6 +22,7 @@
               "price": 200
             }
           ],
+          
           "meals": [
             {
               "id": 1,
