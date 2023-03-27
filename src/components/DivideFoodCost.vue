@@ -1,50 +1,55 @@
 <script setup>
-import { ref, computed, onBeforeUpdate, watchEffect } from "vue"
+import { ref, computed, watchEffect } from "vue"
 const props = defineProps({
   userData: {
     type: Array,
     default: []
+  },
+  mode: {
+    type: String,
+    default: "edit"
   }
 })
 
 const page = ref(true);
 const switchMenu = (type) => {
-  if (type === "equal") {
-    page.value = true
-  } else if (type === "percentage") {
-    console.log(personsList)
-    page.value = false
-    calculatePriceByPercent();
-  }
-}
+  page.value = type === "equal";
+  if (!page.value) calculatePriceByPercent();
+};
 let food = ref({});
 const personsWhoEat = ref()
 const personsList = ref()
-
+const calculatePriceByPercent = () => {
+  if (personsWhoEat.value?.length === undefined) return;
+  personsWhoEat.value.map((person) => {
+    person.price = parseFloat((food.value.price * Number(person.percentage)) / 100).toFixed(2)
+    return person;
+  })
+}
 watchEffect(() => {
-  food.value = props?.userData[0].meals[0]
-  // personsWhoEat.value = food.value?.personsWhoEat
-  // personsList.value = props?.userData[0].persons
-  // console.log("watchEffect", food.value)
-})
-
+  food.value = props?.userData[0]?.meals[0].foods[1] || {};
+  personsWhoEat.value = props?.userData[0]?.meals[0].foods[1]?.consumers || [];
+  page.value = props?.userData[0]?.meals[0].foods[1]?.splitMode === "equal";
+  personsList.value = props?.userData[0]?.members || [];
+});
 const togglePersonWhoEat = (event) => {
   const index = event.target.id;
   if (!checkPersonEating(personsList.value[index].id)) {
-    console.log("donthave.value")
-    personsWhoEat.value.push(personsList.value[index])
-    console.log(personsWhoEat.value)
+    personsWhoEat.value.push({
+      "id": personsList.value[index].id,
+      "name": personsList.value[index].name,
+      "percentage": 0,
+      "price": 0
+    })
+    personsWhoEat.value.sort((a, b) => a.id - b.id)
   }
   else {
-    console.log("have.value")
-    personsWhoEat.value = personsWhoEat.value.filter((person) => person !== personsList.value[index])
-    console.log(personsWhoEat.value)
+    personsWhoEat.value = personsWhoEat.value.filter((person) => person.id !== personsList.value[index].id)
   }
 }
 
 
 const avgPricePerPerson = computed(() => {
-  console.log("ji")
   const avg = Math.ceil(300 / personsWhoEat.value.length) * 100 / 100
   personsWhoEat.value = personsWhoEat.value.map((a) => {
     a.price = avg;
@@ -54,19 +59,13 @@ const avgPricePerPerson = computed(() => {
 });
 
 
-const calculatePriceByPercent = () => {
 
-  console.log("pers");
-  personsWhoEat.value.map((person) => {
-    person.price = parseFloat((food.price * person.percentage) / 100).toFixed(2)
-    return person;
-  })
-}
 const inputPercent = (event, index) => {
-  const percentage = event.target.value
-  personsWhoEat.value[index].percentage = Number(percentage);
+  const percentage = event.target.value;
+  personsWhoEat.value[index].percentage = percentage > 100 || percentage < 0 ? 0 : percentage;
   calculatePriceByPercent();
-}
+};
+
 
 const calculateTotalPercent = () => {
   if (personsWhoEat.value?.length === undefined) return 0;
@@ -84,34 +83,21 @@ const checkPercent = () => {
     return `เกินมา : ${totalPercent - 100}%`
   }
 }
-const showPercentplaceholder = (index) => {
-  const percentage = personsWhoEat.value[index].percentage;
-  if (percentage > 0 && percentage <= 100) {
-    return percentage;
-  }
-  return '0-100'
-}
-const checkPersonEating = (id) => {
-  if (personsWhoEat.value?.length > 0) {
-    console.log("Its Work", id);
-    return personsWhoEat.value?.filter(person => person.id == id).length > 0;
-  }
+const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.id === id);
 
-}
 </script>
 
 <template>
-  {{ userData[0]?.meals[0].foods[1] }}
-  <br />
+  {{ personsWhoEat }}
   <div class="w-full h-full">
     <button class="flex ml-10 text-3xl">Back</button>
     <p class="flex justify-center pt-5 text-4xl">{{ food?.name }}</p>
     <p class="flex justify-center mt-5 text-lg text-gray-600">Average by</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
-        :class="page === true ? 'opacity-100' : 'opacity-10'" />
+        :class="page === true ? 'opacity-100' : 'opacity-10'" alt="" />
       <img src="../assets/MdiPercentCircleOutline.svg" class="cursor-pointer" @click="switchMenu('percentage')"
-        :class="page === false ? 'opacity-100' : 'opacity-10'" />
+        :class="page === false ? 'opacity-100' : 'opacity-10'" alt="" />
     </div>
 
     <p class="flex justify-center mt-5 text-lg text-gray-600">Member</p>
@@ -148,7 +134,7 @@ const checkPersonEating = (id) => {
         <thead>
           <tr>
             <th class="text-left">คนจ่าย</th>
-            <img src="../assets/MaterialSymbolsPercentSharp.svg" class="mx-auto" />
+            <img src="../assets/MaterialSymbolsPercentSharp.svg" class="mx-auto" alt="" />
             <th class="text-end">ราคา</th>
           </tr>
         </thead>
@@ -156,8 +142,8 @@ const checkPersonEating = (id) => {
           <tr class="border-b border-gray-300" v-for="(person, index) in personsWhoEat" :key="index">
             <td class="text-xl text-left">{{ person.name }}</td>
             <td class="text-center">
-              <input type="number" :placeholder="showPercentplaceholder(index)" @input="inputPercent($event, index)"
-                min="100" max="0" class="w-20 text-center bg-gray-200" />
+              <input type="number" placeholder="'0-100'" @input="inputPercent($event, index)" min="100" max="0"
+                class="w-20 text-center bg-gray-200" v-model="person.percentage" />
             </td>
             <td class="text-xl text-end">{{ person.price }}</td>
           </tr>

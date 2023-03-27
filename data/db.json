@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "trqXg",
+      "key": "MsicW",
       "groups": [
         {
           "name": "momo2",
@@ -33,7 +33,8 @@
                     {
                       "id": 1,
                       "name": "food",
-                      "percentage": 100
+                      "percentage": 100,
+                      "price": 100
                     }
                   ],
                   "splitMode": "equal"
@@ -46,12 +47,14 @@
                     {
                       "id": 1,
                       "name": "a",
-                      "percentage": 50
+                      "percentage": 50,
+                      "price": 100
                     },
                     {
                       "id": 2,
                       "name": "b",
-                      "percentage": 50
+                      "percentage": 50,
+                      "price": 100
                     }
                   ],
                   "splitMode": "percentage"
