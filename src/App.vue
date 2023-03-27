@@ -1,79 +1,68 @@
 <script setup>
+import { onMounted, ref } from 'vue'
 import Navbar from './components/Navbar.vue'
-import { onMounted, ref, watch } from 'vue'
-import { getUserGroups, findKey, updateGroups } from './composable/loginFunctions.js';
-import  AvgPerPerson  from './components/AvgPerPerson.vue'
-const username = ref('');
-const userData = ref();
+import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
 
-const setUsername = (name) => {
-  console.log('setUsername: ' + name);
-  username.value = name;
-  fetchUserData();
-};
+const username = ref('')
+const userData = ref([])
+const loginAlready = ref(true)
+
 const fetchUserData = async () => {
-  console.log('fetchUserData: ' + username.value);
-  if (!username.value) {
-    console.log('Username is empty');
-    userData.value = [];
-  } else {
-    const result = await getUserGroups(username.value);
-    console.log('Result: ', result);
-    userData.value = result;
+  userData.value = await getUserGroups(username.value)
+}
+
+const checkLogin = async () => {
+  const storedUsername = sessionStorage.getItem('username')
+  if (!storedUsername) {
+    userData.value = []
+    loginAlready.value = true
+    return
   }
-};
-const clearUserData = () => {
-  userData.value = [];
-};
-onMounted(async () => {
-  username.value = sessionStorage.getItem('username');
-  if (!username.value) {
-    console.log('Username is empty');
-    userData.value = [];
-  } else {
-    const userKey = await findKey(username.value);
-    const key = sessionStorage.getItem('key');
+  try {
+    const userKey = await findKey(storedUsername)
+    const key = sessionStorage.getItem('key')
     if (userKey !== key) {
-      console.log('Key is not a match');
-      console.log('userKey: ' + userKey);
-      console.log('key: ' + key);
-      sessionStorage.clear();
-      username.value = '';
-      userData.value = [];
+      sessionStorage.clear()
+      username.value = ''
+      userData.value = []
     } else {
-      username.value = sessionStorage.getItem('username');
-      userData.value = await getUserGroups(username.value);
-      sessionStorage.setItem('data', JSON.stringify(userData.value));
-      userData.value[1].name = 'test';
-      userData.value[1].name = 'test2';
+      loginAlready.value = false
+      username.value = storedUsername
+      await fetchUserData()
     }
+  } catch (error) {
+    console.error(error)
   }
-});
-watch(() => userData.value, (newVal, oldVal) => {
-  console.log('watch: ' + newVal);
-  sessionStorage.setItem('data', JSON.stringify(newVal));
-  if (sessionStorage.getItem('username') !== null) {
+}
 
-    updateGroups(username.value, newVal);
-  }
-});
+const setUsername = async (name) => {
+  username.value = name
+  loginAlready.value = false
+  await fetchUserData()
+}
 
-// watch
+const clearUserData = () => {
+  loginAlready.value = true
+  userData.value = []
+  username.value = ''
+  sessionStorage.clear()
+}
 
 const updated = (data) => {
-  console.log('updatedate: ' + data);
-  userData.value = data;
-};
+  updateGroups(username.value, data)
+}
+onMounted(() => {
+  console.log('mounted', username.value)
+})
+
+checkLogin()
 </script>
 
+
 <template>
-  <Navbar @getUsername=setUsername @clearData=clearUserData />
-  <!-- <router-view :userData="userData" @updateData=updated></router-view> -->
-  <!-- <div class="w-screen h-screen overflow-hidden bg-slate-500">
-
-                          </div> -->
-<AvgPerPerson />
-
+  <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
+  <router-view v-if="username !== ''" :userData="userData"></router-view>
+  <div v-show="loginAlready"> ช่วย Login pls</div>
 </template>
 
 
