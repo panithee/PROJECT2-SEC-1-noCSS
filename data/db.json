@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "oRDrd",
+      "key": "Bw5cU",
       "groups": [
         {
           "name": "momo2",
@@ -171,6 +171,10 @@
             },
             {
               "name": "ผอิด",
+              "price": 0
+            },
+            {
+              "name": "kaomairak",
               "price": 0
             }
           ],
@@ -465,6 +469,26 @@
             },
             {
               "name": "s",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "jhkjhh",
+          "members": [
+            {
+              "name": "jjj jjj kkk",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "oket",
+          "members": [
+            {
+              "name": "เขาไม่รัก",
               "price": 0
             }
           ],
