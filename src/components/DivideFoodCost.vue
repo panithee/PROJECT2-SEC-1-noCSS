@@ -8,6 +8,12 @@ const props = defineProps({
   mode: {
     type: String,
     default: "add"
+  },
+  members : {
+    type: Array
+  },
+  food : {
+    type : Object
   }
 })
 
@@ -100,7 +106,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
 <template>
   {{ personsWhoEat }}
   <div class="w-full h-full">
-    <button class="flex ml-10 text-3xl">Back</button>
+    <router-link to="/" class="flex ml-10 text-3xl">Back</router-link>
     <input type="text" placeholder="Add your food name" v-model="foodName" class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
     <p class="flex justify-center mt-5 text-lg text-gray-600">Average by</p>
     <div class="flex justify-center">
