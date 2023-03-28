@@ -158,6 +158,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
   } else if (groupOrMember === "newAddMember") {
     memberList.value.splice(index, 1);
   }
+  emit("updated", allGroupArr.value)
 };
 </script>
 
@@ -180,7 +181,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
         </div>
         <div class="w-3/5 py-2 m-auto border border-black rounded-md" v-if="showDetailsOfGroup.includes(index)">
           <p class="py-2 text-xl pl-14">Member Lists</p>
-          <div :id="index" class="pl-14">
+          <div :id="index" class="pl-14 overflow-x-scroll">
             <span v-for="member in group.members" key="index"
               class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
               {{ member.name }}
@@ -213,7 +214,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
     <div v-show="popup" class="fixed inset-0 z-50 flex items-center justify-center">
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
       <div class="container absolute w-3/5 px-2 pt-2 bg-white rounded-lg h-96">
-        <div class="flex justify-end pb-4">
+        <div class="flex justify-end">
           <button @click="showInsertGroupPopUp">
             <Close></Close>
           </button>
@@ -226,7 +227,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
         <div class="mt-4 ml-20 text-xl">
           <p>Member lists</p>
         </div>
-        <div>
+        <div class="overflow-y-scroll h-24 w-full">
           <div class="ml-24">
             <div v-for="(member, index) in membersInGroupTarget" key="index" v-show="showEditMembers">
               <button @click="deleteGroupAndMembers(index, 'member')">
@@ -245,7 +246,9 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
               </span><br v-show="showEditMembers" />
             </span>
           </div>
-          <input v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" type="text"
+        </div>
+        <div>
+        <input v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" type="text"
             placeholder="+ Add a member" />
           <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
             add
@@ -253,7 +256,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
           <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
         <div class="flex justify-center">
-          <button @click="DoneAddEditGroup" class="px-6 py-5 text-white bg-black rounded-full ">
+          <button @click="DoneAddEditGroup" class="px-5 py-3 text-white bg-black rounded-full ">
             Done
           </button>
         </div>

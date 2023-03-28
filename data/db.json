@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "57x4j",
+      "key": "oRDrd",
       "groups": [
         {
           "name": "momo2",
@@ -88,6 +88,90 @@
             {
               "name": "ว้าย",
               "price": 200
+            },
+            {
+              "name": "น้ำ",
+              "price": 0
+            },
+            {
+              "name": "อิอิ",
+              "price": 0
+            },
+            {
+              "name": "แเเดกเหพะ",
+              "price": 0
+            },
+            {
+              "name": "เด",
+              "price": 0
+            },
+            {
+              "name": "หด",
+              "price": 0
+            },
+            {
+              "name": "เำพ",
+              "price": 0
+            },
+            {
+              "name": "ไพพ",
+              "price": 0
+            },
+            {
+              "name": "ฟดพำ",
+              "price": 0
+            },
+            {
+              "name": "เะเำ",
+              "price": 0
+            },
+            {
+              "name": "เะพ้",
+              "price": 0
+            },
+            {
+              "name": "-ำกหฟก",
+              "price": 0
+            },
+            {
+              "name": "เกเดก",
+              "price": 0
+            },
+            {
+              "name": "ะถัดเฟำฟ",
+              "price": 0
+            },
+            {
+              "name": "้เดดเด",
+              "price": 0
+            },
+            {
+              "name": "กพั",
+              "price": 0
+            },
+            {
+              "name": "้้ัปเด",
+              "price": 0
+            },
+            {
+              "name": "ืิอิ",
+              "price": 0
+            },
+            {
+              "name": "อแแืื",
+              "price": 0
+            },
+            {
+              "name": "ืเ้ะั้ดเเ",
+              "price": 0
+            },
+            {
+              "name": "ืทมใ",
+              "price": 0
+            },
+            {
+              "name": "ผอิด",
+              "price": 0
             }
           ],
           "meals": []
@@ -118,7 +202,16 @@
         },
         {
           "name": "Name",
-          "members": [],
+          "members": [
+            {
+              "name": "eve",
+              "price": 0
+            },
+            {
+              "name": "Nt",
+              "price": 0
+            }
+          ],
           "meals": []
         },
         {
@@ -136,8 +229,245 @@
           "meals": []
         },
         {
-          "name": "a3",
-          "members": [],
+          "name": "eve",
+          "members": [
+            {
+              "name": "bd",
+              "price": 0
+            },
+            {
+              "name": "sb",
+              "price": 0
+            },
+            {
+              "name": "้ดเ",
+              "price": 0
+            },
+            {
+              "name": "เด้พะ้",
+              "price": 0
+            },
+            {
+              "name": "ฟหกด",
+              "price": 0
+            },
+            {
+              "name": "้ดเ้",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "ดอกห",
+          "members": [
+            {
+              "name": "อกอ",
+              "price": 0
+            },
+            {
+              "name": "กฟอก",
+              "price": 0
+            },
+            {
+              "name": "พเดก",
+              "price": 0
+            },
+            {
+              "name": "อกห",
+              "price": 0
+            },
+            {
+              "name": "อกหดอ",
+              "price": 0
+            },
+            {
+              "name": "เกดหหอ",
+              "price": 0
+            },
+            {
+              "name": "พำเฟำ",
+              "price": 0
+            },
+            {
+              "name": "เดกอก",
+              "price": 0
+            },
+            {
+              "name": "ดกฟำพเด",
+              "price": 0
+            },
+            {
+              "name": "ดกอผ",
+              "price": 0
+            },
+            {
+              "name": "ๆำพหฟ",
+              "price": 0
+            },
+            {
+              "name": "ผอผอดก",
+              "price": 0
+            },
+            {
+              "name": "กดออดอพำ",
+              "price": 0
+            },
+            {
+              "name": "ิอปแอำด",
+              "price": 0
+            },
+            {
+              "name": "อกหอหก",
+              "price": 0
+            },
+            {
+              "name": "อกหอหพ",
+              "price": 0
+            },
+            {
+              "name": "อกหอกด",
+              "price": 0
+            },
+            {
+              "name": "ผอปแอำด",
+              "price": 0
+            },
+            {
+              "name": "ดกอำพเอแป",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "s",
+          "members": [
+            {
+              "name": " zxzx",
+              "price": 0
+            },
+            {
+              "name": "xzx",
+              "price": 0
+            },
+            {
+              "name": "xz",
+              "price": 0
+            },
+            {
+              "name": "ds",
+              "price": 0
+            },
+            {
+              "name": "czx",
+              "price": 0
+            },
+            {
+              "name": "r",
+              "price": 0
+            },
+            {
+              "name": "t",
+              "price": 0
+            },
+            {
+              "name": "y",
+              "price": 0
+            },
+            {
+              "name": "u",
+              "price": 0
+            },
+            {
+              "name": "i",
+              "price": 0
+            },
+            {
+              "name": "o",
+              "price": 0
+            },
+            {
+              "name": "op",
+              "price": 0
+            },
+            {
+              "name": "[;l",
+              "price": 0
+            },
+            {
+              "name": "as",
+              "price": 0
+            },
+            {
+              "name": "xsa",
+              "price": 0
+            },
+            {
+              "name": "sa",
+              "price": 0
+            },
+            {
+              "name": "asx",
+              "price": 0
+            },
+            {
+              "name": "xas",
+              "price": 0
+            },
+            {
+              "name": "sax",
+              "price": 0
+            },
+            {
+              "name": "sxas",
+              "price": 0
+            },
+            {
+              "name": "vdvcx",
+              "price": 0
+            },
+            {
+              "name": "cxz d",
+              "price": 0
+            },
+            {
+              "name": "fdavcdf",
+              "price": 0
+            },
+            {
+              "name": "cxzcw",
+              "price": 0
+            },
+            {
+              "name": "d",
+              "price": 0
+            },
+            {
+              "name": "csa",
+              "price": 0
+            },
+            {
+              "name": "qw",
+              "price": 0
+            },
+            {
+              "name": "az",
+              "price": 0
+            },
+            {
+              "name": "c",
+              "price": 0
+            },
+            {
+              "name": "x",
+              "price": 0
+            },
+            {
+              "name": "s",
+              "price": 0
+            }
+          ],
           "meals": []
         }
       ]
