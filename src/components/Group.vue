@@ -26,6 +26,12 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['updated'])
+watch(() => allGroupArr.value,
+  (newVal, oldVal) => {    
+    emit("updated", allGroupArr.value)
+  })
+
 watch(
   () => props.userData,
   (newVal, oldVal) => {
@@ -276,10 +282,10 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
           </button><br />
           <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
-        <div class="flex justify-center mt-10">
+        <div class="flex justify-center">
           <button
             @click="DoneAddEditGroup"
-            class="fixed px-6 py-5 text-white bg-black rounded-full">
+            class=" px-6 py-5 text-white bg-black rounded-full">
             Done
           </button>
         </div>
