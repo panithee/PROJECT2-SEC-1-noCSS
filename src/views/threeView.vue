@@ -10,7 +10,7 @@ defineProps({
 <template>
   <div class="threeView">
     <h1>threeView</h1>
-    <DivideFoodCost :userData="userData" :mode="'edit'"></DivideFoodCost>
+    <DivideFoodCost :userData="userData" :mode="'add'"></DivideFoodCost>
   </div>
 </template>
 
