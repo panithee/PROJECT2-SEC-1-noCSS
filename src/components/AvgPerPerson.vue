@@ -1,7 +1,6 @@
 <script setup>
-// import DropDown from './components/DropDown.vue'
 import { ref, computed, watch } from "vue";
-import DropDown from "./DropDown.vue";
+// import DropDown from "./DropDown.vue";
 const props = defineProps({
   userData: {
     type: Array,
@@ -159,19 +158,21 @@ const props = defineProps({
 //   },
 // ]);
 const groupsOption = computed(() => {
-  return props.userData
-}
-)
+  return props.userData;
+});
 const mealsOption = computed(() => {
   if (selectedGroup === "") {
     return [];
   }
-  return groupsOption.value.filter((groups) => groups.name === selectedGroup.value)[0]?.meals
-}
-)
+  return groupsOption.value.filter(
+    (groups) => groups.name === selectedGroup.value
+  )[0]?.meals;
+});
 const membersOption = computed(() => {
-  return groupsOption.value.filter((groups) => groups.name === selectedGroup.value)[0]?.members
-})
+  return groupsOption.value.filter(
+    (groups) => groups.name === selectedGroup.value
+  )[0]?.members;
+});
 const selectedGroup = ref("");
 const selectedMember = ref("");
 const selectedMeal = ref("");
@@ -212,7 +213,9 @@ const memberListByMeal = computed(() => {
           return {
             ...meal,
             foods: meal.foods.filter((food) =>
-              food.consumers.some((consumer) => consumer.name === selectedMember.value)
+              food.consumers.some(
+                (consumer) => consumer.name === selectedMember.value
+              )
             ),
           };
         }),
@@ -222,37 +225,53 @@ const memberListByMeal = computed(() => {
   return filteredGroups;
 });
 
+const foodInMeal = ref([]);
+// const findFoodinMeal = (memberListByMeal) => {
+//   for (meal in memberListByMeal) {
+//     for (foods in meal ){
+//       for (food in foods){
+//         for (f in food.foods){
+//           foodInMeal.value.push(f.name)
+//         }
+//       }
+//     }
+//   }
+// }
+const findFoodMeal = () => {
+  memberListByMeal.value.forEach((meal) => {
+    meal.foods.forEach((food) => {
+      foodInMeal.value.push(food.name);
+    });
+  });
+};
+findFoodMeal();
+console.log(foodInMeal);
 
+console.log(memberListByMeal.value);
 
-
+const avgFood = computed(() => { });
 
 // const demo = groupList.value.find(g => g.name === "test2").members
 // demo.forEach(m => console.log(m.name))
-
-
-
-
-
 </script>
 
 <template>
-  <br>
-  <br>
-  g{{ selectedGroup }}
-  <br>
-  m{{ selectedMeal }}
-  <br>
-  mb{{ selectedMember }}
-
-  <button class="absolute text-2xl top-20 left-14 text-slate-500 hover:text-black">
+  <button class="absolute text-xl top-18 left-14 text-slate-500 hover:text-black">
     Back
   </button>
-  <div class="absolute text-3xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
+  <div class="absolute text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
 
   <div class="pl-64 mt-20 w-fit">
     <div class="grid grid-cols-3 gap-4">
-
-      <div>Selected: {{ selectedGroup }}</div>
+      <!-- <DropDown
+                :name-drop-down="'test'"
+                :default-option="'all'"
+                :selected-fn="selectedGroup"
+                :data-option="groupsOption"
+                @select="(select) => (selectedGroup = select)"
+              ></DropDown
+              > -->
+      <!-- <div>Selected: {{ selectedGroup }}</div> -->
       <div>
         <div class="text-md">Group</div>
         <select class="w-32 h-12 text-lg border" v-model="selectedGroup">
@@ -262,7 +281,6 @@ const memberListByMeal = computed(() => {
           </option>
         </select>
       </div>
-
 
       <div>
         <div class="text-md">Meal</div>
@@ -282,62 +300,36 @@ const memberListByMeal = computed(() => {
           </option>
         </select>
       </div>
-
-      {{ memberListByMeal }}
-
-      <!-- <div class="grid">
-                                                                                                                                                                  <span>Meal</span>
-                                                                                                                                                                  <div class="dropdown">
-                                                                                                                                                                    <label tabindex="0" class="space-x-2 btn"
-                                                                                                                                                                      ><span>Param</span>
-                                                                                                                                                                      <div>
-                                                                                                                                                                        <img
-                                                                                                                                                                          class="w-4 h-4"
-                                                                                                                                                                          src="./components/icons/DropDownArrow.svg"
-                                                                                                                                                                          alt=""
-                                                                                                                                                                        /></div
-                                                                                                                                                                    ></label>
-                                                                                                                                                                    <ul
-                                                                                                                                                                      tabindex="0"
-                                                                                                                                                                      class="w-32 p-2 shadow dropdown-content menu bg-base-100 rounded-box"
-                                                                                                                                                                      v-for="(meals, index) in groupList"
-                                                                                                                                                                      :key="index"
-                                                                                                                                                                    >
-                                                                                                                                                                      <li v-for="(meal, index) in meals.meals" :key="index">
-                                                                                                                                                                        <a>{{ meal.name }}</a>
-                                                                                                                                                                      </li>
-                                                                                                                                                                    </ul>
-                                                                                                                                                                  </div>
-                                                                                                                                                                </div> -->
-
-      <!-- <div class="grid">
-                                                                                                                                                                  <span>Member</span>
-                                                                                                                                                                  <div class="dropdown">
-                                                                                                                                                                    <label tabindex="0" class="space-x-2 btn btn-outline no-animation"
-                                                                                                                                                                      ><span>Param</span>
-                                                                                                                                                                      <div>
-                                                                                                                                                                        <img
-                                                                                                                                                                          class="w-4 h-4"
-                                                                                                                                                                          src="./components/icons/DropDownArrow.svg"
-                                                                                                                                                                          alt=""
-                                                                                                                                                                        />
-                                                                                                                                                                      </div>
-                                                                                                                                                                    </label>
-                                                                                                                                                                    <ul
-                                                                                                                                                                      tabindex="0"
-                                                                                                                                                                      class="w-32 p-2 shadow dropdown-content menu bg-base-100 rounded-box"
-                                                                                                                                                                      v-for="(persons, index) in groupList"
-                                                                                                                                                                      :key="index"
-                                                                                                                                                                    >
-                                                                                                                                                                      <li v-for="(person, index) in persons.members" :key="index">
-                                                                                                                                                                        <a>{{ person.name }}</a>
-                                                                                                                                                                      </li>
-                                                                                                                                                                    </ul>
-                                                                                                                                                                  </div>
-                                                                                                                                                                </div> -->
+      <!-- {{ memberListByMeal }} -->
     </div>
   </div>
 
-  <div></div>
+  <div class="w-full flex justify-center">
+    <div class="w-4/5 mt-7 py-3 flex border justify-center">
+      <div class="w-4/5 flex flex-col px-9 py-6 gap-2 justify-start border">
+        <div class="text-lg" v-if="selectedMember !== null">{{ selectedMember }}</div>
+        <!-- <div class="text-lg" v-else v-for="">{{ selectedMember }}</div> -->
+
+        <div class="flex-col gap-2 justify-center" v-for="meal in memberListByMeal">
+          <!-- <div v-for="mealName in food.meals">{{ mealName }}</div> -->
+          <div v-for="foods in meal">
+            <!-- <div v-for="mealName in foods.meals">{{ mealName }}</div> -->
+            <div v-for="food in foods">
+              <!-- <div v-for="mealName in food.meals">{{ mealName }}</div> -->
+              <!-- <div>{{ food }}</div> -->
+              <div class="px-3 flex justify-between items-center" v-for="f in food.foods">
+                <span>{{ f.name }}</span>
+                <span>Price</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="text-lg">Total</div>
+
+      </div>
+    </div>
+  </div>
 </template>
 <style scoped></style>
