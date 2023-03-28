@@ -1,7 +1,8 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
+import {onBeforeMount, onMounted, ref} from 'vue'
 import Navbar from './components/Navbar.vue'
-import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
+import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
+import Loading from './components/icons/loading.vue'
 
 const username = ref('')
 const userData = ref([])
@@ -65,6 +66,13 @@ checkLogin()
   <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
   <router-view v-if="username !== ''" :userData="userData"></router-view>
   <div v-show="loginAlready"> ช่วย Login pls</div>
+  <div
+      class="relative items-center block max-w-sm p-6 bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-800 dark:hover:bg-gray-700">
+    <div class="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2" role="status">
+      <Loading></Loading>
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 </template>
 
 
