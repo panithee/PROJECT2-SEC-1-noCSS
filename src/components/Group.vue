@@ -138,6 +138,7 @@ const addMember = () => {
     });
 }
 inputMembers.value = "";
+console.log(memberList.value);
 };
 
 const totalPrice = ref(0);
@@ -156,6 +157,9 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
     allGroupArr.value.splice(index, 1);
   } else if (groupOrMember === "member") {
     membersInGroupTarget.value.splice(index, 1);
+  } else if (groupOrMember === "newAddMember") {
+    console.log(index);
+    memberList.value.splice(index, 1);
   }
 };
 </script>
@@ -260,29 +264,24 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
         </div>
         <div>
           <div class="ml-24">
-            <span
-              v-for="member in memberList"
-              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
-            >
-              {{ member.name }}
-              <br v-show="showEditMembers" />
-            </span>
-            <div
-              v-for="(member, index) in membersInGroupTarget"
-              v-show="showEditMembers"
-              key="index"
-            >
-              <button>
-                <Delete
-                  @click="deleteGroupAndMembers(index, 'member')"
-                ></Delete>
+            <div v-for="(member, index) in membersInGroupTarget" key="index" v-show="showEditMembers">
+              <button @click="deleteGroupAndMembers(index, 'member')">
+                <Delete></Delete>
               </button>
               <span
                 class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
               >
-                {{ member.name }} <br />
+                {{ member.name }} <br/>
               </span>
             </div>
+            <span v-for="(member,index) in memberList" key="index">
+              <button :id="index" @click="deleteGroupAndMembers(index, 'newAddMember')" v-show="showEditMembers">
+                <Delete></Delete>
+              </button>
+               <span  class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
+              {{ member.name }} 
+               </span><br v-show = "showEditMembers"/>  
+            </span>
           </div>
           <input
             v-model="inputMembers"
