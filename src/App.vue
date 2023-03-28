@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import Navbar from './components/Navbar.vue'
 import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
 
@@ -51,8 +51,10 @@ const clearUserData = () => {
 const updated = (data) => {
   updateGroups(username.value, data)
 }
-onMounted(() => {
-  console.log('mounted', username.value)
+onBeforeMount(async () => {
+  console.log('before mount', userData.value)
+  await checkLogin();
+  console.log('mounted', userData.value)
 })
 
 checkLogin()
