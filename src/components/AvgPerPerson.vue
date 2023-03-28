@@ -276,6 +276,19 @@ const mealsEat = (consumersName = [], meals = []) => {
   return mealEat;
 };
 
+const mealsCal = (consumersName = [], meals = []) => {
+  const mealCal = meals.reduce((acc, meal) => {
+    meal.foods.forEach((food) => {
+      food.consumers.forEach((consumer) => {
+        if (consumersName.includes(consumer.name)) {
+          acc += consumer.price;
+        }
+      });
+    });
+  }, 0);
+
+  return mealCal;
+};
 
 // Example usage:
 
@@ -293,13 +306,13 @@ const mealsEat = (consumersName = [], meals = []) => {
   <div class="pl-64 mt-20 w-fit">
     <div class="grid grid-cols-3 gap-4">
       <!-- <DropDown
-                                                                                                                                                                          :name-drop-down="'test'"
-                                                                                                                                                                          :default-option="'all'"
-                                                                                                                                                                          :selected-fn="selectedGroup"
-                                                                                                                                                                          :data-option="groupsOption"
-                                                                                                                                                                          @select="(select) => (selectedGroup = select)"
-                                                                                                                                                                        ></DropDown
-                                                                                                                                                                        > -->
+                                                                                                                                                                                        :name-drop-down="'test'"
+                                                                                                                                                                                        :default-option="'all'"
+                                                                                                                                                                                        :selected-fn="selectedGroup"
+                                                                                                                                                                                        :data-option="groupsOption"
+                                                                                                                                                                                        @select="(select) => (selectedGroup = select)"
+                                                                                                                                                                                      ></DropDown
+                                                                                                                                                                                      > -->
       <!-- <div>Selected: {{ selectedGroup }}</div> -->
       <div>
         <div class="text-md">Group</div>
@@ -351,48 +364,48 @@ const mealsEat = (consumersName = [], meals = []) => {
   </div>
 
   <!-- <div class="flex justify-center w-full">
-                                                                                                                                                              <div class="flex justify-center w-4/5 gap-2 py-3 border mt-7" v-for="meal in memberListByMeal">
+                                                                                                                                                                            <div class="flex justify-center w-4/5 gap-2 py-3 border mt-7" v-for="meal in memberListByMeal">
       
-                                                                                                                                                                <div class="flex flex-col justify-start w-4/5 gap-2 py-6 border px-9" >
-                                                                                                                                                                  <div class="text-lg">{{ meal.members }}</div> -->
+                                                                                                                                                                              <div class="flex flex-col justify-start w-4/5 gap-2 py-6 border px-9" >
+                                                                                                                                                                                <div class="text-lg">{{ meal.members }}</div> -->
   <!-- <div class="text-lg" v-else v-for="">{{ selectedMember }}</div> -->
 
   <!-- <div class="flex-col justify-center gap-2" v-for="meal in memberListByMeal">
-                                                                                                                                                                    <div v-for="foods in meal">
-                                                                                                                                                                      <div v-for="food in foods">
-                                                                                                                                                                        <div class="flex items-center justify-between px-3" v-for="f in food.foods">
-                                                                                                                                                                          <span>{{ f.name }}</span>
-                                                                                                                                                                          <span>Price</span>
-                                                                                                                                                                        </div>
-                                                                                                                                                                      </div>
+                                                                                                                                                                                  <div v-for="foods in meal">
+                                                                                                                                                                                    <div v-for="food in foods">
+                                                                                                                                                                                      <div class="flex items-center justify-between px-3" v-for="f in food.foods">
+                                                                                                                                                                                        <span>{{ f.name }}</span>
+                                                                                                                                                                                        <span>Price</span>
+                                                                                                                                                                                      </div>
+                                                                                                                                                                                    </div>
 
-                                                                                                                                                                    </div>
-                                                                                                                                                                  </div> -->
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                </div> -->
 
   <!-- <div class="text-lg">Total</div>
 
-                                                                                                                                                                </div> -->
+                                                                                                                                                                              </div> -->
 
   <!-- <div class="flex flex-col justify-start w-4/5 gap-2 py-6 border px-9">
-                                                                                                                                                                  <div class="text-lg" v-if="selectedMember !== null">{{ selectedMember }}</div>
+                                                                                                                                                                                <div class="text-lg" v-if="selectedMember !== null">{{ selectedMember }}</div>
        
 
-                                                                                                                                                                  <div class="flex-col justify-center gap-2" v-for="meal in memberListByMeal">
-                                                                                                                                                                    <div v-for="foods in meal">
-                                                                                                                                                                      <div v-for="food in foods">
-                                                                                                                                                                        <div class="flex items-center justify-between px-3" v-for="f in food.foods">
-                                                                                                                                                                          <span>{{ f.name }}</span>
-                                                                                                                                                                          <span>Price</span>
-                                                                                                                                                                        </div>
-                                                                                                                                                                      </div>
+                                                                                                                                                                                <div class="flex-col justify-center gap-2" v-for="meal in memberListByMeal">
+                                                                                                                                                                                  <div v-for="foods in meal">
+                                                                                                                                                                                    <div v-for="food in foods">
+                                                                                                                                                                                      <div class="flex items-center justify-between px-3" v-for="f in food.foods">
+                                                                                                                                                                                        <span>{{ f.name }}</span>
+                                                                                                                                                                                        <span>Price</span>
+                                                                                                                                                                                      </div>
+                                                                                                                                                                                    </div>
 
-                                                                                                                                                                    </div>
-                                                                                                                                                                  </div>
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                </div>
 
-                                                                                                                                                                  <div class="text-lg">Total</div>
+                                                                                                                                                                                <div class="text-lg">Total</div>
 
-                                                                                                                                                                </div> -->
+                                                                                                                                                                              </div> -->
   <!-- </div>
-                                                                                                                                                            </div> -->
+                                                                                                                                                                          </div> -->
 </template>
 <style scoped></style>

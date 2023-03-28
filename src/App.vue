@@ -66,13 +66,10 @@ checkLogin()
   <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
   <router-view v-if="username !== ''" :userData="userData"></router-view>
   <div v-show="loginAlready"> ช่วย Login pls</div>
-  <div
-      class="relative items-center block max-w-sm p-6 bg-white border border-gray-100 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-800 dark:hover:bg-gray-700">
-    <div class="absolute -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2" role="status">
-      <Loading></Loading>
-      <span class="sr-only">Loading...</span>
-    </div>
+  <div class="absolute bg-gray-700 inset-0 flex justify-center items-center">
+    <div class="w-6 h-6 border-4 border-gray-300 rounded-full animate-spin"></div>
   </div>
+
 </template>
 
 
