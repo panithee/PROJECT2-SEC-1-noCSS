@@ -35,6 +35,9 @@ watchEffect(() => {
   food.value = props?.userData[0]?.meals[0].foods[1] || {};
   personsWhoEat.value = props?.userData[0]?.meals[0].foods[1]?.consumers || [];
   page.value = props?.userData[0]?.meals[0].foods[1]?.splitMode === "equal";
+  console.log(food.value);
+  foodName.value = food.value.name
+  foodPrice.value = food.value.price
   
 }
 personsList.value = props?.userData[0]?.members || [];}
