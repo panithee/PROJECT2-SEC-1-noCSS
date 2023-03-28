@@ -1,12 +1,13 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import Navbar from './components/Navbar.vue'
 import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
+import Loading from './components/icons/loading.vue'
 
 const username = ref('')
 const userData = ref([])
-const loginAlready = ref(true)
-
+const loginAlready = ref(false)
+const loading = ref(true);
 const fetchUserData = async () => {
   userData.value = await getUserGroups(username.value)
 }
@@ -15,8 +16,7 @@ const checkLogin = async () => {
   const storedUsername = sessionStorage.getItem('username')
   if (!storedUsername) {
     userData.value = []
-    loginAlready.value = true
-    return
+    loginAlready.value = false
   }
   try {
     const userKey = await findKey(storedUsername)
@@ -25,8 +25,9 @@ const checkLogin = async () => {
       sessionStorage.clear()
       username.value = ''
       userData.value = []
-    } else {
       loginAlready.value = false
+    } else {
+      loginAlready.value = true
       username.value = storedUsername
       await fetchUserData()
     }
@@ -37,12 +38,12 @@ const checkLogin = async () => {
 
 const setUsername = async (name) => {
   username.value = name
-  loginAlready.value = false
+  loginAlready.value = true
   await fetchUserData()
 }
 
 const clearUserData = () => {
-  loginAlready.value = true
+  loginAlready.value = false
   userData.value = []
   username.value = ''
   sessionStorage.clear()
@@ -51,19 +52,32 @@ const clearUserData = () => {
 const updated = (data) => {
   updateGroups(username.value, data)
 }
-onMounted(() => {
-  console.log('mounted', username.value)
+onBeforeMount(async () => {
+  await checkLogin();
+  loading.value = false;
 })
 
-checkLogin()
 </script>
 
 
 <template>
-  <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
-  <router-view v-if="username !== ''" :userData="userData"></router-view>
-  <div v-show="loginAlready"> ช่วย Login pls</div>
+  <div class="bg-gray-100">
+    <Navbar @clearData="clearUserData" @setUsername="setUsername"></Navbar>
+    <div class="container py-8 mx-auto">
+      <div v-show="!loginAlready" class="w-full h-full mb-8 text-3xl font-bold text-center">
+        กรุณาเข้าสู่ระบบ
+      </div>
+      <router-view v-if="username !== ''" :userData="userData" @updated="updated"></router-view>
+    </div>
+    <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <Loading />
+    </div>
+  </div>
 </template>
+
+
+
+
 
 
 

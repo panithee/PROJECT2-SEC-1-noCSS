@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "Ywd3G",
+      "key": "IyYoD",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -246,6 +246,13 @@
           ]
         }
       ]
+    },
+    {
+      "username": "admi",
+      "password": "1",
+      "groups": [],
+      "key": "QxgrE",
+      "id": 2
     }
   ]
 }
