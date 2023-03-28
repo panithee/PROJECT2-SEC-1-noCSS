@@ -1,13 +1,13 @@
 <script setup>
-import {onBeforeMount, onMounted, ref} from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import Navbar from './components/Navbar.vue'
-import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
+import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
 import Loading from './components/icons/loading.vue'
 
 const username = ref('')
 const userData = ref([])
-const loginAlready = ref(true)
-
+const loginAlready = ref(false)
+const loading = ref(true);
 const fetchUserData = async () => {
   userData.value = await getUserGroups(username.value)
 }
@@ -16,8 +16,7 @@ const checkLogin = async () => {
   const storedUsername = sessionStorage.getItem('username')
   if (!storedUsername) {
     userData.value = []
-    loginAlready.value = true
-    return
+    loginAlready.value = false
   }
   try {
     const userKey = await findKey(storedUsername)
@@ -26,8 +25,9 @@ const checkLogin = async () => {
       sessionStorage.clear()
       username.value = ''
       userData.value = []
-    } else {
       loginAlready.value = false
+    } else {
+      loginAlready.value = true
       username.value = storedUsername
       await fetchUserData()
     }
@@ -38,12 +38,12 @@ const checkLogin = async () => {
 
 const setUsername = async (name) => {
   username.value = name
-  loginAlready.value = false
+  loginAlready.value = true
   await fetchUserData()
 }
 
 const clearUserData = () => {
-  loginAlready.value = true
+  loginAlready.value = false
   userData.value = []
   username.value = ''
   sessionStorage.clear()
@@ -55,6 +55,7 @@ const updated = (data) => {
 onBeforeMount(async () => {
   console.log('before mount', userData.value)
   await checkLogin();
+  loading.value = false;
   console.log('mounted', userData.value)
 })
 
@@ -64,13 +65,20 @@ checkLogin()
 
 <template>
   <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
-  <router-view v-if="username !== ''" :userData="userData"></router-view>
-  <div v-show="loginAlready"> ช่วย Login pls</div>
-  <div class="absolute bg-gray-700 inset-0 flex justify-center items-center">
-    <div class="w-6 h-6 border-4 border-gray-300 rounded-full animate-spin"></div>
+  <div class="container mx-auto">
+    <router-view v-if="username !== ''" :userData="userData"></router-view>
+    <div v-show="!loginAlready" class="p-8 text-2xl text-center">
+      กรุณาเข้าสู่ระบบ
+    </div>
+    <div v-show="loading" class="absolute inset-0 flex items-center justify-center bg-gray-700">
+      <Loading />
+    </div>
   </div>
-
 </template>
+
+
+
+
 
 
 
