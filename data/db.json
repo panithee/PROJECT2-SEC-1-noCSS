@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "VnQjm",
+      "key": "57x4j",
       "groups": [
         {
           "name": "momo2",
@@ -133,6 +133,11 @@
               "price": 0
             }
           ],
+          "meals": []
+        },
+        {
+          "name": "a3",
+          "members": [],
           "meals": []
         }
       ]

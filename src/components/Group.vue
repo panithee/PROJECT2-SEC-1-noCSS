@@ -27,15 +27,10 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['updated'])
-watch(() => allGroupArr.value,
-  (newVal, oldVal) => {    
-    emit("updated", allGroupArr.value)
-  })
 
 watch(
   () => props.userData,
   (newVal, oldVal) => {
-    // console.log("watch: ", newVal);
     allGroupArr.value = newVal;
   }
 );
@@ -105,8 +100,8 @@ const addMember = () => {
       name: newMember.value,
       price: 0,
     });
-}
-newMember.value = "";
+  }
+  newMember.value = "";
 };
 
 //Done (add value to allGroupArr)
@@ -139,10 +134,11 @@ const DoneAddEditGroup = () => {
   if (modeTarget.value === "edit") {
     showEditMembers.value = true;
     let currentGroup = targetGroupForEdit.value;
-    currentGroup.name =  newGroupName.value;
+    currentGroup.name = newGroupName.value;
     currentGroup.members = membersInGroupTarget.value.concat(memberList.value);
     showInsertGroupPopUp();
   }
+  emit("updated", allGroupArr.value)
 };
 
 // show member toggle
@@ -174,29 +170,18 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
       <div v-for="(group, index) in allGroupArr" key="index">
         <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
           <p> {{ group.name }} </p>
-          <button
-            :id="index"
-            v-if="showDetailsOfGroup.includes(index)"
-            @click="unshowGroupDetails(index)"
+          <button :id="index" v-if="showDetailsOfGroup.includes(index)" @click="unshowGroupDetails(index)"
             class="flex justify-end pr-5">
             <ArrowDown></ArrowDown>
           </button>
-          <button
-            :id="index"
-            v-else
-            @click="showGroupDetails(index)"
-            class="flex justify-end pr-5">
+          <button :id="index" v-else @click="showGroupDetails(index)" class="flex justify-end pr-5">
             <ArrowUp></ArrowUp>
           </button>
         </div>
-        <div
-          class="w-3/5 py-2 m-auto border border-black rounded-md"
-          v-if="showDetailsOfGroup.includes(index)">
+        <div class="w-3/5 py-2 m-auto border border-black rounded-md" v-if="showDetailsOfGroup.includes(index)">
           <p class="py-2 text-xl pl-14">Member Lists</p>
           <div :id="index" class="pl-14">
-            <span
-              v-for="member in group.members"
-              key="index"
+            <span v-for="member in group.members" key="index"
               class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
               {{ member.name }}
             </span>
@@ -206,15 +191,11 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
             <span class="">ราคาทั้งหมด: {{ totalPrice }}</span>
           </div>
           <div class="text-xl text-right">
-            <button
-              :id="index"
-              @click="eventAddEdit(index, 'edit')"
+            <button :id="index" @click="eventAddEdit(index, 'edit')"
               class="mr-4 border border-b-black border-x-white border-t-white">
               edit
             </button>
-            <button
-              :id="index"
-              @click="deleteGroupAndMembers(index, 'group')"
+            <button :id="index" @click="deleteGroupAndMembers(index, 'group')"
               class="mr-5 border border-b-black border-x-white border-t-white">
               delete
             </button>
@@ -223,9 +204,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
       </div>
     </div>
     <div class="mt-5 text-center bg-white">
-      <button
-        @click="eventAddEdit(index, 'add')"
-        class="px-8 py-3 text-white bg-black rounded-full">
+      <button @click="eventAddEdit(index, 'add')" class="px-8 py-3 text-white bg-black rounded-full">
         เพิ่มกลุ่ม
       </button>
     </div>
@@ -240,11 +219,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input
-            v-model="newGroupName"
-            class="border border-b-black"
-            type="text"
-            placeholder="Add your group name"/>
+          <input v-model="newGroupName" class="border border-b-black" type="text" placeholder="Add your group name" />
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
@@ -258,34 +233,27 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
                 <Delete></Delete>
               </button>
               <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
-                {{ member.name }} <br/>
+                {{ member.name }} <br />
               </span>
             </div>
-            <span v-for="(member,index) in memberList" key="index">
+            <span v-for="(member, index) in memberList" key="index">
               <button :id="index" @click="deleteGroupAndMembers(index, 'newAddMember')" v-show="showEditMembers">
                 <Delete></Delete>
               </button>
-               <span  class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
-              {{ member.name }} 
-               </span><br v-show = "showEditMembers"/>  
+              <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
+                {{ member.name }}
+              </span><br v-show="showEditMembers" />
             </span>
           </div>
-          <input
-            v-model="newMember"
-            class="mt-4 ml-24 text-xl border border-b-black"
-            type="text"
-            placeholder="+ Add a member"/>
-          <button
-            @click="addMember"
-            class="px-2 text-xl text-black border border-black rounded-full">
+          <input v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" type="text"
+            placeholder="+ Add a member" />
+          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
             add
           </button><br />
           <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
         <div class="flex justify-center">
-          <button
-            @click="DoneAddEditGroup"
-            class=" px-6 py-5 text-white bg-black rounded-full">
+          <button @click="DoneAddEditGroup" class="px-6 py-5 text-white bg-black rounded-full ">
             Done
           </button>
         </div>
