@@ -237,19 +237,42 @@ const foodInMeal = ref([]);
 //     }
 //   }
 // }
-const findFoodMeal = () => {
-  memberListByMeal.value.forEach((meal) => {
-    meal.foods.forEach((food) => {
-      foodInMeal.value.push(food.name);
-    });
-  });
-};
-findFoodMeal();
-console.log(foodInMeal);
+// const findFoodMeal = () => {
+//   memberListByMeal.value.forEach((meal) => {
+//     meal.foods.forEach((food) => {
+//       foodInMeal.value.push(food.name);
+//     });
+//   });
+// };
+// findFoodMeal();
+// console.log(foodInMeal);
 
-console.log(memberListByMeal.value);
+// console.log(memberListByMeal.value);
 
-const avgFood = computed(() => { });
+// const foodListByMeal = (memberListByMeal) => { 
+//   for(const meal in memberListByMeal){
+//     console.log(`${meal}`);
+//     for(const food of memberListByMeal[meal]){
+//       console.log(`${food}`);
+//     }
+//   }
+// }
+// foodListByMeal;
+
+
+const foodListByMeal = (memberListByMeal) => { 
+  console.log(memberListByMeal);
+  // for(const meal in memberListByMeal){
+  //     console.log(meal)
+  //   for(const food of meal){
+  //     console.log(food);
+  //   }
+  // }
+}
+
+// Example usage:
+
+foodListByMeal(memberListByMeal.value);
 
 // const demo = groupList.value.find(g => g.name === "test2").members
 // demo.forEach(m => console.log(m.name))
@@ -264,13 +287,13 @@ const avgFood = computed(() => { });
   <div class="pl-64 mt-20 w-fit">
     <div class="grid grid-cols-3 gap-4">
       <!-- <DropDown
-                :name-drop-down="'test'"
-                :default-option="'all'"
-                :selected-fn="selectedGroup"
-                :data-option="groupsOption"
-                @select="(select) => (selectedGroup = select)"
-              ></DropDown
-              > -->
+                  :name-drop-down="'test'"
+                  :default-option="'all'"
+                  :selected-fn="selectedGroup"
+                  :data-option="groupsOption"
+                  @select="(select) => (selectedGroup = select)"
+                ></DropDown
+                > -->
       <!-- <div>Selected: {{ selectedGroup }}</div> -->
       <div>
         <div class="text-md">Group</div>
@@ -300,36 +323,68 @@ const avgFood = computed(() => { });
           </option>
         </select>
       </div>
-      <!-- {{ memberListByMeal }} -->
+      {{ memberListByMeal }}
     </div>
   </div>
 
-  <div class="w-full flex justify-center">
-    <div class="w-4/5 mt-7 py-3 flex border justify-center">
-      <div class="w-4/5 flex flex-col px-9 py-6 gap-2 justify-start border">
-        <div class="text-lg" v-if="selectedMember !== null">{{ selectedMember }}</div>
-        <!-- <div class="text-lg" v-else v-for="">{{ selectedMember }}</div> -->
 
-        <div class="flex-col gap-2 justify-center" v-for="meal in memberListByMeal">
-          <!-- <div v-for="mealName in food.meals">{{ mealName }}</div> -->
-          <div v-for="foods in meal">
-            <!-- <div v-for="mealName in foods.meals">{{ mealName }}</div> -->
-            <div v-for="food in foods">
-              <!-- <div v-for="mealName in food.meals">{{ mealName }}</div> -->
-              <!-- <div>{{ food }}</div> -->
-              <div class="px-3 flex justify-between items-center" v-for="f in food.foods">
-                <span>{{ f.name }}</span>
-                <span>Price</span>
-              </div>
-            </div>
-
-          </div>
+  <div>
+    <div v-for="foodMeal in memberListByMeal">
+      <div class="border">
+        <div class="border" v-for="members in foodMeal.meals">
+          <div v-for="member in members.foods">{{ member.consumers }} : {{ member.name }}</div>
+          <!-- <div class="" v-for="meals in members.meals"> -->
+            <!-- <div>{{ meals. }}</div> -->
+            <!-- <div>{{ meals.name }}</div> -->
+          <!-- </div> -->
         </div>
-
-        <div class="text-lg">Total</div>
-
       </div>
     </div>
   </div>
+
+  <!-- <div class="w-full flex justify-center">
+      <div class="w-4/5 mt-7 py-3 gap-2 flex border justify-center" v-for="meal in memberListByMeal">
+      
+        <div class="w-4/5 flex flex-col px-9 py-6 gap-2 justify-start border" >
+          <div class="text-lg">{{ meal.members }}</div> -->
+  <!-- <div class="text-lg" v-else v-for="">{{ selectedMember }}</div> -->
+
+  <!-- <div class="flex-col gap-2 justify-center" v-for="meal in memberListByMeal">
+            <div v-for="foods in meal">
+              <div v-for="food in foods">
+                <div class="px-3 flex justify-between items-center" v-for="f in food.foods">
+                  <span>{{ f.name }}</span>
+                  <span>Price</span>
+                </div>
+              </div>
+
+            </div>
+          </div> -->
+
+  <!-- <div class="text-lg">Total</div>
+
+        </div> -->
+
+  <!-- <div class="w-4/5 flex flex-col px-9 py-6 gap-2 justify-start border">
+          <div class="text-lg" v-if="selectedMember !== null">{{ selectedMember }}</div>
+       
+
+          <div class="flex-col gap-2 justify-center" v-for="meal in memberListByMeal">
+            <div v-for="foods in meal">
+              <div v-for="food in foods">
+                <div class="px-3 flex justify-between items-center" v-for="f in food.foods">
+                  <span>{{ f.name }}</span>
+                  <span>Price</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="text-lg">Total</div>
+
+        </div> -->
+  <!-- </div>
+    </div> -->
 </template>
 <style scoped></style>
