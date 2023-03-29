@@ -4,36 +4,43 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "Bw5cU",
+      "key": "meyHU",
       "groups": [
         {
-          "name": "momo2",
+          "name": "ยามเช้า",
           "members": [
             {
               "id": 1,
-              "name": "a",
-              "price": 100
+              "name": "กล้า"
             },
             {
               "id": 2,
-              "name": "b",
-              "price": 200
+              "name": "เอก"
+            },
+            {
+              "id": 3,
+              "name": "ปิง"
+            },
+            {
+              "id": 4,
+              "name": "ไอซ์"
             }
           ],
           "meals": [
             {
               "id": 1,
-              "name": "breakfast",
+              "name": "มื้อเช้า",
               "foods": [
                 {
                   "id": 1,
-                  "name": "rice",
+                  "name": "ข้าวใจเจียว",
                   "price": 100,
                   "consumers": [
                     {
                       "id": 1,
-                      "name": "food",
-                      "percentage": 100
+                      "name": "กล้า",
+                      "percentage": 100,
+                      "price": 100
                     }
                   ],
                   "splitMode": "equal"
@@ -45,13 +52,191 @@
                   "consumers": [
                     {
                       "id": 1,
-                      "name": "a",
-                      "percentage": 50
+                      "name": "กล้า",
+                      "percentage": 50,
+                      "price": 100
                     },
                     {
                       "id": 2,
-                      "name": "b",
-                      "percentage": 50
+                      "name": "เอก",
+                      "percentage": 50,
+                      "price": 100
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 3,
+                  "name": "toast",
+                  "price": 50,
+                  "consumers": [
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 50,
+                      "price": 25
+                    },
+                    {
+                      "id": 4,
+                      "name": "ไอซ์",
+                      "percentage": 50,
+                      "price": 25
+                    }
+                  ],
+                  "splitMode": "percentage"
+                }
+              ]
+            },
+            {
+              "id": 2,
+              "name": "มื้อกลางวัน",
+              "foods": [
+                {
+                  "id": 4,
+                  "name": "ข้าวหมูแดง",
+                  "price": 150,
+                  "consumers": [
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 33,
+                      "price": 50
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 33,
+                      "price": 50
+                    },
+                    {
+                      "id": 4,
+                      "name": "ไอซ์",
+                      "percentage": 33,
+                      "price": 50
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 5,
+                  "name": "ต้มยำกุ้ง",
+                  "price": 250,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 100,
+                      "price": 250
+                    }
+                  ],
+                  "splitMode": "percentage"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "name": "มื้อเย็น",
+              "foods": [
+                {
+                  "id": 4,
+                  "name": "ผัดไทย",
+                  "price": 150,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 60,
+                      "price": 90
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 20,
+                      "price": 30
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 20,
+                      "price": 30
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 5,
+                  "name": "ไข่เจียว",
+                  "price": 50,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 70,
+                      "price": 35
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 10,
+                      "price": 5
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 20,
+                      "price": 10
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 6,
+                  "name": "ส้มตำ",
+                  "price": 80,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 30,
+                      "price": 24
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 30,
+                      "price": 24
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 40,
+                      "price": 32
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 7,
+                  "name": "ขนมจีน",
+                  "price": 120,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 40,
+                      "price": 48
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 30,
+                      "price": 36
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 30,
+                      "price": 36
                     }
                   ],
                   "splitMode": "percentage"
@@ -59,491 +244,8 @@
               ]
             }
           ]
-        },
-        {
-          "name": "a",
-          "members": [
-            {
-              "name": "a",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "อีสัสมาร์คหัวควย",
-          "members": [
-            {
-              "name": "มาร์ค",
-              "price": 0
-            },
-            {
-              "name": "หิน",
-              "price": 0
-            },
-            {
-              "name": "เขาไม่รัก",
-              "price": 0
-            },
-            {
-              "name": "ว้าย",
-              "price": 200
-            },
-            {
-              "name": "น้ำ",
-              "price": 0
-            },
-            {
-              "name": "อิอิ",
-              "price": 0
-            },
-            {
-              "name": "แเเดกเหพะ",
-              "price": 0
-            },
-            {
-              "name": "เด",
-              "price": 0
-            },
-            {
-              "name": "หด",
-              "price": 0
-            },
-            {
-              "name": "เำพ",
-              "price": 0
-            },
-            {
-              "name": "ไพพ",
-              "price": 0
-            },
-            {
-              "name": "ฟดพำ",
-              "price": 0
-            },
-            {
-              "name": "เะเำ",
-              "price": 0
-            },
-            {
-              "name": "เะพ้",
-              "price": 0
-            },
-            {
-              "name": "-ำกหฟก",
-              "price": 0
-            },
-            {
-              "name": "เกเดก",
-              "price": 0
-            },
-            {
-              "name": "ะถัดเฟำฟ",
-              "price": 0
-            },
-            {
-              "name": "้เดดเด",
-              "price": 0
-            },
-            {
-              "name": "กพั",
-              "price": 0
-            },
-            {
-              "name": "้้ัปเด",
-              "price": 0
-            },
-            {
-              "name": "ืิอิ",
-              "price": 0
-            },
-            {
-              "name": "อแแืื",
-              "price": 0
-            },
-            {
-              "name": "ืเ้ะั้ดเเ",
-              "price": 0
-            },
-            {
-              "name": "ืทมใ",
-              "price": 0
-            },
-            {
-              "name": "ผอิด",
-              "price": 0
-            },
-            {
-              "name": "kaomairak",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "joijidsjci🤣",
-          "members": [
-            {
-              "name": "กแผ",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "Eve",
-          "members": [
-            {
-              "name": "eve",
-              "price": 0
-            },
-            {
-              "name": "mo",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "Name",
-          "members": [
-            {
-              "name": "eve",
-              "price": 0
-            },
-            {
-              "name": "Nt",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "อีฟรักเนม",
-          "members": [
-            {
-              "name": "อีฟ",
-              "price": 0
-            },
-            {
-              "name": "เนม",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "eve",
-          "members": [
-            {
-              "name": "bd",
-              "price": 0
-            },
-            {
-              "name": "sb",
-              "price": 0
-            },
-            {
-              "name": "้ดเ",
-              "price": 0
-            },
-            {
-              "name": "เด้พะ้",
-              "price": 0
-            },
-            {
-              "name": "ฟหกด",
-              "price": 0
-            },
-            {
-              "name": "้ดเ้",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "ดอกห",
-          "members": [
-            {
-              "name": "อกอ",
-              "price": 0
-            },
-            {
-              "name": "กฟอก",
-              "price": 0
-            },
-            {
-              "name": "พเดก",
-              "price": 0
-            },
-            {
-              "name": "อกห",
-              "price": 0
-            },
-            {
-              "name": "อกหดอ",
-              "price": 0
-            },
-            {
-              "name": "เกดหหอ",
-              "price": 0
-            },
-            {
-              "name": "พำเฟำ",
-              "price": 0
-            },
-            {
-              "name": "เดกอก",
-              "price": 0
-            },
-            {
-              "name": "ดกฟำพเด",
-              "price": 0
-            },
-            {
-              "name": "ดกอผ",
-              "price": 0
-            },
-            {
-              "name": "ๆำพหฟ",
-              "price": 0
-            },
-            {
-              "name": "ผอผอดก",
-              "price": 0
-            },
-            {
-              "name": "กดออดอพำ",
-              "price": 0
-            },
-            {
-              "name": "ิอปแอำด",
-              "price": 0
-            },
-            {
-              "name": "อกหอหก",
-              "price": 0
-            },
-            {
-              "name": "อกหอหพ",
-              "price": 0
-            },
-            {
-              "name": "อกหอกด",
-              "price": 0
-            },
-            {
-              "name": "ผอปแอำด",
-              "price": 0
-            },
-            {
-              "name": "ดกอำพเอแป",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "s",
-          "members": [
-            {
-              "name": " zxzx",
-              "price": 0
-            },
-            {
-              "name": "xzx",
-              "price": 0
-            },
-            {
-              "name": "xz",
-              "price": 0
-            },
-            {
-              "name": "ds",
-              "price": 0
-            },
-            {
-              "name": "czx",
-              "price": 0
-            },
-            {
-              "name": "r",
-              "price": 0
-            },
-            {
-              "name": "t",
-              "price": 0
-            },
-            {
-              "name": "y",
-              "price": 0
-            },
-            {
-              "name": "u",
-              "price": 0
-            },
-            {
-              "name": "i",
-              "price": 0
-            },
-            {
-              "name": "o",
-              "price": 0
-            },
-            {
-              "name": "op",
-              "price": 0
-            },
-            {
-              "name": "[;l",
-              "price": 0
-            },
-            {
-              "name": "as",
-              "price": 0
-            },
-            {
-              "name": "xsa",
-              "price": 0
-            },
-            {
-              "name": "sa",
-              "price": 0
-            },
-            {
-              "name": "asx",
-              "price": 0
-            },
-            {
-              "name": "xas",
-              "price": 0
-            },
-            {
-              "name": "sax",
-              "price": 0
-            },
-            {
-              "name": "sxas",
-              "price": 0
-            },
-            {
-              "name": "vdvcx",
-              "price": 0
-            },
-            {
-              "name": "cxz d",
-              "price": 0
-            },
-            {
-              "name": "fdavcdf",
-              "price": 0
-            },
-            {
-              "name": "cxzcw",
-              "price": 0
-            },
-            {
-              "name": "d",
-              "price": 0
-            },
-            {
-              "name": "csa",
-              "price": 0
-            },
-            {
-              "name": "qw",
-              "price": 0
-            },
-            {
-              "name": "az",
-              "price": 0
-            },
-            {
-              "name": "c",
-              "price": 0
-            },
-            {
-              "name": "x",
-              "price": 0
-            },
-            {
-              "name": "s",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "jhkjhh",
-          "members": [
-            {
-              "name": "jjj jjj kkk",
-              "price": 0
-            }
-          ],
-          "meals": []
-        },
-        {
-          "name": "oket",
-          "members": [
-            {
-              "name": "เขาไม่รัก",
-              "price": 0
-            }
-          ],
-          "meals": []
         }
       ]
-    },
-    {
-      "username": "a",
-      "password": "a",
-      "groups": [],
-      "key": "OQ3FG",
-      "id": 2
-    },
-    {
-      "username": "a1",
-      "password": "a",
-      "groups": [],
-      "key": "",
-      "id": 3
-    },
-    {
-      "username": "mo2",
-      "password": "123",
-      "groups": [],
-      "key": "",
-      "id": 4
-    },
-    {
-      "username": "a2",
-      "password": "a",
-      "groups": [],
-      "key": "",
-      "id": 5
-    },
-    {
-      "username": "admin2",
-      "password": "1",
-      "groups": [],
-      "key": "",
-      "id": 6
-    },
-    {
-      "username": "22",
-      "password": "222",
-      "groups": [],
-      "key": "",
-      "id": 7
-    },
-    {
-      "username": "aa",
-      "password": "aa",
-      "groups": [],
-      "key": "",
-      "id": 8
     }
   ]
 }
