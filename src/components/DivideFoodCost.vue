@@ -66,11 +66,14 @@ const togglePersonWhoEat = (event) => {
 
 
 const avgPricePerPerson = computed(() => {
-  const avg = Math.ceil(foodPrice.value / personsWhoEat.value.length) * 100 / 100
-  personsWhoEat.value = personsWhoEat.value.map((a) => {
+  if(isNaN(foodPrice.value)){
+    foodPrice.value = 0
+    const avg = Math.ceil(foodPrice.value / personsWhoEat.value.length) * 100 / 100
+    personsWhoEat.value = personsWhoEat.value.map((a) => {
     a.price = avg;
     return a
   })
+}
   return Math.ceil(foodPrice.value / personsWhoEat.value.length) * 100 / 100
 });
 
@@ -116,7 +119,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
         :class="page === false ? 'opacity-100' : 'opacity-10'" alt="" />
     </div>
 
-    <p class="flex justify-center mt-3 text-lg text-gray-600">จำนวนคนทั้งหมด</p>
+    <p class="flex justify-center mt-3 text-lg text-gray-600">รายชื่อคนทั้งหมดในกลุ่ม</p>
     <div class="flex justify-between w-64 mx-auto bg-white mt-2 overflow-x-scroll pb-2">
       <button class="px-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index"
         :id="index" @click="togglePersonWhoEat($event)" :class="
@@ -128,7 +131,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
       </button>
     </div>
 
-    <div class="flex w-3/5 p-4 mx-auto overflow-y-scroll h-96" v-if="page">
+    <div class="flex w-3/5 p-4 mx-auto overflow-y-scroll h-96 m-height m-table" v-if="page">
       <table class="w-full mx-auto mt-4">
         <thead>
           <tr>
@@ -145,7 +148,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
       </table>
     </div>
 
-    <div class="flex w-3/5 p-4 mx-auto overflow-y-scroll h-96" v-if="!page">
+    <div class="flex w-3/5 p-4 mx-auto overflow-y-scroll h-96 m-table" v-if="!page">
       <table class="w-full mx-auto mt-4">
         <thead>
           <tr>
@@ -167,18 +170,18 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
       </table>
     </div>
 
-    <div class="flex w-3/5 mx-auto mt-10 justify-end">
-      <div class="w-full flex flex-col justify-between ">
+    <div class="flex w-3/5 mx-auto mt-10 ">
+      <div class="w-full flex flex-col percenttext">
         <p v-if="!page" class="flex flex-col">
-          เปอร์เซ็นต์ทั้งหมด : {{ calculateTotalPercent() }}%
+          เปอร์เซ็นต์ : {{ calculateTotalPercent() }}%
         </p>
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
       
       <div class="flex w-full justify-end boxfoodprice">
         <p class="flex mr-3 items-center text-xl textfoodprice">ราคาอาหาร :</p>
-        <input v-model="foodPrice" type="number" placeholder="กรุณาใส่ราคาอาหาร" 
-        class="border border-gray-500 text-center rounded-lg text-xl justify-end">
+        <input v-model="foodPrice" type="number" :placeholder="isNaN(foodPrice)?'กรุณาใส่ราคาอาหาร':foodPrice"
+        class="border border-gray-500 text-center rounded-lg text-xl justify-end inputfoodprice">
       </div>
     </div>
    
@@ -188,15 +191,22 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
 </template>
 
 <style scoped>
-@media (max-width: 390px){
+@media (max-width: 640px){
 
   .backfont{
     font-size: medium;
     font-weight: bold;
     margin-left: 1em;
   }
+ 
+
+  .percenttext{
+    text-align: center;
+  }
+
   .boxfoodprice{
     flex-wrap: wrap;
+    
   }
   
   .textfoodprice{
@@ -204,6 +214,24 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
     flex: content;
     justify-content: center;
   }
+
+
+  .inputfoodprice{
+    text-align: center;
+    flex: content;
+    justify-content: end;
+    width: 9em;
+    font-size: small;
+  }
+
+  
+
+  .m-table{
+    width: 98%;
+    height: 20em;
+  }
 }
+
+
 
 </style>
