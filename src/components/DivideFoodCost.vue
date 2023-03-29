@@ -104,11 +104,11 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
 </script>
 
 <template>
-  {{ personsWhoEat }}
+  <!-- {{ personsWhoEat }} -->
   <div class="w-full h-full">
-    <router-link to="/" class="flex ml-10 text-3xl">Back</router-link>
-    <input type="text" placeholder="Add your food name" v-model="foodName" class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
-    <p class="flex justify-center mt-5 text-lg text-gray-600">Average by</p>
+    <router-link to="/" class="flex ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 w-fit backfont">กลับ</router-link>
+    <input type="text" placeholder="กรุณาใส่ชื่ออาหาร" v-model="foodName" class="flex justify-center mx-auto border rounded-lg text-center text-2xl hover:rounded-xl">
+    <p class="flex justify-center mt-5 text-lg text-gray-600">เลือกโหมดการหาร</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
         :class="page === true ? 'opacity-100' : 'opacity-10'" alt="" />
@@ -116,9 +116,9 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
         :class="page === false ? 'opacity-100' : 'opacity-10'" alt="" />
     </div>
 
-    <p class="flex justify-center mt-5 text-lg text-gray-600">Member</p>
-    <div class="flex justify-center w-1/2 mx-auto bg-white">
-      <button class="px-2 mx-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index"
+    <p class="flex justify-center mt-3 text-lg text-gray-600">จำนวนคนทั้งหมด</p>
+    <div class="flex justify-between w-64 mx-auto bg-white mt-2 overflow-x-scroll pb-2">
+      <button class="px-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index"
         :id="index" @click="togglePersonWhoEat($event)" :class="
           checkPersonEating(person.id)
             ? 'bg-white hover:bg-gray-200  border-black text-black'
@@ -167,17 +167,43 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
       </table>
     </div>
 
-    <div class="flex items-center justify-between w-3/5 mx-auto mt-10">
-      <div class="flex flex-col justify-between">
+    <div class="flex w-3/5 mx-auto mt-10 justify-end">
+      <div class="w-full flex flex-col justify-between ">
         <p v-if="!page" class="flex flex-col">
           เปอร์เซ็นต์ทั้งหมด : {{ calculateTotalPercent() }}%
         </p>
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
-      <button @click="$emit('sendAllData',foodName, foodPrice, personsWhoEat)" class="flex justify-center text-2xl">Done</button>
-      <input v-model="foodPrice" type="number" placeholder="add your food price" class="border border-gray-500 text-right rounded-lg text-3xl">
+      
+      <div class="flex w-full justify-end boxfoodprice">
+        <p class="flex mr-3 items-center text-xl textfoodprice">ราคาอาหาร :</p>
+        <input v-model="foodPrice" type="number" placeholder="กรุณาใส่ราคาอาหาร" 
+        class="border border-gray-500 text-center rounded-lg text-xl justify-end">
+      </div>
     </div>
+   
+    <button @click="$emit('sendAllData',foodName, foodPrice, personsWhoEat)" 
+    class="flex text-2xl mx-auto justify-center hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 mt-5">ยืนยันการทำรายการ</button>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 390px){
+
+  .backfont{
+    font-size: medium;
+    font-weight: bold;
+    margin-left: 1em;
+  }
+  .boxfoodprice{
+    flex-wrap: wrap;
+  }
+  
+  .textfoodprice{
+    text-align: center;
+    flex: content;
+    justify-content: center;
+  }
+}
+
+</style>

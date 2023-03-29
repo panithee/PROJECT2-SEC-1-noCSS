@@ -2,6 +2,8 @@
 import Navbar from './components/Navbar.vue'
 import { onBeforeMount, ref } from 'vue'
 import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js';
+import ThreeView from './views/threeView.vue';
+import DivideFoodCost from './components/DivideFoodCost.vue';
 
 const username = ref('');
 const userData = ref([]);
@@ -56,7 +58,7 @@ const updated = (data) => {
 </script>
 
 <template>
-  <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
+  <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar> 
   <router-view v-if="username !== ''" :userData="userData"></router-view>
   <div v-show="loginAlready"> ช่วย Login pls</div>
 </template>
