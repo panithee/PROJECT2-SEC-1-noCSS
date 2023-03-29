@@ -16,8 +16,9 @@ const props = defineProps({
     default: []
   }
 })
-onMounted(() => {
-  console.log(props.userData.value)
+const testd = ref(props.userData.value)
+watch(() => props.userData, (newVal) => {
+  test.value = newVal
 })
 console.log(props.userData.value)
 

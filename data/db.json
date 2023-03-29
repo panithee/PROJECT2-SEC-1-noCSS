@@ -4,7 +4,11 @@
       "id": 1,
       "username": "admin",
       "password": "1",
+<<<<<<< HEAD
       "key": "JsKe2",
+=======
+      "key": "liCa5",
+>>>>>>> origin/mo
       "groups": [
         {
           "name": "ยามเช้า",
@@ -246,6 +250,16 @@
           ]
         }
       ]
+<<<<<<< HEAD
+=======
+    },
+    {
+      "username": "admi",
+      "password": "1",
+      "groups": [],
+      "key": "QxgrE",
+      "id": 2
+>>>>>>> origin/mo
     }
   ]
 }
