@@ -1,7 +1,7 @@
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue'
+import {onBeforeMount, ref} from 'vue'
 import Navbar from './components/Navbar.vue'
-import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
+import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
 import Loading from './components/icons/loading.vue'
 
 const username = ref('')
@@ -71,7 +71,7 @@ checkLogin()
       กรุณาเข้าสู่ระบบ
     </div>
     <div v-show="loading" class="absolute inset-0 flex items-center justify-center bg-gray-700">
-      <Loading />
+      <Loading/>
     </div>
   </div>
 </template>

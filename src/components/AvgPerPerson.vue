@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from "vue";
+import {computed, ref} from "vue";
 // import DropDown from "./DropDown.vue";
 const props = defineProps({
   userData: {
@@ -165,12 +165,12 @@ const mealsOption = computed(() => {
     return [];
   }
   return groupsOption.value.filter(
-    (groups) => groups.name === selectedGroup.value
+      (groups) => groups.name === selectedGroup.value
   )[0]?.meals;
 });
 const membersOption = computed(() => {
   return groupsOption.value.filter(
-    (groups) => groups.name === selectedGroup.value
+      (groups) => groups.name === selectedGroup.value
   )[0]?.members;
 });
 const selectedGroup = ref("");
@@ -194,7 +194,7 @@ const memberListByMeal = computed(() => {
   let filteredGroups = props.userData;
   if (selectedGroup.value) {
     filteredGroups = filteredGroups.filter(
-      (group) => group.name === selectedGroup.value
+        (group) => group.name === selectedGroup.value
     );
   }
   if (selectedMeal.value) {
@@ -213,9 +213,9 @@ const memberListByMeal = computed(() => {
           return {
             ...meal,
             foods: meal.foods.filter((food) =>
-              food.consumers.some(
-                (consumer) => consumer.name === selectedMember.value
-              )
+                food.consumers.some(
+                    (consumer) => consumer.name === selectedMember.value
+                )
             ),
           };
         }),
@@ -263,11 +263,11 @@ const foodInMeal = ref([]);
 const mealsEat = (consumersName = [], meals = []) => {
   const mealEat = meals.reduce((acc, meal) => {
     const filteredFoods = meal.foods.filter((food) =>
-      food.consumers.some((consumer) => consumersName.includes(consumer.name))
+        food.consumers.some((consumer) => consumersName.includes(consumer.name))
     );
 
     if (filteredFoods.length > 0) {
-      acc.push({ ...meal, foods: filteredFoods });
+      acc.push({...meal, foods: filteredFoods});
     }
 
     return acc;
@@ -316,7 +316,7 @@ const mealsCal = (consumersName = [], meals = []) => {
       <!-- <div>Selected: {{ selectedGroup }}</div> -->
       <div>
         <div class="text-md">Group</div>
-        <select class="w-32 h-12 text-lg border" v-model="selectedGroup">
+        <select v-model="selectedGroup" class="w-32 h-12 text-lg border">
           <option value="">all</option>
           <option v-for="(group, index) in groupsOption" :key="index">
             {{ group.name }}
@@ -326,7 +326,7 @@ const mealsCal = (consumersName = [], meals = []) => {
 
       <div>
         <div class="text-md">Meal</div>
-        <select class="w-32 h-12 text-lg border" v-model="selectedMeal">
+        <select v-model="selectedMeal" class="w-32 h-12 text-lg border">
           <option value="">all</option>
           <option v-for="(meal, index) in mealsOption" :key="index">
             {{ meal.name }}
@@ -335,7 +335,7 @@ const mealsCal = (consumersName = [], meals = []) => {
       </div>
       <div>
         <div class="text-md">Member</div>
-        <select class="w-32 h-12 text-lg border" v-model="selectedMember">
+        <select v-model="selectedMember" class="w-32 h-12 text-lg border">
           <option value="">all</option>
           <option v-for="(member, index) in membersOption" :key="index">
             {{ member.name }}
