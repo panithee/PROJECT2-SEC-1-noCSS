@@ -138,6 +138,7 @@ const DoneAddEditGroup = () => {
     let currentGroup = allGroupArr.value[targetGroupForEditIndex.value];
     currentGroup.name = newGroupName.value;
     currentGroup.members = membersInGroupTarget.value.concat(memberList.value);
+    currentGroup.meals = targetGroupForEdit.value.meals;
     showInsertGroupPopUp();
   }
   emit("updated", allGroupArr.value)
@@ -165,67 +166,76 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
 };
 const resetPriceWhenRemove = (index) => {
   const { name: memberRemoveName } = membersInGroupTarget.value[index];
-
-  targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce((acc, meal) => {
-    acc.push({
-      ...meal,
-      foods: meal.foods.map((food) => {
-        if (!food.consumers.includes(memberRemoveName)) {
+  console.log(typeof targetGroupForEdit.value.meals, targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce((acc, { name, foods }) => {
+    acc = [...acc, {
+      name,
+      foods: foods.map(food => {
+        if (food.consumers === []) {
           return food;
         }
+        if (food.consumers.some(consumer => consumer?.name === memberRemoveName)) {
+          const consumerData = food.consumers.find(consumer => consumer.name === memberRemoveName);
+          console.log("food in loop", food)
+          let filteredConsumers = food.consumers.filter(consumer => {
+            console.log("🚀 ~ file: Group.vue:181 ~ filteredConsumers ~ consumer:", consumer)
+            return consumer.name !== memberRemoveName
+          });
 
-        const { splitMode, consumers, price } = food;
-        const removedConsumer = consumers.find((consumer) => consumer.name === memberRemoveName);
-        const restPercentage = (removedConsumer.percentage / food.consumers.length - 1).toFixed(2);
-        const scapePercentage = (removedConsumer - (restPercentage * food.consumers.length - 1)) + restPercentage;
-
-        if (splitMode === "equal") {
-          return {
-            ...food,
-            consumers: consumers.map((consumer) => {
-              if (consumer.name === memberRemoveName) {
-                return consumer;
+          if (food.splitMode === "equal") {
+            let modifyPriceConsumers = filteredConsumers.map(consumer => ({
+              ...consumer,
+              price: (food.price / filteredConsumers.length).toFixed(2)
+            }));
+            return {
+              ...food,
+              consumers: filteredConsumers.length > 0 ? modifyPriceConsumers : [],
+            }
+          }
+          else if (food.splitMode === "percentage") {
+            console.log("filteredConsumers in percentage", filteredConsumers)
+            let modifyPriceConsumers = filteredConsumers.map((consumer, index) => {
+              if (index === 0) {
+                console.log(consumerData)
+                console.log("consumer", consumer)
+                let newPercentage = Number(consumerData.percentage + consumer.percentage).toFixed(2);
+                let newPrice = ((food.price * newPercentage) / 100).toFixed(2);
+                return {
+                  ...consumer,
+                  price: Number(newPrice),
+                  percentage: Number(newPercentage)
+                }
               }
-
-              const newPrice = (price / consumers.length - 1).toFixed(2);
-              return {
-                ...consumer,
-                percentage: 0,
-                price: newPrice,
-              };
-            }),
-          };
+              return consumer;
+            });
+            return {
+              ...food,
+              consumers: filteredConsumers.length > 0 ? modifyPriceConsumers : [],
+            }
+          }
         } else {
-          return {
-            ...food,
-            consumers: consumers.map((consumer, index) => {
-              if (consumer.name === memberRemoveName) {
-                return consumer;
-              }
-
-              const newPercentage = (consumer.percentage + restPercentage).toFixed(2);
-              const isLastConsumer = index === consumers.length - 1;
-              const newConsumerPercentage = isLastConsumer ? scapePercentage : newPercentage;
-              const newPrice = (newConsumerPercentage * price).toFixed(2);
-              return {
-                ...consumer,
-                percentage: newConsumerPercentage,
-                price: newPrice,
-              };
-            }),
-          };
+          return food;
         }
-      }),
-    });
-
+      })
+    }];
     return acc;
-  }, []);
+  }, []));
 };
+
+
 
 
 </script>
 
 <template>
+  <br>
+  <br>
+  <p v-for="group in userData ">
+  <p v-for="meal in targetGroupForEdit.meals">
+    <br>
+    {{ meal }}
+    <br>
+  </p>
+  </p>
   <div class="w-full text-2xl">
     <div class="ml-16">
       <h1>รายชื่อกลุ่ม</h1>
