@@ -1,38 +1,33 @@
-import { generateRandomId } from "./generateKey";
+import {generateRandomId} from "./generateKey";
 
-const URL_API = "http://localhost:5000";
-const ERR_INPUT = "Error Input";
-const ERR_REGISTRATION = "Error Cannot Register";
-const ERR_LOGIN = "failed to login";
-const ERR_NOTFOUND = "Error: 404";
-const ERR_FORBIDDEN = "Error: 403";
-const SUCCESS_UPDATE_GROUPS = "Success Update Groups";
-const FAILED_UPDATE_GROUPS = "failed to update groups";
 const checkUsernameExists = async (username) => {
     if (username === undefined) {
-        return ERR_INPUT;
+        return "Error Input";
     }
     username = String(username).toLowerCase();
     try {
-        const response = await fetch(`${URL_API}/users?username=${username}`);
+        const response = await fetch(`http://localhost:5000/users?username=${username}`);
         const user = await response.json();
-        return user.length > 0 ? "Username Exists" : "Not Exists";
+        if (user.length > 0) {
+            return "Username Exists";
+        }
+        return "Not Exists";
     } catch (e) {
         console.log(e);
-
     }
-};
+
+}
 const registerUser = async (username, password) => {
     if (username === undefined || password === undefined) {
-        return ERR_INPUT;
+        return "Error Input";
     }
     username = String(username).toLowerCase();
     const check = await checkUsernameExists(username);
     if (check === "Username Exists") {
-        return ERR_REGISTRATION;
+        return "Error Cannot Register";
     }
     try {
-        const response = await fetch(`${URL_API}/users`, {
+        const response = await fetch('http://localhost:5000/users', {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
             }, body: JSON.stringify({
@@ -43,56 +38,60 @@ const registerUser = async (username, password) => {
     } catch (e) {
         console.log(e);
     }
-};
+}
 const loginUser = async (username, password) => {
     if (username === undefined || password === undefined) {
-        return ERR_INPUT;
+        return "Error Input";
     }
     username = String(username).toLowerCase();
-    const check = await checkUsernameExists(username);
-    if (check === "Not Exists") {
-        return check;
-    }
     try {
-        const response = await fetch(`${URL_API}/users?username=${username}`);
-        const user = await response.json();
-        if (user[0].password.localeCompare(password) !== 0) {
-            return ERR_LOGIN;
+        const check = await checkUsernameExists(username);
+        if (check === "Not Exists") {
+            return check;
         }
-        const key = generateRandomId(5);
-        await fetch(`${URL_API}/users/${user[0].id}`, {
-            method: 'PATCH', headers: {
-                'Content-Type': 'application/json'
-            }, body: JSON.stringify({
-                'key': key
-            })
-        });
-        sessionStorage.setItem('key', key);
-        sessionStorage.setItem('username', user[0].username);
-        return user[0].username;
+        const response = await fetch(`http://localhost:5000/users?username=${username}`);
+        const user = await response.json();
+        if (user[0].password.localeCompare(password) === 0) {
+            const key = generateRandomId(5);
+            // update key
+            await fetch(`http://localhost:5000/users/${user[0].id}`, {
+                method: 'PATCH', headers: {
+                    'Content-Type': 'application/json'
+
+                }, body: JSON.stringify({
+                    'key': key
+                })
+            });
+            sessionStorage.setItem('key', key);
+            sessionStorage.setItem('username', user[0].username);
+            return user[0].username;
+        }
+        return "failed to login";
     } catch (e) {
         console.log(e);
     }
-};
+}
 const getUserGroups = async (username) => {
     if (username === undefined) {
-        return ERR_INPUT;
+        return "Error Input";
     }
     try {
-        const resp = await fetch(`${URL_API}/users?username=${username}`);
+        const resp = await fetch(`http://localhost:5000/users?username=${username}`);
         const user = await resp.json();
-        return user.length > 0 ? user[0].groups : '';
+        if (user.length === 0) {
+            return ' ';
+        }
+        return user[0].groups;
     } catch (e) {
         console.log(e);
     }
-};
-
+}
 const findKey = async (username) => {
     if (username === undefined) {
-        return ERR_INPUT;
+        return "Error Input";
     }
     try {
-        const response = await fetch(`${URL_API}/users?username=${username}`);
+        const response = await fetch(`http://localhost:5000/users?username=${username}`);
         const user = await response.json();
         return user[0].key;
     } catch (e) {
@@ -101,10 +100,10 @@ const findKey = async (username) => {
 }
 const checkKey = async (username, key) => {
     if (username === undefined || key === undefined) {
-        return ERR_INPUT;
+        return "Error Input";
     }
     try {
-        const response = await fetch(`${URL_API}/users?username=${username}`);
+        const response = await fetch(`http://localhost:5000/users?username=${username}`);
         const user = await response.json();
         return user[0].key.localeCompare(key) === 0;
     } catch (e) {
@@ -113,18 +112,18 @@ const checkKey = async (username, key) => {
 }
 const updateGroups = async (username, groups) => {
     if (username === undefined || groups === undefined) {
-        return ERR_INPUT;
+        return "Error Input";
     }
     try {
-        const response = await fetch(`${URL_API}/users?username=${username}`);
+        const response = await fetch(`http://localhost:5000/users?username=${username}`);
         if (!response.ok) {
-            return ERR_NOTFOUND;
+            return "Error: 404";
         }
         if (await checkKey(username, sessionStorage.getItem('key')) === false) {
-            return ERR_FORBIDDEN;
+            return "Error: 403";
         }
         const user = await response.json();
-        const res = await fetch(`${URL_API}/users/${user[0].id}`, {
+        const res = await fetch(`http://localhost:5000/users/${user[0].id}`, {
             method: 'PATCH', headers: {
                 'Content-Type': 'application/json'
             }, body: JSON.stringify({
@@ -132,12 +131,12 @@ const updateGroups = async (username, groups) => {
             })
         });
         if (res.ok) {
-            return SUCCESS_UPDATE_GROUPS;
+            return "Success Update Groups";
         }
-        return FAILED_UPDATE_GROUPS;
+        return "failed to update groups";
     } catch (e) {
         console.log(e);
     }
 }
-export { checkUsernameExists, registerUser, loginUser, getUserGroups, findKey, updateGroups };
+export {checkUsernameExists, registerUser, loginUser, getUserGroups, findKey, updateGroups};
 

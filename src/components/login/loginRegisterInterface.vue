@@ -1,6 +1,6 @@
 <script setup>
-import { computed, ref, watch } from "vue";
-import { checkUsernameExists, loginUser, registerUser } from "@/composable/FetchFunctions";
+import {computed, ref, watch} from "vue";
+import {checkUsernameExists, loginUser, registerUser} from "@/composable/FetchFunctions";
 import ErrorText from "@/components/login/ErrorText.vue";
 
 const props = defineProps({
@@ -22,7 +22,7 @@ const errorRegisterUsername = computed(() => {
     if (usernameInput.value === "") {
       return "";
     } else if (alreadyUserExist.value) {
-      return "ชื่อผู้ใช้นี้มีอยู่แล้ว";
+      return "Username already exists";
     } else {
       return "";
     }
@@ -48,7 +48,7 @@ const errorRegisterConfirmPassword = computed(() => {
     } else if (checkConfirm.value) {
       return "";
     } else {
-      return "รหัสผ่านไม่ตรงกัน";
+      return "Password not match";
     }
   }
 });
@@ -64,11 +64,11 @@ const handleLoginResult = async () => {
   errorLoginPassword.value = "";
   const authResult = await loginUser(usernameInput.value, passwordInput.value);
   if (authResult === "Not Exists") {
-    errorLoginUsername.value = "ไม่พบชื่อผู้ใช้";
+    errorLoginUsername.value = "Username not found";
   } else if (authResult === "failed to login") {
-    errorLoginPassword.value = "รหัสผ่านไม่ถูกต้อง";
+    errorLoginPassword.value = "Password not match";
   } else if (authResult.length > 0) {
-    emit("login", { status: "login", data: authResult });
+    emit("login", {status: "login", data: authResult});
   } else {
     console.log("Unknown error");
   }
@@ -76,17 +76,17 @@ const handleLoginResult = async () => {
 
 const handleRegister = async () => {
   if (usernameInput.value === "" || passwordInput.value === "" || confirmPasswordInput.value === "") {
-    errorSubmit.value = "กรุณากรอกข้อมูลให้ครบถ้วน";
+    errorSubmit.value = "Please fill all fields";
   } else if (alreadyUserExist.value === false && checkConfirm.value === true) {
     try {
       const res = await registerUser(usernameInput.value, passwordInput.value);
       if (res !== "Error Cannot Register") {
-        errorSubmit.value = "ลงทะเบียนสำเร็จ";
+        errorSubmit.value = "Register success";
         usernameInput.value = "";
         passwordInput.value = "";
         confirmPasswordInput.value = "";
       } else {
-        errorSubmit.value = "ไม่สามารถลงทะเบียนได้";
+        errorSubmit.value = "Register failed";
       }
     } catch (error) {
       console.log(error);
@@ -110,59 +110,58 @@ const checkConfirm = computed(() => {
   <div class="flex flex-wrap items-center justify-center pt-16">
     <!--  login-->
     <div class="md:w-8/12 lg:ml-6 lg:w-5/12">
-      <div class="max-w-md p-6 bg-white rounded-lg shadow-lg">
-        <div v-if="loginRegister === 'login'">
+      <div class="max-w-md form-control basis-full">
+        <div v-if="loginRegister === 'login' ">
           <label class="label">
-            <span class="label-text">ชื่อผู้ใช้</span>
+            <span class="label-text">Username</span>
           </label>
-          <input v-model="usernameInput" class="w-full input input-bordered " placeholder="พิมพ์ที่นี่" type="text" />
-          <label class="label ">
+          <input v-model="usernameInput" class="w-full input input-bordered " placeholder="Type here" type="text"/>
+          <label class=" label">
             <ErrorText :error-name="errorLoginUsername"></ErrorText>
           </label>
           <label class="label ">
-            <span class="label-text">รหัสผ่าน</span>
+            <span class="label-text">Password</span>
           </label>
-          <input v-model="passwordInput" class="w-full input input-bordered" placeholder="พิมพ์ที่นี่" type="password" />
-          <label class="label ">
+          <input v-model="passwordInput" class="w-full input input-bordered" placeholder="Type here" type="password"/>
+          <label class=" label ">
             <error-text :error-name="errorLoginPassword"></error-text>
           </label>
-          <button class="w-full max-w-md mt-4 btn btn-primary" @click="handleLoginResult">
-            เข้าสู่ระบบ
+          <button class="w-full max-w-md btn" @click="handleLoginResult">
+            Sign In
           </button>
         </div>
         <div v-else>
           <label class="label">
-            <span class="label-text">ชื่อผู้ใช้</span>
+            <span class="label-text">Username</span>
           </label>
-          <input v-model="usernameInput" class="w-full input input-bordered " placeholder="พิมพ์ที่นี่" type="text" />
-          <label class="label ">
+          <input v-model="usernameInput" class="w-full input input-bordered " placeholder="Type here" type="text"/>
+          <label class=" label">
             <ErrorText :errorName="errorRegisterUsername"></ErrorText>
           </label>
           <div class="max-w-md form-control basis-full">
             <label class="label ">
-              <span class="label-text">รหัสผ่าน</span>
+              <span class="label-text">Password</span>
             </label>
-            <input v-model="passwordInput" class="w-full input input-bordered" placeholder="พิมพ์ที่นี่"
-              type="password" />
-            <label class="label ">
+            <input v-model="passwordInput" class="w-full input input-bordered" placeholder="Type here" type="password"/>
+            <label class=" label ">
               <ErrorText :errorName="errorRegisterPassword"></ErrorText>
             </label>
           </div>
           <div class="max-w-md form-control basis-full">
             <label class="label ">
-              <span class="label-text">ยืนยันรหัสผ่าน</span>
+              <span class="label-text">Confirm Password</span>
             </label>
-            <input v-model="confirmPasswordInput" class="w-full input input-bordered" placeholder="พิมพ์ที่นี่"
-              type="password" />
-            <label class="label">
+            <input v-model="confirmPasswordInput" class="w-full input input-bordered" placeholder="Type here"
+                   type="password"/>
+            <label class=" label">
               <ErrorText :errorName="errorRegisterConfirmPassword"></ErrorText>
             </label>
           </div>
           <div class="flex items-center justify-between max-w-md mb-6 basis-full"></div>
-          <button class="w-full max-w-md mt-4 btn btn-primary" @click="handleRegister">
-            ลงทะเบียน
+          <button class="w-full max-w-md btn" @click="handleRegister">
+            Register
           </button>
-          <label class="label">
+          <label class=" label">
             <ErrorText :errorName="errorSubmit"></ErrorText>
           </label>
         </div>
@@ -171,6 +170,5 @@ const checkConfirm = computed(() => {
     </div>
   </div>
 </template>
-
 
 <style scoped></style>

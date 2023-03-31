@@ -1,19 +1,19 @@
 <template>
   <div class="ntView">
     <h1>ntView</h1>
-    {{ userData[0].name }}
+    {{ userData }}
   </div>
 </template>
 
 <script setup>
-const props = defineProps({
+defineProps({
   userData: {
     type: Array,
     default: []
   }
 })
-
-console.log('ntView', props.userData)
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
