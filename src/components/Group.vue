@@ -164,6 +164,7 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
   }
   emit("updated", allGroupArr.value)
 };
+
 const resetPriceWhenRemove = (index) => {
   const { name: memberRemoveName } = membersInGroupTarget.value[index];
   console.log(typeof targetGroupForEdit.value.meals, targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce((acc, { name, foods }) => {
@@ -236,13 +237,13 @@ const resetPriceWhenRemove = (index) => {
     <br>
   </p>
   </p>
-  <div class="w-full text-2xl">
-    <div class="ml-16">
+  <div class="w-full text-2xl h-screen">
+    <div class="text-center sm:grid sm:grid-cols-2 sm:pr-96">
       <h1>รายชื่อกลุ่ม</h1>
     </div>
-    <div>
       <div v-for="(group, index) in allGroupArr" key="index">
-        <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
+        <div>
+        <div class="grid w-5/6 sm:w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md sm:pl-14 pl-5">
           <p> {{ group.name }} </p>
           <button :id="index" v-if="showDetailsOfGroup.includes(index)" @click="unshowGroupDetails(index)"
             class="flex justify-end pr-5">
@@ -252,19 +253,19 @@ const resetPriceWhenRemove = (index) => {
             <ArrowUp></ArrowUp>
           </button>
         </div>
-        <div class="flex flex-col items-center w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md"
+        <div class="flex flex-col items-center w-5/6 sm:w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md"
           v-if="showDetailsOfGroup.includes(index)">
           <div class="flex flex-col items-start w-4/5 gap-2">
             <span class="py-2 text-xl">Member Lists</span>
-            <div :id="index" class="flex w-full gap-2 overflow-x-scroll h-11 flex-nowrap">
+            <div :id="index" class="flex w-full gap-2 overflow-x-scroll flex-nowrap h-11">
               <span v-for="member in group.members" key="index" class="px-3 text-lg border border-black rounded-xl">
                 {{ member.name }}
               </span>
             </div>
           </div>
           <div class="grid grid-cols-2 text-xl text-center">
-            <span class="">จำนวนคน: {{ group.members.length }}</span>
-            <span class="">ราคาทั้งหมด: {{ totalPrice }}</span>
+            <span>จำนวนคน: {{ group.members.length }}</span>
+            <span>ราคาทั้งหมด: {{ totalPrice }}</span>
           </div>
           <div class="flex flex-row justify-end w-full gap-2 pr-2 text-base">
             <button :id="index" @click="eventAddEdit(index, 'edit')"
