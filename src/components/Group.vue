@@ -1,5 +1,5 @@
 <script setup>
-import {onBeforeMount, ref, watch} from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import ArrowDown from "./icons/arrowDown.vue";
 import ArrowUp from "./icons/arrowUp.vue";
 import Close from "./icons/close.vue";
@@ -22,11 +22,11 @@ const props = defineProps({
 });
 
 watch(
-    () => props.userData,
-    (newVal, oldVal) => {
-      console.log("watch: ", newVal);
-      myGroupArr.value = newVal;
-    }
+  () => props.userData,
+  (newVal, oldVal) => {
+    console.log("watch: ", newVal);
+    myGroupArr.value = newVal;
+  }
 );
 onBeforeMount(() => {
   myGroupArr.value = props.userData;
@@ -61,8 +61,8 @@ const addGroup = () => {
     errorGroupName.value = "Group name already exists";
     checkInputGroupName.value = true;
   } else if (
-      inputGroupName.value !== "" &&
-      inputGroupName.value !== groupNameExists
+    inputGroupName.value !== "" &&
+    inputGroupName.value !== groupNameExists
   ) {
     myGroupArr.value.push({
       name: inputGroupName.value,
@@ -129,7 +129,7 @@ const deleteGroup = (index) => {
         <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
           <p>{{ group.name }}</p>
           <button v-if="grouptarget.includes(index)" :id="index" class="flex justify-end pr-5"
-                  @click="unshowGroupDetails(index)">
+            @click="unshowGroupDetails(index)">
 
             <ArrowDown></ArrowDown>
           </button>
@@ -141,7 +141,7 @@ const deleteGroup = (index) => {
           <p class="py-2 text-xl pl-14">Member Lists</p>
           <div :id="index" class="pl-14">
             <span v-for="member in group.members" key="index"
-                  class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{ member.name }}
+              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{ member.name }}
             </span>
           </div>
           <div class="grid grid-cols-2 text-xl text-center">
@@ -151,7 +151,7 @@ const deleteGroup = (index) => {
           <div class="text-xl text-right ">
             <button :id="index" class="mr-4 border border-b-black border-x-white border-t-white">edit</button>
             <button :id="index" class="mr-5 border border-b-black border-x-white border-t-white"
-                    @click="deleteGroup(index)">delete
+              @click="deleteGroup(index)">delete
             </button>
           </div>
         </div>
@@ -173,7 +173,7 @@ const deleteGroup = (index) => {
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input v-model="inputGroupName" class="border border-b-black" placeholder="Add your group name" type="text"/>
+          <input v-model="inputGroupName" class="border border-b-black" placeholder="Add your group name" type="text" />
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ errorGroupName }}</span>
         </div>
@@ -187,11 +187,11 @@ const deleteGroup = (index) => {
             </span>
           </div>
           <input v-model="inputMembers" class="mt-4 ml-24 text-xl border border-b-black" placeholder="+ Add a member"
-                 type="text"/>
+            type="text" />
           <button class="px-2 text-xl text-black border border-black rounded-full" @click="addMember">
             add
           </button>
-          <br/>
+          <br />
           <span class="ml-24 text-lg text-red-600"> {{ errorMembers }}</span>
         </div>
         <div class="flex justify-center mt-10">
