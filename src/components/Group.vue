@@ -44,6 +44,7 @@ const popup = ref(false);
 const showInsertGroupPopUp = () => {
   textErrMember.value = "";
   textError.value = "";
+  newMember.value = "";
   memberList.value = [];
   popup.value = !popup.value;
 };
@@ -154,13 +155,20 @@ const unshowGroupDetails = (index) => {
 
 // delete group and members
 const deleteGroupAndMembers = (index, groupOrMember) => {
+  
   if (groupOrMember === "group") {
-    allGroupArr.value.splice(index, 1);
+    if(confirm('คุณต้องการลบข้อมูลกลุ่มใช่หรือไม่')){
+      allGroupArr.value.splice(index, 1); 
+    }
   } else if (groupOrMember === "member") {
-    resetPriceWhenRemove(index);
-    membersInGroupTarget.value.splice(index, 1);
+    if (confirm('คุณต้องการลบสมาชิกใช่หรือไม่?')) {
+      resetPriceWhenRemove(index);
+      membersInGroupTarget.value.splice(index, 1);
+    }
   } else if (groupOrMember === "newAddMember") {
-    memberList.value.splice(index, 1);
+    if (confirm('คุณต้องการลบสมาชิกใช่หรือไม่?')) {
+      memberList.value.splice(index, 1);
+    }
   }
   emit("updated", allGroupArr.value)
 };
