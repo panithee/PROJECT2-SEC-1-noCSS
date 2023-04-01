@@ -81,19 +81,28 @@ const mealsEat = (consumersName = [], meals = []) => {
   return mealEat;
 };
 
-const mealsCal = (consumersName = [], meals = []) => {
-  const mealCal = meals.reduce((acc, meal) => {
-    meal.foods.forEach((food) => {
-      food.consumers.forEach((consumer) => {
-        if (consumersName.includes(consumer.name)) {
-          console.log(consumer.price);
-          acc += Number(consumer.price);
-        }
-      });
-    });
+const mealCalGroup = (consumersName = [], meal = {}) => {
+  // const mealCal = meals.reduce((acc, meal) => {
+  //   meal.foods.forEach((food) => {
+  //     food.consumers.forEach((consumer) => {
+  //       if (consumersName.includes(consumer.name)) {
+  //         console.log(food.name, consumer.price);
+  //         acc += Number(consumer.price);
+  //       }
+  //     });
+  //   });
+  //   return acc
+  // }, 0);
+  // return mealCal;
+  const mealCal = meal.foods.reduce((acc, food) => {
+    food.consumers.forEach((consumer) => {
+      if (consumersName.includes(consumer.name)) {
+        acc += Number(consumer.price)
+      }
+    })
     return acc
-  }, 0);
-  return mealCal;
+  }, 0)
+  return mealCal
 };
 
 </script>
@@ -108,13 +117,13 @@ const mealsCal = (consumersName = [], meals = []) => {
     <div class="flex justify-start w-7/12 mt-20">
       <div class="grid grid-cols-3 gap-4">
         <!-- <DropDown
-                          :name-drop-down="'test'"
-                            :default-option="'all'"
-                            :selected-fn="selectedGroup"
-                            :data-option="groupsOption"
-                            @select="(select) => (selectedGroup = select)"
-                          ></DropDown
-                          > -->
+                                                              :name-drop-down="'test'"
+                                                                :default-option="'all'"
+                                                                :selected-fn="selectedGroup"
+                                                                :data-option="groupsOption"
+                                                                @select="(select) => (selectedGroup = select)"
+                                                              ></DropDown
+                                                              > -->
         <!-- <div>Selected: {{ selectedGroup }}</div> -->
         <div>
           <div class="text-md">Group</div>
@@ -154,9 +163,9 @@ const mealsCal = (consumersName = [], meals = []) => {
     <!-- <PersonMealCost test="group"/> -->
 
     <div class="flex flex-col gap-4" v-for="member in group.members">
-
       <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-if="selectedMember === ''"
         v-for="meal in mealsEat(member.name, group.meals)">
+
         <div>{{ member.name }}</div>
 
         <div class="flex justify-center">
@@ -164,14 +173,14 @@ const mealsCal = (consumersName = [], meals = []) => {
             <div v-for="food in meal.foods">
               <div class="flex flex-row justify-between w-full">
                 <span>{{ food.name }}</span>
-                <span>{{ food.price }}</span>
+                <span>{{ food.consumers.find((consumer) => consumer.name === member.name).price }}</span>
               </div>
             </div>
           </div>
 
         </div>
 
-        <div class="text-lg">ราคามื้อ {{ mealsCal(member.name, group.meals) }} บาท</div>
+        <div class="text-lg">ราคามื้อ {{ mealCalGroup(member.name, meal) }} บาท</div>
 
       </div>
 
@@ -184,14 +193,14 @@ const mealsCal = (consumersName = [], meals = []) => {
             <div v-for="food in meal.foods">
               <div class="flex flex-row justify-between w-full">
                 <span>{{ food.name }}</span>
-                <span>{{ food.price }}</span>
+                <span>{{ food.consumers.find((consumer) => consumer.name === selectedMember).price }}</span>
               </div>
             </div>
           </div>
 
         </div>
 
-        <div class="text-lg">ราคามื้อ {{ mealsCal(member.name, group.meals) }} บาท</div>
+        <div class="text-lg">ราคามื้อ {{ mealCalGroup(member.name, meal) }} บาท</div>
       </div>
 
     </div>
