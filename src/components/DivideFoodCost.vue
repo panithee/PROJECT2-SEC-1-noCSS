@@ -163,7 +163,7 @@ const checkDataBeforeDone = () => {
           :class="page === false ? 'opacity-100' : 'opacity-10'" alt="" />
       </div>
     </div>
-
+    
     <p class="flex justify-center mt-3 text-lg text-gray-600">รายชื่อคนทั้งหมดในกลุ่ม</p>
     <p v-show="isPersonsWhoEatValid" class="flex justify-center text-red-500 text-md font-bold">*จำเป็น</p>
     <div class="flex justify-between w-64 mx-auto bg-white mt-2 overflow-x-scroll pb-2">
@@ -218,10 +218,10 @@ const checkDataBeforeDone = () => {
 
     <div class="flex w-3/5 mx-auto mt-10 ">
       <div class="w-full flex flex-col percenttext">
-        <p v-if="!page" class="flex flex-col w-fit">
+        <p v-if="!page" class="flex flex-col">
           เปอร์เซ็นต์ : {{ calculateTotalPercent() }}%
         </p>
-        <p v-if="!page" class="flex flex-col w-fit">{{ checkPercent() }}</p>
+        <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
 
       <div class="flex w-full justify-end items-center boxfoodprice">
@@ -229,7 +229,7 @@ const checkDataBeforeDone = () => {
         <input v-model="foodPrice" type="number" @input="checkFoodPrice"
           :placeholder="foodPrice === 0 || isNaN(foodPrice) ? 'กรุณาใส่ราคาอาหาร' : foodPrice"
           class="border border-gray-500 text-center rounded-lg text-xl justify-end inputfoodprice">
-        <p v-show="isFoodPriceValid" class="flex justify-center text-red-500 text-md font-bold ml-1">*จำเป็น</p>
+        <p v-show="isPersonsWhoEatValid" class="flex justify-center text-red-500 text-md font-bold ml-1">*จำเป็น</p>
       </div>
     </div>
 
@@ -257,7 +257,7 @@ const checkDataBeforeDone = () => {
 
   .textfoodprice {
     text-align: center;
-    flex:auto;
+    flex: content;
     justify-content: center;
   }
 
