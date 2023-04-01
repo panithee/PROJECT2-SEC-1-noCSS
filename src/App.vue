@@ -61,13 +61,11 @@ onBeforeMount(async () => {
 
 
 <template>
-  <div class="bg-gray-100">
-    <Navbar @clearData="clearUserData" @setUsername="setUsername"></Navbar>
-    <div class="container py-8 mx-auto">
-      <div v-show="!loginAlready" class="w-full h-full mb-8 text-3xl font-bold text-center">
-        กรุณาเข้าสู่ระบบ
-      </div>
-      <router-view v-if="username !== ''" :userData="userData" @updated="updated"></router-view>
+  <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
+  <div class="container mx-auto">
+    <router-view @updated="updated" v-if="username !== ''" :userData="userData"></router-view>
+    <div v-show="!loginAlready" class="p-8 text-2xl text-center">
+      กรุณาเข้าสู่ระบบ
     </div>
     <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <Loading />
