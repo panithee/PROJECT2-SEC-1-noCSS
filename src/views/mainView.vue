@@ -17,9 +17,10 @@
       <!-- <div>{{ userData }}</div> -->
       <!-- 
      {{ g_list }} -->
-      <label for="underline_select" class="sr-only">Underline select</label>
-      <select v-model="g_name" @click="show" id="underline_select"
-        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+      <label class="sr-only" for="underline_select">Underline select</label>
+      <select id="underline_select" v-model="g_name"
+              class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+              @click="show">
 
         <option v-for="item2 in props.userData ">{{ item2.name }}</option>
 
@@ -33,17 +34,32 @@
 
           </li>
         </ul>
-
+        <br>
 
       </div>
 
+      <br>
+      <div v-for="meals in g_list.meals">
+        <div>
+          <p> {{ meals.name }}</p>
+          <!--          {{ meals.foods }}-->
+          <div v-for="food in meals.foods">
+            <li>{{ food.name }} : {{ food.price }}</li>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <oat-view class=""></oat-view>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import Group from '../components/Group.vue';
+import OatView from "@/views/oatView.vue";
+
 const g_name = ref("")
 const g_list = ref({})
 const props = defineProps({
@@ -55,11 +71,10 @@ const show = () => {
   if (g_name.value == "") {
     g_list.value = {}
   } else {
-    g_list.value = JSON.parse(JSON.stringify(props.userData.find(e => e.name == g_name.value)))
+    g_list.value = (props.userData.find(e => e.name == g_name.value))
   }
 
 }
-
 
 
 </script>
