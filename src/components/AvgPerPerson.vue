@@ -118,7 +118,7 @@ const memberListByMeal = computed(() => {
       </div>
     </div>
   </div>
-</div>
+
 
   <div class="flex flex-col w-full gap-4 mt-8 px-28" v-for="group in memberListByMeal">
 
@@ -168,5 +168,5 @@ const memberListByMeal = computed(() => {
 
     </div> -->
 
-  </div>
+</div>
 </template>
