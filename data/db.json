@@ -280,6 +280,16 @@
             }
           ],
           "meals": []
+        },
+        {
+          "name": "xsa",
+          "members": [
+            {
+              "name": "sax",
+              "price": 0
+            }
+          ],
+          "meals": []
         }
       ]
     },

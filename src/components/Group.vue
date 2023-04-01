@@ -84,19 +84,19 @@ const addMember = () => {
   for (const member of memberList.value) {
     if (member.name === newMember.value) {
       memberExists = member.name;
-      textErrMember.value = "Member already exits";
+      textErrMember.value = "สมาชิกนี้มีอยู่แล้ว";
     }
   }
 
   for (const member of membersInGroupTarget.value) {
     if (member.name === newMember.value) {
       memberExists = member.name;
-      textErrMember.value = "Member already exits";
+      textErrMember.value = "สมาชิกนี้มีอยู่แล้ว";
     }
   }
 
   if (newMember.value === "") {
-    textErrMember.value = "Please add your member";
+    textErrMember.value = "กรุณาเพิ่มสมาชิก";
     checkInputMember.value = true;
   } else if (newMember.value !== "" && newMember.value !== memberExists) {
     textErrMember.value = "";
@@ -118,9 +118,9 @@ const DoneAddEditGroup = () => {
       }
     }
     if (newGroupName.value === "") {
-      textError.value = "Please add a group name";
+      textError.value = "กรุณาใส่ชื่อกลุ่ม";
     } else if (newGroupName.value === groupNameExists) {
-      textError.value = "Group name already exists";
+      textError.value = "ชื่อกลุ่มนี้มีอยู่แล้ว";
     } else if (
         newGroupName.value !== "" &&
         newGroupName.value !== groupNameExists
@@ -246,7 +246,7 @@ const resetPriceWhenRemove = (index) => {
   <!--      <br>-->
   <!--    </p>-->
   <!--  </p>-->
-  <div class="w-full text-2xl h-screen">
+  <div class="w-full text-2xl">
     <div class="text-center sm:grid sm:grid-cols-2 sm:pr-96">
       <h1>รายชื่อกลุ่ม</h1>
     </div>
@@ -305,15 +305,15 @@ const resetPriceWhenRemove = (index) => {
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input v-model="newGroupName" class="border border-b-black" placeholder="Add your group name" type="text"/>
+          <input v-model="newGroupName" class="border border-b-black w-36 sm:w-64" type="text" placeholder="กรุณาใส่ชื่อกลุ่ม" />
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
-        <div class="mt-4 ml-20 text-xl">
+        <div class="sm:mt-4 sm:ml-20 text-xl">
           <p>รายชื่อสมาชิก</p>
         </div>
-        <div class="w-full h-24 overflow-y-scroll">
-          <div class="ml-24">
+        <div class="w-full sm:h-24 overflow-y-scroll h-10">
+          <div class="sm:ml-24">
             <div v-for="(member, index) in membersInGroupTarget" v-show="showEditMembers" key="index">
               <button @click="deleteGroupAndMembers(index, 'member')">
                 <Delete></Delete>
@@ -332,18 +332,16 @@ const resetPriceWhenRemove = (index) => {
             </span>
           </div>
         </div>
-        <div>
-          <input v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" placeholder="+ Add a member"
-                 type="text"
-                 @keypress.enter="addMember"/>
-          <button class="px-2 text-xl text-black border border-black rounded-full" @click="addMember">
-            เพิ่มสมาชิก
-          </button>
-          <br/>
-          <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
+        <div class="text-center sm:text-left">
+          <input @keypress.enter="addMember" v-model="newMember" class="mt-4 sm:ml-24 text-lg border border-b-black" type="text"
+            placeholder="+ ใส่ชื่อสมาชิกทีละคน" />
+          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
+            เพิ่ม
+          </button><br />
+          <span class="sm:ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
         <div class="flex justify-center">
-          <button class="px-5 py-3 text-white bg-black rounded-full " @click="DoneAddEditGroup">
+          <button class="px-5 py-3 mt-3 sm:mt-0 text-white bg-black rounded-full " @click="DoneAddEditGroup">
             บันทึกกลุ่ม
           </button>
         </div>
