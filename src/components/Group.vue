@@ -264,7 +264,7 @@ const resetPriceWhenRemove = (index) => {
         <div class="flex flex-col items-center w-5/6 sm:w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md"
           v-if="showDetailsOfGroup.includes(index)">
           <div class="flex flex-col items-start w-4/5 gap-2">
-            <span class="py-2 text-xl">Member Lists</span>
+            <span class="py-2 text-xl">รายชื่อสมาชิก</span>
             <div :id="index" class="flex w-full gap-2 overflow-x-scroll flex-nowrap h-11">
               <span v-for="member in group.members" key="index" class="px-3 text-lg border border-black rounded-xl">
                 {{ member.name }}
@@ -278,11 +278,11 @@ const resetPriceWhenRemove = (index) => {
           <div class="flex flex-row justify-end w-full gap-2 pr-2 text-base">
             <button :id="index" @click="eventAddEdit(index, 'edit')"
               class="border border-b-black border-x-white border-t-white">
-              edit
+              แก้ไขกลุ่ม
             </button>
             <button :id="index" @click="deleteGroupAndMembers(index, 'group')"
               class="border border-b-black border-x-white border-t-white">
-              delete
+              ลบกลุ่ม
             </button>
           </div>
         </div>
@@ -309,7 +309,7 @@ const resetPriceWhenRemove = (index) => {
           <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
         <div class="mt-4 ml-20 text-xl">
-          <p>Member lists</p>
+          <p>รายชื่อสมาชิก</p>
         </div>
         <div class="w-full h-24 overflow-y-scroll">
           <div class="ml-24">
@@ -335,13 +335,13 @@ const resetPriceWhenRemove = (index) => {
           <input @keypress.enter="addMember" v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" type="text"
             placeholder="+ Add a member" />
           <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
-            add
+            เพิ่มสมาชิก
           </button><br />
           <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
         <div class="flex justify-center">
           <button @click="DoneAddEditGroup" class="px-5 py-3 text-white bg-black rounded-full ">
-            Done
+            บันทึกกลุ่ม
           </button>
         </div>
       </div>
