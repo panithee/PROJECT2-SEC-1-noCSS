@@ -17,9 +17,9 @@ const props = defineProps({
   }
 })
 const testd = ref(props.userData.value)
-watch(() => props.userData, (newVal) => {
-  test.value = newVal
-})
+// watch(() => props.userData, (newVal) => {
+//   test.value = newVal
+// })
 console.log(props.userData.value)
 
 const foodName1 = ref('')

@@ -9,32 +9,33 @@ const props = defineProps({
     type: String,
     default: "add"
   },
-  members : {
+  members: {
     type: Array
   },
-  food : {
-    type : Object
+  food: {
+    type: Object
   }
 })
 
-defineEmits('sendAllData')
+const emit = defineEmits('sendAllData')
 const page = ref(true);
 const switchMenu = (type) => {
   page.value = type === "equal";
   if (!page.value) calculatePriceByPercent();
 };
 let food = ref({});
-const foodName= ref("");
-const foodPrice = ref()
+const foodName = ref("");
+const foodPrice = ref(undefined)
 
 const personsWhoEat = ref([])
 const personsList = ref([])
 
+
 const calculatePriceByPercent = () => {
-  if (personsWhoEat.value?.length === undefined) return ;
+  if (personsWhoEat.value?.length === undefined) return;
   personsWhoEat.value.map((person) => {
-    if(foodPrice.value===undefined){
-      person.price=0;
+    if (foodPrice.value === undefined) {
+      person.price = 0;
       return person
     }
     person.price = parseFloat((foodPrice.value * Number(person.percentage)) / 100).toFixed(2)
@@ -42,16 +43,17 @@ const calculatePriceByPercent = () => {
   })
 }
 watchEffect(() => {
-  if(props.mode === 'edit'){
-  food.value = props?.userData[0]?.meals[0].foods[1] || {};
-  personsWhoEat.value = props?.userData[0]?.meals[0].foods[1]?.consumers || [];
-  page.value = props?.userData[0]?.meals[0].foods[1]?.splitMode === "equal";
-  console.log(food.value);
-  foodName.value = food.value.name
-  foodPrice.value = food.value.price
-  
+  if (props.mode === 'edit') {
+    food.value = props?.userData[0]?.meals[0].foods[1] || {};
+    personsWhoEat.value = props?.userData[0]?.meals[0].foods[1]?.consumers || [];
+    page.value = props?.userData[0]?.meals[0].foods[1]?.splitMode === "equal";
+    console.log(food.value);
+    foodName.value = food.value.name
+    foodPrice.value = food.value.price
+
+  }
+  personsList.value = props?.userData[0]?.members || [];
 }
-personsList.value = props?.userData[0]?.members || [];}
 );
 const togglePersonWhoEat = (event) => {
   const index = event.target.id;
@@ -71,15 +73,15 @@ const togglePersonWhoEat = (event) => {
 
 
 const avgPricePerPerson = computed(() => {
-  if(isNaN(foodPrice.value) || foodPrice.value < 0){
+  if (isNaN(foodPrice.value) || foodPrice.value < 0) {
     foodPrice.value = 0
     const avg = (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
     personsWhoEat.value = personsWhoEat.value.map((a) => {
-    a.price = avg;
-    return a
-  })
-}
-  return (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100)/100).toFixed(2)
+      a.price = avg;
+      return a
+    })
+  }
+  return (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
 });
 
 
@@ -110,18 +112,35 @@ const checkPercent = () => {
 const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.id === id);
 
 const checkFoodPrice = () => {
-  if(foodPrice.value<0){
-    foodPrice.value=0
+  if (foodPrice.value < 0) {
+    foodPrice.value = 0
+  }
+}
+
+const checkDataBeforeDone = () => {
+  if (foodName.value.trim() !== "" && foodPrice.value !== undefined && foodPrice.value > 0 && personsWhoEat.value.length >= 1) {
+    emit('sendAllData', foodName.value, foodPrice.value, personsWhoEat.value);
+
+  }
+  if (foodName.value.trim() === "") {
+    alert('Please fill your food name.')
+  }
+  if (foodPrice.value === undefined || foodPrice.value <= 0) {
+    alert('Please fill your food price.')
+  }
+  if (personsWhoEat.value.length < 1) {
+    alert('Please choose a person who eat at least one.')
   }
 }
 
 </script>
 
 <template>
-  <!-- {{ personsWhoEat }} -->
   <div class="w-full h-full">
-    <router-link to="/" class="flex ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 w-fit backfont">กลับ</router-link>
-    <input type="text" placeholder="กรุณาใส่ชื่ออาหาร" v-model="foodName" class="flex justify-center mx-auto border rounded-lg text-center text-2xl hover:rounded-xl">
+    <router-link to="/"
+      class="flex ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 w-fit backfont">กลับ</router-link>
+    <input type="text" placeholder="กรุณาใส่ชื่ออาหาร" v-model="foodName"
+      class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
     <p class="flex justify-center mt-5 text-lg text-gray-600">เลือกโหมดการหาร</p>
     <div class="flex justify-center">
       <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
@@ -132,8 +151,8 @@ const checkFoodPrice = () => {
 
     <p class="flex justify-center mt-3 text-lg text-gray-600">รายชื่อคนทั้งหมดในกลุ่ม</p>
     <div class="flex justify-between w-64 mx-auto bg-white mt-2 overflow-x-scroll pb-2">
-      <button class="px-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index"
-        :id="index" @click="togglePersonWhoEat($event)" :class="
+      <button class="px-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index" :id="index"
+        @click="togglePersonWhoEat($event)" :class="
           checkPersonEating(person.id)
             ? 'bg-white hover:bg-gray-200  border-black text-black'
             : 'bg-white hover:bg-gray-200 hover:text-black border-gray-200 text-gray-300'
@@ -188,46 +207,47 @@ const checkFoodPrice = () => {
         </p>
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
-      
+
       <div class="flex w-full justify-end boxfoodprice">
         <p class="flex mr-3 items-center text-xl textfoodprice">ราคาอาหาร :</p>
-        <input v-model="foodPrice" type="number" @input="checkFoodPrice" :placeholder="foodPrice===0 || isNaN(foodPrice)?'กรุณาใส่ราคาอาหาร':foodPrice"
-        class="border border-gray-500 text-center rounded-lg text-xl justify-end inputfoodprice">
+        <input v-model="foodPrice" type="number" @input="checkFoodPrice"
+          :placeholder="foodPrice === 0 || isNaN(foodPrice) ? 'กรุณาใส่ราคาอาหาร' : foodPrice"
+          class="border border-gray-500 text-center rounded-lg text-xl justify-end inputfoodprice">
       </div>
     </div>
-   
-    <button @click="$emit('sendAllData',foodName, foodPrice, personsWhoEat)" 
-    class="flex text-2xl mx-auto justify-center hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 mt-5">ยืนยันการทำรายการ</button>
+
+    <button @click="checkDataBeforeDone"
+      class="flex text-2xl mx-auto justify-center hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 mt-5">ยืนยันการทำรายการ</button>
   </div>
 </template>
 
 <style scoped>
-@media (max-width: 640px){
+@media (max-width: 640px) {
 
-  .backfont{
+  .backfont {
     font-size: medium;
     font-weight: bold;
     margin-left: 1em;
   }
- 
 
-  .percenttext{
+
+  .percenttext {
     text-align: center;
   }
 
-  .boxfoodprice{
+  .boxfoodprice {
     flex-wrap: wrap;
-    
+
   }
-  
-  .textfoodprice{
+
+  .textfoodprice {
     text-align: center;
     flex: content;
     justify-content: center;
   }
 
 
-  .inputfoodprice{
+  .inputfoodprice {
     text-align: center;
     flex: content;
     justify-content: end;
@@ -235,14 +255,11 @@ const checkFoodPrice = () => {
     font-size: small;
   }
 
-  
 
-  .m-table{
+
+  .m-table {
     width: 98%;
     height: 20em;
   }
 }
-
-
-
 </style>
