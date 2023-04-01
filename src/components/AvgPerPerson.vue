@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <script setup>
 import {computed, ref} from "vue";
 // import DropDown from "./DropDown.vue";
@@ -352,13 +353,12 @@ const mealsCal = (consumersName = [], meals = []) => {
       {{ group.name }}
       <div v-for="member in group.members">
         {{ member.name }}
-        <p v-for="meal in mealsEat(member.name, group.meals)">
+        <div v-for="meal in mealsEat(member.name, group.meals)">
           {{ meal.name }}
-        <div v-for="food in meal.foods">
-          {{ food.name }}
+          <div v-for="food in meal.foods">
+            {{ food.name }}
+          </div>
         </div>
-        </p>
-
       </div>
     </div>
   </div>
