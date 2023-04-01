@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "VPS4O",
+      "key": "Kktpb",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -287,6 +287,20 @@
             },
             {
               "name": "asx",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "i p",
+          "members": [
+            {
+              "name": "khj",
+              "price": 0
+            },
+            {
+              "name": "lp",
               "price": 0
             }
           ],

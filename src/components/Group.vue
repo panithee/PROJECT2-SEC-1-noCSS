@@ -332,7 +332,7 @@ const resetPriceWhenRemove = (index) => {
           </div>
         </div>
         <div>
-          <input v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" type="text"
+          <input @keypress.enter="addMember" v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" type="text"
             placeholder="+ Add a member" />
           <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
             add
