@@ -8,7 +8,6 @@ const props = defineProps({
     default: [],
   },
 });
-
 const groupsOption = computed(() => {
   return props.userData;
 });
@@ -82,7 +81,6 @@ const mealsEat = (consumersName = [], meals = []) => {
   return mealEat;
 };
 
-
 const mealsCal = (consumersName = [], meals = []) => {
   const mealCal = meals.reduce((acc, meal) => {
     meal.foods.forEach((food) => {
@@ -110,13 +108,13 @@ const mealsCal = (consumersName = [], meals = []) => {
     <div class="flex justify-start w-7/12 mt-20">
       <div class="grid grid-cols-3 gap-4">
         <!-- <DropDown
-                      :name-drop-down="'test'"
-                        :default-option="'all'"
-                        :selected-fn="selectedGroup"
-                        :data-option="groupsOption"
-                        @select="(select) => (selectedGroup = select)"
-                      ></DropDown
-                      > -->
+                          :name-drop-down="'test'"
+                            :default-option="'all'"
+                            :selected-fn="selectedGroup"
+                            :data-option="groupsOption"
+                            @select="(select) => (selectedGroup = select)"
+                          ></DropDown
+                          > -->
         <!-- <div>Selected: {{ selectedGroup }}</div> -->
         <div>
           <div class="text-md">Group</div>

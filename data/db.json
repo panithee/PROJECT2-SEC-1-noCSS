@@ -1,62 +1,258 @@
 {
-    "members": [
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "1",
+      "key": "JIAf9",
+      "groups": [
         {
-            "id": 1,
-            "username": "images/1.jpg",
-            "password": "Autumn",
-            "groups": [
+          "name": "ยามเช้า",
+          "members": [
+            {
+              "id": 1,
+              "name": "กล้า"
+            },
+            {
+              "id": 2,
+              "name": "เอก"
+            },
+            {
+              "id": 3,
+              "name": "ปิง"
+            },
+            {
+              "id": 4,
+              "name": "ไอซ์"
+            }
+          ],
+          "meals": [
+            {
+              "id": 1,
+              "name": "มื้อเช้า",
+              "foods": [
                 {
-                    "name": "group1",
-                    "members": [
-                        {
-                            "id": 1,
-                            "name": "mo",
-                            "price": 100
-                        },
-                        {
-                            "id": 2,
-                            "name": "eve",
-                            "price": 200
-                        }
-                    ],
-                    "meals": [
-                        {
-                            "id": 1,
-                            "name": "breakfast",
-                            "foods": [
-                                {
-                                    "id": 1,
-                                    "name": "rice",
-                                    "price": 100,
-                                    "consumers": [
-                                        {
-                                            "id": 1,
-                                            "percentage": 100
-                                        }
-                                    ],
-                                    "split_mode": "equal"
-                                },
-                                {
-                                    "id": 2,
-                                    "name": "noodle",
-                                    "price": 200,
-                                    "consumers": [
-                                        {
-                                            "id": 1,
-                                            "percentage": 50
-                                        },
-                                        {
-                                            "id": 2,
-                                            "percentage": 50
-                                        }
-                                    ],
-                                    "split_mode": "percentage"
-                                }
-                            ]
-                        }
-                    ]
+                  "id": 1,
+                  "name": "ข้าวใจเจียว",
+                  "price": 100,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 100,
+                      "price": 100
+                    }
+                  ],
+                  "splitMode": "equal"
+                },
+                {
+                  "id": 2,
+                  "name": "noodle",
+                  "price": 200,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 50,
+                      "price": 100
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 50,
+                      "price": 100
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 3,
+                  "name": "toast",
+                  "price": 50,
+                  "consumers": [
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 50,
+                      "price": 25
+                    },
+                    {
+                      "id": 4,
+                      "name": "ไอซ์",
+                      "percentage": 50,
+                      "price": 25
+                    }
+                  ],
+                  "splitMode": "percentage"
                 }
-            ]
+              ]
+            },
+            {
+              "id": 2,
+              "name": "มื้อกลางวัน",
+              "foods": [
+                {
+                  "id": 4,
+                  "name": "ข้าวหมูแดง",
+                  "price": 150,
+                  "consumers": [
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 33,
+                      "price": 50
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 33,
+                      "price": 50
+                    },
+                    {
+                      "id": 4,
+                      "name": "ไอซ์",
+                      "percentage": 33,
+                      "price": 50
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 5,
+                  "name": "ต้มยำกุ้ง",
+                  "price": 250,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 100,
+                      "price": 250
+                    }
+                  ],
+                  "splitMode": "percentage"
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "name": "มื้อเย็น",
+              "foods": [
+                {
+                  "id": 4,
+                  "name": "ผัดไทย",
+                  "price": 150,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 60,
+                      "price": 90
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 20,
+                      "price": 30
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 20,
+                      "price": 30
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 5,
+                  "name": "ไข่เจียว",
+                  "price": 50,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 70,
+                      "price": 35
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 10,
+                      "price": 5
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 20,
+                      "price": 10
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 6,
+                  "name": "ส้มตำ",
+                  "price": 80,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 30,
+                      "price": 24
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 30,
+                      "price": 24
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 40,
+                      "price": 32
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "id": 7,
+                  "name": "ขนมจีน",
+                  "price": 120,
+                  "consumers": [
+                    {
+                      "id": 1,
+                      "name": "กล้า",
+                      "percentage": 40,
+                      "price": 48
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 30,
+                      "price": 36
+                    },
+                    {
+                      "id": 3,
+                      "name": "ปิง",
+                      "percentage": 30,
+                      "price": 36
+                    }
+                  ],
+                  "splitMode": "percentage"
+                }
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    },
+    {
+      "username": "admi",
+      "password": "1",
+      "groups": [],
+      "key": "QxgrE",
+      "id": 2
+    }
+  ]
 }
