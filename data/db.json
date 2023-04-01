@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "gr5j3",
+      "key": "Gd7aC",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -276,6 +276,16 @@
             },
             {
               "name": "โอ้ต",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "xsa",
+          "members": [
+            {
+              "name": "sax",
               "price": 0
             }
           ],
