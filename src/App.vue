@@ -1,7 +1,7 @@
 <script setup>
-import {onBeforeMount, onMounted, ref} from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import Navbar from './components/Navbar.vue'
-import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
+import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
 import Loading from './components/icons/loading.vue'
 
 const username = ref('')
@@ -63,14 +63,14 @@ onBeforeMount(async () => {
 <template>
   <div class="bg-gray-100">
     <Navbar @clearData="clearUserData" @setUsername="setUsername"></Navbar>
-    <div class="container mx-auto py-8">
-      <div v-show="!loginAlready" class="text-center text-3xl font-bold mb-8 w-full h-full">
+    <div class="container py-8 mx-auto">
+      <div v-show="!loginAlready" class="w-full h-full mb-8 text-3xl font-bold text-center">
         กรุณาเข้าสู่ระบบ
       </div>
       <router-view v-if="username !== ''" :userData="userData" @updated="updated"></router-view>
     </div>
     <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <Loading/>
+      <Loading />
     </div>
   </div>
 </template>
