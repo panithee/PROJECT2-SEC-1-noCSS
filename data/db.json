@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "AuS0N",
+      "key": "U1m6J",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -250,6 +250,32 @@
           "members": [
             {
               "name": "hr",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "NocSS",
+          "members": [
+            {
+              "name": "Eve",
+              "price": 0
+            },
+            {
+              "name": "Three",
+              "price": 0
+            },
+            {
+              "name": "Mo",
+              "price": 0
+            },
+            {
+              "name": "Oat",
+              "price": 0
+            },
+            {
+              "name": "Nt",
               "price": 0
             }
           ],
