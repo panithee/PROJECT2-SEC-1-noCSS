@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import ArrowDown from "./icons/arrowDown.vue";
 import ArrowUp from "./icons/arrowUp.vue";
 import Close from "./icons/close.vue";
@@ -257,7 +257,7 @@ const resetPriceWhenRemove = (index) => {
             class="flex justify-end pr-5">
             <ArrowDown></ArrowDown>
           </button>
-          <button :id="index" v-else @click="showGroupDetails(index)" class="flex justify-end pr-5">
+          <button v-else :id="index" class="flex justify-end pr-5" @click="showGroupDetails(index)">
             <ArrowUp></ArrowUp>
           </button>
         </div>

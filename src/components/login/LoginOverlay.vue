@@ -19,18 +19,18 @@ const loginNavStatus = (status) => {
     <div class="container absolute h-full bg-white rounded-xl">
       <div class="justify-center ">
         <div class="w-full">
-          <loginNav :loginNav="loginRegister" @login="loginNavStatus"></loginNav>
+          <login-nav :login-nav="loginRegister" @login="loginNavStatus"></login-nav>
         </div>
         <div>
           <div class="absolute top-0 right-0 mt-4 mr-4 ">
             <button class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
                     @click="$emit('close')">
-              <CloseIcon/>
+              <close-icon/>
             </button>
           </div>
 
-          <loginRegisterInterface :loginRegister="loginRegister ? 'login' : 'register'"
-                                  @login="loginEmit"></loginRegisterInterface>
+          <login-register-interface :login-register="loginRegister ? 'login' : 'register'"
+                                    @login="loginEmit"></login-register-interface>
         </div>
 
       </div>

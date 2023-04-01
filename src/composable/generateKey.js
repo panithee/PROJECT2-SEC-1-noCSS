@@ -20,4 +20,5 @@ function generateRandomId(length) {
     }
     return result;
 }
-export { generateRandomId };
+
+export {generateRandomId};

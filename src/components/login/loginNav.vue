@@ -15,10 +15,12 @@ let loginBarStatus = computed(() => {
 </script>
 <template>
   <div class="tabs tabs-boxed">
-    <a :class="loginBarStatus ? 'tab-active' : ''" class="w-1/2 tab tab-lg tab-lifted "
-       @click="$emit('login', true)">Login</a>
-    <a :class="!loginBarStatus ? 'tab-active' : ''" class="w-1/2 tab tab-lg tab-lifted "
-       @click="$emit('login', false)">Register</a>
+    <a :class="loginBarStatus ? 'tab-active bg-primary text-white' : ''" class="w-1/2 text-black tab tab-lg tab-lifted "
+       @click="$emit('login', true)">เข้าสู่ระบบ</a>
+    <a :class="!loginBarStatus ? 'tab-active bg-primary text-white' : ''"
+       class="w-1/2 text-black tab tab-lg tab-lifted "
+       @click="$emit('login', false)">ลงทะเบียน</a>
   </div>
 </template>
+
 <style scoped></style>
