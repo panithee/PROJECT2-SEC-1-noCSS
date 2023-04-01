@@ -1,10 +1,11 @@
 <script setup>
-import { onBeforeMount, ref, watch } from "vue";
+import {onBeforeMount, ref, watch} from "vue";
 import ArrowDown from "./icons/arrowDown.vue";
 import ArrowUp from "./icons/arrowUp.vue";
 import Close from "./icons/close.vue";
 import Pen from "./icons/pen.vue";
 import Delete from "./icons/Delete.vue";
+
 const allGroupArr = ref([]);
 const memberList = ref([]);
 const textErrMember = ref("");
@@ -30,10 +31,10 @@ const props = defineProps({
 const emit = defineEmits(['updated'])
 
 watch(
-  () => props.userData,
-  (newVal, oldVal) => {
-    allGroupArr.value = newVal;
-  }
+    () => props.userData,
+    (newVal) => {
+      allGroupArr.value = newVal;
+    }
 );
 onBeforeMount(() => {
   allGroupArr.value = props.userData;
@@ -121,8 +122,8 @@ const DoneAddEditGroup = () => {
     } else if (newGroupName.value === groupNameExists) {
       textError.value = "ชื่อกลุ่มนี้มีอยู่แล้ว";
     } else if (
-      newGroupName.value !== "" &&
-      newGroupName.value !== groupNameExists
+        newGroupName.value !== "" &&
+        newGroupName.value !== groupNameExists
     ) {
       allGroupArr.value.push({
         name: newGroupName.value,
@@ -155,10 +156,10 @@ const unshowGroupDetails = (index) => {
 
 // delete group and members
 const deleteGroupAndMembers = (index, groupOrMember) => {
-  
+
   if (groupOrMember === "group") {
-    if(confirm('คุณต้องการลบข้อมูลกลุ่มใช่หรือไม่')){
-      allGroupArr.value.splice(index, 1); 
+    if (confirm('คุณต้องการลบข้อมูลกลุ่มใช่หรือไม่')) {
+      allGroupArr.value.splice(index, 1);
     }
   } else if (groupOrMember === "member") {
     if (confirm('คุณต้องการลบสมาชิกใช่หรือไม่?')) {
@@ -174,8 +175,11 @@ const deleteGroupAndMembers = (index, groupOrMember) => {
 };
 
 const resetPriceWhenRemove = (index) => {
-  const { name: memberRemoveName } = membersInGroupTarget.value[index];
-  console.log(typeof targetGroupForEdit.value.meals, targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce((acc, { name, foods }) => {
+  const {name: memberRemoveName} = membersInGroupTarget.value[index];
+  console.log(typeof targetGroupForEdit.value.meals, targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce((acc, {
+    name,
+    foods
+  }) => {
     acc = [...acc, {
       name,
       foods: foods.map(food => {
@@ -199,8 +203,7 @@ const resetPriceWhenRemove = (index) => {
               ...food,
               consumers: filteredConsumers.length > 0 ? modifyPriceConsumers : [],
             }
-          }
-          else if (food.splitMode === "percentage") {
+          } else if (food.splitMode === "percentage") {
             console.log("filteredConsumers in percentage", filteredConsumers)
             let modifyPriceConsumers = filteredConsumers.map((consumer, index) => {
               if (index === 0) {
@@ -231,38 +234,36 @@ const resetPriceWhenRemove = (index) => {
 };
 
 
-
-
 </script>
 
 <template>
-  <br>
-  <br>
-  <p v-for="group in userData ">
-  <p v-for="meal in targetGroupForEdit.meals">
-    <br>
-    {{ meal }}
-    <br>
-  </p>
-  </p>
+  <!--  <br>-->
+  <!--  <br>-->
+  <!--    <p v-for="group in userData ">-->
+  <!--    <p v-for="meal in targetGroupForEdit.meals">-->
+  <!--      <br>-->
+  <!--      {{ meal }}-->
+  <!--      <br>-->
+  <!--    </p>-->
+  <!--  </p>-->
   <div class="w-full text-2xl h-screen">
     <div class="text-center sm:grid sm:grid-cols-2 sm:pr-96">
       <h1>รายชื่อกลุ่ม</h1>
     </div>
-      <div v-for="(group, index) in allGroupArr" key="index">
-        <div>
+    <div v-for="(group, index) in allGroupArr" key="index">
+      <div>
         <div class="grid w-5/6 sm:w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md sm:pl-14 pl-5">
           <p> {{ group.name }} </p>
-          <button :id="index" v-if="showDetailsOfGroup.includes(index)" @click="unshowGroupDetails(index)"
-            class="flex justify-end pr-5">
+          <button v-if="showDetailsOfGroup.includes(index)" :id="index" class="flex justify-end pr-5"
+                  @click="unshowGroupDetails(index)">
             <ArrowDown></ArrowDown>
           </button>
           <button v-else :id="index" class="flex justify-end pr-5" @click="showGroupDetails(index)">
             <ArrowUp></ArrowUp>
           </button>
         </div>
-        <div class="flex flex-col items-center w-5/6 sm:w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md"
-          v-if="showDetailsOfGroup.includes(index)">
+        <div v-if="showDetailsOfGroup.includes(index)"
+             class="flex flex-col items-center w-5/6 sm:w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md">
           <div class="flex flex-col items-start w-4/5 gap-2">
             <span class="py-2 text-xl">รายชื่อสมาชิก</span>
             <div :id="index" class="flex w-full gap-2 overflow-x-scroll flex-nowrap h-11">
@@ -276,12 +277,12 @@ const resetPriceWhenRemove = (index) => {
             <span>ราคาทั้งหมด: {{ totalPrice }}</span>
           </div>
           <div class="flex flex-row justify-end w-full gap-2 pr-2 text-base">
-            <button :id="index" @click="eventAddEdit(index, 'edit')"
-              class="border border-b-black border-x-white border-t-white">
+            <button :id="index" class="border border-b-black border-x-white border-t-white"
+                    @click="eventAddEdit(index, 'edit')">
               แก้ไขกลุ่ม
             </button>
-            <button :id="index" @click="deleteGroupAndMembers(index, 'group')"
-              class="border border-b-black border-x-white border-t-white">
+            <button :id="index" class="border border-b-black border-x-white border-t-white"
+                    @click="deleteGroupAndMembers(index, 'group')">
               ลบกลุ่ม
             </button>
           </div>
@@ -289,7 +290,7 @@ const resetPriceWhenRemove = (index) => {
       </div>
     </div>
     <div class="mt-5 text-center bg-white">
-      <button @click="eventAddEdit(index, 'add')" class="px-8 py-3 text-white bg-black rounded-full">
+      <button class="px-8 py-3 text-white bg-black rounded-full" @click="eventAddEdit(index, 'add')">
         เพิ่มกลุ่ม
       </button>
     </div>
@@ -313,21 +314,21 @@ const resetPriceWhenRemove = (index) => {
         </div>
         <div class="w-full h-24 overflow-y-scroll">
           <div class="ml-24">
-            <div v-for="(member, index) in membersInGroupTarget" key="index" v-show="showEditMembers">
+            <div v-for="(member, index) in membersInGroupTarget" v-show="showEditMembers" key="index">
               <button @click="deleteGroupAndMembers(index, 'member')">
                 <Delete></Delete>
               </button>
               <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
-                {{ member.name }} <br />
+                {{ member.name }} <br/>
               </span>
             </div>
             <span v-for="(member, index) in memberList" key="index">
-              <button :id="index" @click="deleteGroupAndMembers(index, 'newAddMember')" v-show="showEditMembers">
+              <button v-show="showEditMembers" :id="index" @click="deleteGroupAndMembers(index, 'newAddMember')">
                 <Delete></Delete>
               </button>
               <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
                 {{ member.name }}
-              </span><br v-show="showEditMembers" />
+              </span><br v-show="showEditMembers"/>
             </span>
           </div>
         </div>
@@ -340,7 +341,7 @@ const resetPriceWhenRemove = (index) => {
           <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
         <div class="flex justify-center">
-          <button @click="DoneAddEditGroup" class="px-5 py-3 text-white bg-black rounded-full ">
+          <button class="px-5 py-3 text-white bg-black rounded-full " @click="DoneAddEditGroup">
             บันทึกกลุ่ม
           </button>
         </div>
