@@ -126,7 +126,7 @@ const checkConfirm = computed(() => {
           <label class="label ">
             <error-text :error-name="errorLoginPassword"></error-text>
           </label>
-          <button class="w-full max-w-md mt-4 btn btn-primary" @click="handleLoginResult">
+          <button class="w-full max-w-md mt-4 border-none btn bg-blueEdit" @click="handleLoginResult">
             เข้าสู่ระบบ
           </button>
         </div>
@@ -159,7 +159,7 @@ const checkConfirm = computed(() => {
             </label>
           </div>
           <div class="flex items-center justify-between max-w-md mb-6 basis-full"></div>
-          <button class="w-full max-w-md mt-4 btn btn-primary" @click="handleRegister">
+          <button class="w-full max-w-md mt-4 border-none btn bg-blueEdit" @click="handleRegister">
             ลงทะเบียน
           </button>
           <label class="label">

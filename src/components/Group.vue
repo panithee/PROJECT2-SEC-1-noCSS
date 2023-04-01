@@ -1,17 +1,25 @@
 <script setup>
-import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { onBeforeMount, ref, watch } from "vue";
 import ArrowDown from "./icons/arrowDown.vue";
 import ArrowUp from "./icons/arrowUp.vue";
 import Close from "./icons/close.vue";
 import Pen from "./icons/pen.vue";
-const myGroupArr = ref([]);
-const memberList = ref([]);
-const checkInputMember = ref(false);
-const errorMembers = ref("");
-const checkInputGroupName = ref(false);
-const errorGroupName = ref("");
+import Delete from "./icons/Delete.vue";
 
-// console.log(myGroupArr.value);
+const allGroupArr = ref([]);
+const memberList = ref([]);
+const textErrMember = ref("");
+const textError = ref("");
+const modeTarget = ref("");
+const totalPrice = ref(0);
+
+//Edit
+const showEditMembers = ref(false);
+const membersInGroupTarget = ref([]);
+const targetGroupForEdit = ref([]);
+const targetGroupForEditIndex = ref(-1);
+const showDetailsOfGroup = ref([]);
+
 
 const props = defineProps({
   userData: {
@@ -20,179 +28,322 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(['updated'])
+
 watch(
   () => props.userData,
-  (newVal, oldVal) => {
-    console.log("watch: ", newVal);
-    myGroupArr.value = newVal;
+  (newVal) => {
+    allGroupArr.value = newVal;
   }
 );
 onBeforeMount(() => {
-  myGroupArr.value = props.userData;
-  // console.log("onBeforeMount: ", myGroupArr.value);
+  allGroupArr.value = props.userData;
 });
 
 // show pop-up
-const showGroupPopUp = ref(false);
-const showInsertGroupPopUp = (event) => {
-  errorMembers.value = "";
-  errorGroupName.value = "";
+const popup = ref(false);
+const showInsertGroupPopUp = () => {
+  textErrMember.value = "";
+  textError.value = "";
+  newMember.value = "";
   memberList.value = [];
-  inputGroupName.value = ""
-  showGroupPopUp.value = !showGroupPopUp.value;
-  console.log(showGroupPopUp.value);
+  popup.value = !popup.value;
 };
 
-// add value
-const inputGroupName = ref("");
-const inputMembers = ref("");
-const addGroup = () => {
-  let groupNameExists = "";
-  for (const group of myGroupArr.value) {
-    if (group.name === inputGroupName.value) {
-      groupNameExists = group.name;
+const newGroupName = ref("");
+const newMember = ref("");
+
+
+// set start value on popup
+const eventAddEdit = (index, mode) => {
+  if (mode === "add") {
+    showEditMembers.value = false;
+    modeTarget.value = "add";
+    newGroupName.value = "";
+    memberList.value = [];
+  }
+
+  if (mode === "edit") {
+    modeTarget.value = "edit";
+    showEditMembers.value = true;
+    for (let i = 0; i < allGroupArr.value.length; i++) {
+      if (i === index) {
+        targetGroupForEditIndex.value = i;
+        targetGroupForEdit.value = JSON.parse(JSON.stringify(allGroupArr.value[i]));
+        newGroupName.value = targetGroupForEdit.value.name;
+        membersInGroupTarget.value = targetGroupForEdit.value.members;
+      }
     }
   }
-  if (inputGroupName.value === "") {
-    errorGroupName.value = "Please add a group name";
-    checkInputGroupName.value = true;
-  } else if (inputGroupName.value === groupNameExists) {
-    errorGroupName.value = "Group name already exists";
-    checkInputGroupName.value = true;
-  } else if (
-    inputGroupName.value !== "" &&
-    inputGroupName.value !== groupNameExists
-  ) {
-    myGroupArr.value.push({
-      name: inputGroupName.value,
-      members: memberList.value,
-      meals: [],
-    });
-    // emit("updateData", myGroupArr.value);
-    showInsertGroupPopUp();
-    inputGroupName.value = "";
-    memberList.value = [];
-    // console.log(myGroupArr.value);
-  }
+  showInsertGroupPopUp();
 };
 
+// addMember
 const addMember = () => {
   let memberExists = "";
   for (const member of memberList.value) {
-    if (member.name === inputMembers.value) {
+    if (member.name === newMember.value) {
       memberExists = member.name;
-      errorMembers.value = "Member already exits";
-      checkInputMember.value = true;
+      textErrMember.value = "สมาชิกนี้มีอยู่แล้ว";
     }
   }
 
-  if (inputMembers.value === "") {
-    errorMembers.value = "Please add your member";
+  for (const member of membersInGroupTarget.value) {
+    if (member.name === newMember.value) {
+      memberExists = member.name;
+      textErrMember.value = "สมาชิกนี้มีอยู่แล้ว";
+    }
+  }
+
+  if (newMember.value === "") {
+    textErrMember.value = "กรุณาเพิ่มสมาชิก";
     checkInputMember.value = true;
-  } else if (inputMembers.value !== "" && inputMembers.value !== memberExists) {
-    errorMembers.value = "";
+  } else if (newMember.value !== "" && newMember.value !== memberExists) {
+    textErrMember.value = "";
     memberList.value.push({
-      name: inputMembers.value,
+      name: newMember.value,
       price: 0,
     });
   }
-  inputMembers.value = "";
+  newMember.value = "";
 };
 
-const totalPrice = ref(0)
+//Done (add value to allGroupArr)
+const DoneAddEditGroup = () => {
+  let groupNameExists = "";
+  if (modeTarget.value === "add") {
+    for (const group of allGroupArr.value) {
+      if (group.name === newGroupName.value) {
+        groupNameExists = group.name;
+      }
+    }
+    if (newGroupName.value === "") {
+      textError.value = "กรุณาใส่ชื่อกลุ่ม";
+    } else if (newGroupName.value === groupNameExists) {
+      textError.value = "ชื่อกลุ่มนี้มีอยู่แล้ว";
+    } else if (
+      newGroupName.value !== "" &&
+      newGroupName.value !== groupNameExists
+    ) {
+      allGroupArr.value.push({
+        name: newGroupName.value,
+        members: memberList.value,
+        meals: [],
+      });
+      showInsertGroupPopUp();
+      newGroupName.value = "";
+      memberList.value = [];
+    }
+  }
+  if (modeTarget.value === "edit") {
+    showEditMembers.value = true;
+    let currentGroup = allGroupArr.value[targetGroupForEditIndex.value];
+    currentGroup.name = newGroupName.value;
+    currentGroup.members = membersInGroupTarget.value.concat(memberList.value);
+    currentGroup.meals = targetGroupForEdit.value.meals;
+    showInsertGroupPopUp();
+  }
+  emit("updated", allGroupArr.value)
+};
 
-// show member
-const grouptarget = ref([]);
+// show member toggle
 const showGroupDetails = (index) => {
-  grouptarget.value.push(index);
-  // console.log(grouptarget.value);
+  showDetailsOfGroup.value.push(index);
 };
 const unshowGroupDetails = (index) => {
-  grouptarget.value.splice(grouptarget.value.indexOf(index), 1);
-  // console.log(grouptarget.value);
+  showDetailsOfGroup.value.splice(showDetailsOfGroup.value.indexOf(index), 1);
 };
 
-const deleteGroup = (index) => {
-  myGroupArr.value.splice(index, 1)
-}
+// delete group and members
+const deleteGroupAndMembers = (index, groupOrMember) => {
+
+  if (groupOrMember === "group") {
+    if (confirm('คุณต้องการลบข้อมูลกลุ่มใช่หรือไม่')) {
+      allGroupArr.value.splice(index, 1);
+    }
+  } else if (groupOrMember === "member") {
+    if (confirm('คุณต้องการลบสมาชิกใช่หรือไม่?')) {
+      resetPriceWhenRemove(index);
+      membersInGroupTarget.value.splice(index, 1);
+    }
+  } else if (groupOrMember === "newAddMember") {
+    if (confirm('คุณต้องการลบสมาชิกใช่หรือไม่?')) {
+      memberList.value.splice(index, 1);
+    }
+  }
+  emit("updated", allGroupArr.value)
+};
+
+const resetPriceWhenRemove = (index) => {
+  const { name: memberRemoveName } = membersInGroupTarget.value[index];
+  console.log(typeof targetGroupForEdit.value.meals, targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce((acc, {
+    name,
+    foods
+  }) => {
+    acc = [...acc, {
+      name,
+      foods: foods.map(food => {
+        if (food.consumers === []) {
+          return food;
+        }
+        if (food.consumers.some(consumer => consumer?.name === memberRemoveName)) {
+          const consumerData = food.consumers.find(consumer => consumer.name === memberRemoveName);
+          console.log("food in loop", food)
+          let filteredConsumers = food.consumers.filter(consumer => {
+            console.log("🚀 ~ file: Group.vue:181 ~ filteredConsumers ~ consumer:", consumer)
+            return consumer.name !== memberRemoveName
+          });
+
+          if (food.splitMode === "equal") {
+            let modifyPriceConsumers = filteredConsumers.map(consumer => ({
+              ...consumer,
+              price: (food.price / filteredConsumers.length).toFixed(2)
+            }));
+            return {
+              ...food,
+              consumers: filteredConsumers.length > 0 ? modifyPriceConsumers : [],
+            }
+          } else if (food.splitMode === "percentage") {
+            console.log("filteredConsumers in percentage", filteredConsumers)
+            let modifyPriceConsumers = filteredConsumers.map((consumer, index) => {
+              if (index === 0) {
+                console.log(consumerData)
+                console.log("consumer", consumer)
+                let newPercentage = Number(consumerData.percentage + consumer.percentage).toFixed(2);
+                let newPrice = ((food.price * newPercentage) / 100).toFixed(2);
+                return {
+                  ...consumer,
+                  price: Number(newPrice),
+                  percentage: Number(newPercentage)
+                }
+              }
+              return consumer;
+            });
+            return {
+              ...food,
+              consumers: filteredConsumers.length > 0 ? modifyPriceConsumers : [],
+            }
+          }
+        } else {
+          return food;
+        }
+      })
+    }];
+    return acc;
+  }, []));
+};
+
 
 </script>
 
 <template>
+  <!--  <br>-->
+  <!--  <br>-->
+  <!--    <p v-for="group in userData ">-->
+  <!--    <p v-for="meal in targetGroupForEdit.meals">-->
+  <!--      <br>-->
+  <!--      {{ meal }}-->
+  <!--      <br>-->
+  <!--    </p>-->
+  <!--  </p>-->
   <div class="w-full text-2xl">
-    <div class="ml-16">
+    <div class="text-center sm:grid sm:grid-cols-2 sm:pr-96">
       <h1>รายชื่อกลุ่ม</h1>
     </div>
-    <div>
-      <div v-for="(group, index) in myGroupArr" key="index">
-        <div class="grid w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md pl-14">
-          <p>{{ group.name }}</p>
-          <button :id="index" v-if="grouptarget.includes(index)" @click="unshowGroupDetails(index)"
-            class="flex justify-end pr-5">
-
+    <div v-for="(group, index) in allGroupArr" key="index">
+      <div>
+        <div class="grid w-5/6 grid-cols-2 py-2 pl-5 m-auto mt-5 border border-black rounded-md sm:w-3/5 sm:pl-14">
+          <p> {{ group.name }} </p>
+          <button v-if="showDetailsOfGroup.includes(index)" :id="index" class="flex justify-end pr-5"
+            @click="unshowGroupDetails(index)">
             <ArrowDown></ArrowDown>
           </button>
-          <button :id="index" v-else @click="showGroupDetails(index)" class="flex justify-end pr-5">
+          <button v-else :id="index" class="flex justify-end pr-5" @click="showGroupDetails(index)">
             <ArrowUp></ArrowUp>
           </button>
         </div>
-        <div class="w-3/5 py-2 m-auto border border-black rounded-md" v-if="grouptarget.includes(index)">
-          <p class="py-2 text-xl pl-14">Member Lists</p>
-          <div :id="index" class="pl-14">
-            <span v-for="member in group.members" key="index"
-              class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">{{ member.name }}
-            </span>
+        <div v-if="showDetailsOfGroup.includes(index)"
+          class="flex flex-col items-center w-5/6 gap-2 py-2 pr-2 m-auto border border-black rounded-md sm:w-3/5">
+          <div class="flex flex-col items-start w-4/5 gap-2">
+            <span class="py-2 text-xl">รายชื่อสมาชิก</span>
+            <div :id="index" class="flex items-center w-full gap-2 overflow-x-scroll flex-nowrap h-14">
+              <span v-for="member in group.members" key="index" class="px-3 text-lg border border-black rounded-xl">
+                {{ member.name }}
+              </span>
+            </div>
           </div>
           <div class="grid grid-cols-2 text-xl text-center">
-            <span class="">จำนวนคน: {{ group.members.length }}</span>
-            <span class="">ราคาทั้งหมด: {{ totalPrice }}</span>
+            <span>จำนวนคน: {{ group.members.length }}</span>
+            <span>ราคาทั้งหมด: {{ totalPrice }}</span>
           </div>
-          <div class="text-xl text-right ">
-            <button :id="index" class="mr-4 border border-b-black border-x-white border-t-white">edit</button>
-            <button :id="index" @click="deleteGroup(index)"
-              class="mr-5 border border-b-black border-x-white border-t-white">delete</button>
+          <div class="flex flex-row justify-end w-full gap-2 pr-2 text-base">
+            <button :id="index" class="border border-b-black border-x-white border-t-white"
+              @click="eventAddEdit(index, 'edit')">
+              แก้ไขกลุ่ม
+            </button>
+            <button :id="index" class="border border-b-black border-x-white border-t-white"
+              @click="deleteGroupAndMembers(index, 'group')">
+              ลบกลุ่ม
+            </button>
           </div>
         </div>
       </div>
     </div>
-    <div class="mt-5 text-center bg-white">
-      <button @click="showInsertGroupPopUp" class="px-8 py-3 text-white bg-black rounded-full">
+    <div class="mt-5 text-center ">
+      <button class="px-8 py-3 text-white bg-black rounded-full" @click="eventAddEdit(index, 'add')">
         เพิ่มกลุ่ม
       </button>
     </div>
 
     <!-- pop-up -->
-    <div v-show="showGroupPopUp" class="fixed inset-0 z-50 flex items-center justify-center">
+    <div v-show="popup" class="fixed inset-0 z-50 flex items-center justify-center">
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
       <div class="container absolute w-3/5 px-2 pt-2 bg-white rounded-lg h-96">
-        <div class="flex justify-end pb-4">
+        <div class="flex justify-end">
           <button @click="showInsertGroupPopUp">
             <Close></Close>
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input v-model="inputGroupName" class="border border-b-black" type="text" placeholder="Add your group name" />
+          <input v-model="newGroupName" class="border border-b-black w-36 sm:w-64" type="text"
+            placeholder="กรุณาใส่ชื่อกลุ่ม" />
           <Pen class="inline mx-3"></Pen>
-          <span class="text-lg text-red-600"> {{ errorGroupName }}</span>
+          <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
-        <div class="mt-4 ml-20 text-xl">
-          <p>Member lists</p>
+        <div class="text-xl sm:mt-4 sm:ml-20">
+          <p>รายชื่อสมาชิก</p>
         </div>
-        <div>
-          <div class="ml-24">
-            <span v-for="member in memberList" class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
-              {{ member.name }}
+        <div class="w-full h-10 overflow-y-scroll sm:h-24">
+          <div class="sm:ml-24">
+            <div v-for="(member, index) in membersInGroupTarget" v-show="showEditMembers" key="index">
+              <button @click="deleteGroupAndMembers(index, 'member')">
+                <Delete></Delete>
+              </button>
+              <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
+                {{ member.name }} <br />
+              </span>
+            </div>
+            <span v-for="(member, index) in memberList" key="index">
+              <button v-show="showEditMembers" :id="index" @click="deleteGroupAndMembers(index, 'newAddMember')">
+                <Delete></Delete>
+              </button>
+              <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
+                {{ member.name }}
+              </span><br v-show="showEditMembers" />
             </span>
           </div>
-          <input v-model="inputMembers" class="mt-4 ml-24 text-xl border border-b-black" type="text"
-            placeholder="+ Add a member" />
-          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
-            add</button><br />
-          <span class="ml-24 text-lg text-red-600"> {{ errorMembers }}</span>
         </div>
-        <div class="flex justify-center mt-10">
-          <button @click="addGroup" class="fixed px-6 py-5 text-white bg-black rounded-full">
-            Done
+        <div class="text-center sm:text-left">
+          <input @keypress.enter="addMember" v-model="newMember" class="mt-4 text-lg border sm:ml-24 border-b-black"
+            type="text" placeholder="+ ใส่ชื่อสมาชิกทีละคน" />
+          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
+            เพิ่ม
+          </button><br />
+          <span class="text-lg text-red-600 sm:ml-24"> {{ textErrMember }}</span>
+        </div>
+        <div class="flex justify-center">
+          <button class="px-5 py-3 mt-3 text-white bg-black rounded-full sm:mt-0 " @click="DoneAddEditGroup">
+            บันทึกกลุ่ม
           </button>
         </div>
       </div>

@@ -17,6 +17,7 @@ const checkLogin = async () => {
   if (!storedUsername) {
     userData.value = []
     loginAlready.value = false
+    sessionStorage.setItem("isLoggedIn", "false")
   }
   try {
     const userKey = await findKey(storedUsername)
@@ -25,6 +26,8 @@ const checkLogin = async () => {
       sessionStorage.clear()
       username.value = ''
       userData.value = []
+      sessionStorage.setItem("isLoggedIn", "false")
+      console.log('key not match')
       loginAlready.value = false
     } else {
       loginAlready.value = true
@@ -53,6 +56,7 @@ const updated = (data) => {
   updateGroups(username.value, data)
 }
 onBeforeMount(async () => {
+  loginAlready.value = sessionStorage.getItem("isLoggedIn") === "true";
   await checkLogin();
   loading.value = false;
 })
@@ -61,7 +65,7 @@ onBeforeMount(async () => {
 
 
 <template>
-  <div class="bg-gray-100">
+  <<<<<<< HEAD <div class="bg-gray-100">
     <Navbar @clearData="clearUserData" @setUsername="setUsername"></Navbar>
     <div class="container py-8 mx-auto">
       <div v-show="!loginAlready" class="w-full h-full mb-8 text-3xl font-bold text-center">
@@ -71,8 +75,20 @@ onBeforeMount(async () => {
     </div>
     <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <Loading />
-    </div>
-  </div>
+      =======
+      <div class="w-full min-h-screen bg-cover bg-hero-mobile sm:bg-hero">
+        <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
+        <div class="container mx-auto">
+          <router-view v-if="username !== ''" :userData="userData" @updated="updated"></router-view>
+          <div v-show="!loginAlready" class="p-8 text-2xl text-center">
+            กรุณาเข้าสู่ระบบ
+          </div>
+          <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <Loading />
+          </div>
+          >>>>>>> main
+        </div>
+      </div>
 </template>
 
 
