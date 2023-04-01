@@ -1,10 +1,6 @@
 <script setup>
 import { ref, computed, watchEffect } from "vue"
 const props = defineProps({
-  userData: {
-    type: Array,
-    default: []
-  },
   mode: {
     type: String,
     default: "add"
