@@ -25,7 +25,7 @@ const switchMenu = (type) => {
 };
 let food = ref({});
 const foodName = ref("");
-const foodPrice = ref()
+const foodPrice = ref(undefined)
 
 const personsWhoEat = ref([])
 const personsList = ref([])
@@ -149,21 +149,16 @@ const checkDataBeforeDone = () => {
   <div class="w-full h-full">
     <router-link to="/"
       class="flex ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 w-fit backfont">กลับ</router-link>
-    <div>
       <input type="text" placeholder="กรุณาใส่ชื่ออาหาร" v-model="foodName"
-        class=" flex justify-center mx-auto border rounded-lg text-center text-2xl">
+        class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
       <p v-show="isFoodNameValid" class="flex justify-center text-red-500 text-md font-bold">*จำเป็น</p>
-    </div>
-    <div class="mt-5">
-      <p class="flex justify-center text-lg text-gray-600">เลือกโหมดการหาร</p>
+      <p class="flex justify-center mt-3 text-lg text-gray-600">เลือกโหมดการหาร</p>
       <div class="flex justify-center">
         <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
           :class="page === true ? 'opacity-100' : 'opacity-10'" alt="" />
         <img src="../assets/MdiPercentCircleOutline.svg" class="cursor-pointer" @click="switchMenu('percentage')"
           :class="page === false ? 'opacity-100' : 'opacity-10'" alt="" />
-      </div>
     </div>
-    
     <p class="flex justify-center mt-3 text-lg text-gray-600">รายชื่อคนทั้งหมดในกลุ่ม</p>
     <p v-show="isPersonsWhoEatValid" class="flex justify-center text-red-500 text-md font-bold">*จำเป็น</p>
     <div class="flex justify-between w-64 mx-auto bg-white mt-2 overflow-x-scroll pb-2">
