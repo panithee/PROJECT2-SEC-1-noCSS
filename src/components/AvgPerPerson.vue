@@ -70,9 +70,9 @@ const memberListByMeal = computed(() => {
 
 <template>
   <button class="absolute text-xl top-18 left-14 text-slate-500 hover:text-black">
-    Back
-  </button>
-  <div class="absolute text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
+  Back
+</button>
+<div class="absolute text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
 
   <div class="flex justify-center w-full">
     <div class="flex justify-start w-7/12 mt-20">
@@ -118,6 +118,7 @@ const memberListByMeal = computed(() => {
       </div>
     </div>
   </div>
+</div>
 
   <div class="flex flex-col w-full gap-4 mt-8 px-28" v-for="group in memberListByMeal">
 
