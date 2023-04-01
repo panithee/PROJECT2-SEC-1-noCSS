@@ -266,7 +266,7 @@ const resetPriceWhenRemove = (index) => {
              class="flex flex-col items-center w-5/6 sm:w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md">
           <div class="flex flex-col items-start w-4/5 gap-2">
             <span class="py-2 text-xl">รายชื่อสมาชิก</span>
-            <div :id="index" class="flex w-full gap-2 overflow-x-scroll flex-nowrap h-11">
+            <div :id="index" class="flex w-full gap-2 items-center overflow-x-scroll flex-nowrap h-14">
               <span v-for="member in group.members" key="index" class="px-3 text-lg border border-black rounded-xl">
                 {{ member.name }}
               </span>
