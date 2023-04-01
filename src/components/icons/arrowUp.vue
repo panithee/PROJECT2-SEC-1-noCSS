@@ -1,10 +1,10 @@
 
 <template>
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12 8l6 6H6z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m12 16l-6-6h12z"></path></svg>
   </template>
   
   <script>
   export default {
-    name: 'RiArrowUpSFill'
+    name: 'RiArrowDownSFill'
   }
   </script>
