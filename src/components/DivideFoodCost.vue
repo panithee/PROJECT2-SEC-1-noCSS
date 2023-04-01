@@ -218,10 +218,10 @@ const checkDataBeforeDone = () => {
 
     <div class="flex w-3/5 mx-auto mt-10 ">
       <div class="w-full flex flex-col percenttext">
-        <p v-if="!page" class="flex flex-col">
+        <p v-if="!page" class="flex flex-col w-fit">
           เปอร์เซ็นต์ : {{ calculateTotalPercent() }}%
         </p>
-        <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
+        <p v-if="!page" class="flex flex-col w-fit">{{ checkPercent() }}</p>
       </div>
 
       <div class="flex w-full justify-end items-center boxfoodprice">
@@ -257,7 +257,7 @@ const checkDataBeforeDone = () => {
 
   .textfoodprice {
     text-align: center;
-    flex: content;
+    flex:auto;
     justify-content: center;
   }
 
