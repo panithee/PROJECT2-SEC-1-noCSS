@@ -17,6 +17,7 @@ const checkLogin = async () => {
   if (!storedUsername) {
     userData.value = []
     loginAlready.value = false
+    sessionStorage.setItem("isLoggedIn", "false")
   }
   try {
     const userKey = await findKey(storedUsername)
@@ -25,6 +26,8 @@ const checkLogin = async () => {
       sessionStorage.clear()
       username.value = ''
       userData.value = []
+      sessionStorage.setItem("isLoggedIn", "false")
+      console.log('key not match')
       loginAlready.value = false
     } else {
       loginAlready.value = true
@@ -53,6 +56,7 @@ const updated = (data) => {
   updateGroups(username.value, data)
 }
 onBeforeMount(async () => {
+  loginAlready.value = sessionStorage.getItem("isLoggedIn") === "true";
   await checkLogin();
   loading.value = false;
 })
