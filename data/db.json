@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "OXrdM",
+      "key": "AuS0N",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -244,6 +244,16 @@
               ]
             }
           ]
+        },
+        {
+          "name": "trhh",
+          "members": [
+            {
+              "name": "hr",
+              "price": 0
+            }
+          ],
+          "meals": []
         }
       ]
     },

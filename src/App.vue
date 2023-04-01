@@ -66,7 +66,7 @@ checkLogin()
 <template>
   <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
   <div class="container mx-auto">
-    <router-view v-if="username !== ''" :userData="userData"></router-view>
+    <router-view @updated="updated" v-if="username !== ''" :userData="userData"></router-view>
     <div v-show="!loginAlready" class="p-8 text-2xl text-center">
       กรุณาเข้าสู่ระบบ
     </div>
