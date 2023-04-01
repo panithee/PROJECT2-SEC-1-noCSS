@@ -28,17 +28,6 @@ const errorRegisterUsername = computed(() => {
     }
   }
 });
-const errorRegisterPassword = computed(() => {
-  if (props.loginRegister === "login") {
-    return "";
-  } else {
-    if (passwordInput.value === "") {
-      return "";
-    } else {
-      return "";
-    }
-  }
-});
 const errorRegisterConfirmPassword = computed(() => {
   if (props.loginRegister === "login") {
     return "";
@@ -145,7 +134,7 @@ const checkConfirm = computed(() => {
             <input v-model="passwordInput" class="w-full input input-bordered" placeholder="พิมพ์ที่นี่"
               type="password" />
             <label class="label ">
-              <ErrorText :errorName="errorRegisterPassword"></ErrorText>
+              <ErrorText></ErrorText>
             </label>
           </div>
           <div class="max-w-md form-control basis-full">
@@ -173,4 +162,6 @@ const checkConfirm = computed(() => {
 </template>
 
 
-<style scoped></style>
+<style scoped>
+/* empty */
+</style>

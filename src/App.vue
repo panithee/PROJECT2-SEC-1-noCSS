@@ -73,7 +73,7 @@ onBeforeMount(async () => {
         กรุณาเข้าสู่ระบบ
       </div>
       <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <Loading/>
+        <Loading />
       </div>
     </div>
   </div>
