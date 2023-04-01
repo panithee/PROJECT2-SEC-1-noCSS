@@ -29,6 +29,7 @@ const foodPrice = ref()
 
 const personsWhoEat = ref([])
 const personsList = ref([])
+
 const calculatePriceByPercent = () => {
   if (personsWhoEat.value?.length === undefined) return ;
   personsWhoEat.value.map((person) => {
@@ -70,15 +71,15 @@ const togglePersonWhoEat = (event) => {
 
 
 const avgPricePerPerson = computed(() => {
-  if(isNaN(foodPrice.value)){
+  if(isNaN(foodPrice.value) || foodPrice.value < 0){
     foodPrice.value = 0
-    const avg = Math.ceil(foodPrice.value / personsWhoEat.value.length) * 100 / 100
+    const avg = (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
     personsWhoEat.value = personsWhoEat.value.map((a) => {
     a.price = avg;
     return a
   })
 }
-  return Math.ceil(foodPrice.value / personsWhoEat.value.length) * 100 / 100
+  return (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100)/100).toFixed(2)
 });
 
 
@@ -107,6 +108,12 @@ const checkPercent = () => {
   }
 }
 const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.id === id);
+
+const checkFoodPrice = () => {
+  if(foodPrice.value<0){
+    foodPrice.value=0
+  }
+}
 
 </script>
 
@@ -184,7 +191,7 @@ const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.i
       
       <div class="flex w-full justify-end boxfoodprice">
         <p class="flex mr-3 items-center text-xl textfoodprice">ราคาอาหาร :</p>
-        <input v-model="foodPrice" type="number" :placeholder="foodPrice===0 || isNaN(foodPrice)?'กรุณาใส่ราคาอาหาร':foodPrice"
+        <input v-model="foodPrice" type="number" @input="checkFoodPrice" :placeholder="foodPrice===0 || isNaN(foodPrice)?'กรุณาใส่ราคาอาหาร':foodPrice"
         class="border border-gray-500 text-center rounded-lg text-xl justify-end inputfoodprice">
       </div>
     </div>
