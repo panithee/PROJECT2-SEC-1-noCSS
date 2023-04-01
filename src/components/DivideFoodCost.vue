@@ -25,10 +25,14 @@ const switchMenu = (type) => {
 };
 let food = ref({});
 const foodName = ref("");
-const foodPrice = ref(undefined)
+const foodPrice = ref()
 
 const personsWhoEat = ref([])
 const personsList = ref([])
+
+const isFoodNameValid = ref(false);
+const isFoodPriceValid = ref(false);
+const isPersonsWhoEatValid = ref(false);
 
 
 const calculatePriceByPercent = () => {
@@ -118,18 +122,24 @@ const checkFoodPrice = () => {
 }
 
 const checkDataBeforeDone = () => {
-  if (foodName.value.trim() !== "" && foodPrice.value !== undefined && foodPrice.value > 0 && personsWhoEat.value.length >= 1) {
-    emit('sendAllData', foodName.value, foodPrice.value, personsWhoEat.value);
-
-  }
   if (foodName.value.trim() === "") {
-    alert('Please fill your food name.')
+    isFoodNameValid.value = true
+  } else {
+    isFoodNameValid.value = false
   }
   if (foodPrice.value === undefined || foodPrice.value <= 0) {
-    alert('Please fill your food price.')
+    isFoodPriceValid.value = true
+  } else {
+    isFoodPriceValid.value = false
   }
   if (personsWhoEat.value.length < 1) {
-    alert('Please choose a person who eat at least one.')
+    isPersonsWhoEatValid.value = true
+  } else {
+    isPersonsWhoEatValid.value = false
+  }
+
+  if (foodName.value.trim() !== "" && foodPrice.value !== undefined && foodPrice.value > 0 && personsWhoEat.value.length >= 1) {
+    return emit('sendAllData', foodName.value, foodPrice.value, personsWhoEat.value);
   }
 }
 
@@ -139,17 +149,23 @@ const checkDataBeforeDone = () => {
   <div class="w-full h-full">
     <router-link to="/"
       class="flex ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg px-2 w-fit backfont">กลับ</router-link>
-    <input type="text" placeholder="กรุณาใส่ชื่ออาหาร" v-model="foodName"
-      class="flex justify-center mx-auto border rounded-lg text-center text-2xl">
-    <p class="flex justify-center mt-5 text-lg text-gray-600">เลือกโหมดการหาร</p>
-    <div class="flex justify-center">
-      <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
-        :class="page === true ? 'opacity-100' : 'opacity-10'" alt="" />
-      <img src="../assets/MdiPercentCircleOutline.svg" class="cursor-pointer" @click="switchMenu('percentage')"
-        :class="page === false ? 'opacity-100' : 'opacity-10'" alt="" />
+    <div>
+      <input type="text" placeholder="กรุณาใส่ชื่ออาหาร" v-model="foodName"
+        class=" flex justify-center mx-auto border rounded-lg text-center text-2xl">
+      <p v-show="isFoodNameValid" class="flex justify-center text-red-500 text-md font-bold">*จำเป็น</p>
+    </div>
+    <div class="mt-5">
+      <p class="flex justify-center text-lg text-gray-600">เลือกโหมดการหาร</p>
+      <div class="flex justify-center">
+        <img src="../assets/AkarIconsEqual.svg" class="mr-2 cursor-pointer" @click="switchMenu('equal')"
+          :class="page === true ? 'opacity-100' : 'opacity-10'" alt="" />
+        <img src="../assets/MdiPercentCircleOutline.svg" class="cursor-pointer" @click="switchMenu('percentage')"
+          :class="page === false ? 'opacity-100' : 'opacity-10'" alt="" />
+      </div>
     </div>
 
     <p class="flex justify-center mt-3 text-lg text-gray-600">รายชื่อคนทั้งหมดในกลุ่ม</p>
+    <p v-show="isPersonsWhoEatValid" class="flex justify-center text-red-500 text-md font-bold">*จำเป็น</p>
     <div class="flex justify-between w-64 mx-auto bg-white mt-2 overflow-x-scroll pb-2">
       <button class="px-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index" :id="index"
         @click="togglePersonWhoEat($event)" :class="
@@ -208,11 +224,12 @@ const checkDataBeforeDone = () => {
         <p v-if="!page" class="flex flex-col">{{ checkPercent() }}</p>
       </div>
 
-      <div class="flex w-full justify-end boxfoodprice">
+      <div class="flex w-full justify-end items-center boxfoodprice">
         <p class="flex mr-3 items-center text-xl textfoodprice">ราคาอาหาร :</p>
         <input v-model="foodPrice" type="number" @input="checkFoodPrice"
           :placeholder="foodPrice === 0 || isNaN(foodPrice) ? 'กรุณาใส่ราคาอาหาร' : foodPrice"
           class="border border-gray-500 text-center rounded-lg text-xl justify-end inputfoodprice">
+        <p v-show="isFoodPriceValid" class="flex justify-center text-red-500 text-md font-bold ml-1">*จำเป็น</p>
       </div>
     </div>
 
@@ -223,13 +240,11 @@ const checkDataBeforeDone = () => {
 
 <style scoped>
 @media (max-width: 640px) {
-
   .backfont {
     font-size: medium;
     font-weight: bold;
     margin-left: 1em;
   }
-
 
   .percenttext {
     text-align: center;
@@ -246,7 +261,6 @@ const checkDataBeforeDone = () => {
     justify-content: center;
   }
 
-
   .inputfoodprice {
     text-align: center;
     flex: content;
@@ -255,11 +269,8 @@ const checkDataBeforeDone = () => {
     font-size: small;
   }
 
-
-
   .m-table {
     width: 98%;
     height: 20em;
   }
-}
-</style>
+}</style>
