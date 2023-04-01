@@ -239,13 +239,13 @@ const resetPriceWhenRemove = (index) => {
 <template>
   <!--  <br>-->
   <!--  <br>-->
-  <!--  <p v-for="group in userData ">-->
-  <!--  <p v-for="meal in targetGroupForEdit.meals">-->
-  <!--    <br>-->
-  <!--    {{ meal }}-->
-  <!--    <br>-->
+  <!--    <p v-for="group in userData ">-->
+  <!--    <p v-for="meal in targetGroupForEdit.meals">-->
+  <!--      <br>-->
+  <!--      {{ meal }}-->
+  <!--      <br>-->
+  <!--    </p>-->
   <!--  </p>-->
-  <!--</p>-->
   <div class="w-full text-2xl h-screen">
     <div class="text-center sm:grid sm:grid-cols-2 sm:pr-96">
       <h1>รายชื่อกลุ่ม</h1>
