@@ -16,11 +16,28 @@ const confirmPasswordInput = ref("");
 const errorSubmit = ref("");
 const emit = defineEmits(["login"]);
 const errorRegisterUsername = computed(() => {
-  if (alreadyUserExist.value) {
-    return "ชื่อผู้ใช้นี้มีอยู่แล้ว";
+  if (props.loginRegister === "login") {
+    return "";
+  } else {
+    if (usernameInput.value === "") {
+      return "";
+    } else if (alreadyUserExist.value) {
+      return "ชื่อผู้ใช้นี้มีอยู่แล้ว";
+    } else {
+      return "";
+    }
   }
-  return "";
-
+});
+const errorRegisterPassword = computed(() => {
+  if (props.loginRegister === "login") {
+    return "";
+  } else {
+    if (passwordInput.value === "") {
+      return "";
+    } else {
+      return "";
+    }
+  }
 });
 const errorRegisterConfirmPassword = computed(() => {
   if (props.loginRegister === "login") {
@@ -109,7 +126,7 @@ const checkConfirm = computed(() => {
           <label class="label ">
             <error-text :error-name="errorLoginPassword"></error-text>
           </label>
-          <button class="w-full max-w-md mt-4 border-none btn bg-blueEdit" @click="handleLoginResult">
+          <button class="w-full max-w-md mt-4 btn btn-primary" @click="handleLoginResult">
             เข้าสู่ระบบ
           </button>
         </div>
@@ -128,7 +145,7 @@ const checkConfirm = computed(() => {
             <input v-model="passwordInput" class="w-full input input-bordered" placeholder="พิมพ์ที่นี่"
               type="password" />
             <label class="label ">
-              <ErrorText></ErrorText>
+              <ErrorText :errorName="errorRegisterPassword"></ErrorText>
             </label>
           </div>
           <div class="max-w-md form-control basis-full">
@@ -142,7 +159,7 @@ const checkConfirm = computed(() => {
             </label>
           </div>
           <div class="flex items-center justify-between max-w-md mb-6 basis-full"></div>
-          <button class="w-full max-w-md mt-4 border-none btn bg-blueEdit" @click="handleRegister">
+          <button class="w-full max-w-md mt-4 btn btn-primary" @click="handleRegister">
             ลงทะเบียน
           </button>
           <label class="label">
