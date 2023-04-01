@@ -83,19 +83,19 @@ const addMember = () => {
   for (const member of memberList.value) {
     if (member.name === newMember.value) {
       memberExists = member.name;
-      textErrMember.value = "Member already exits";
+      textErrMember.value = "สมาชิกนี้มีอยู่แล้ว";
     }
   }
 
   for (const member of membersInGroupTarget.value) {
     if (member.name === newMember.value) {
       memberExists = member.name;
-      textErrMember.value = "Member already exits";
+      textErrMember.value = "สมาชิกนี้มีอยู่แล้ว";
     }
   }
 
   if (newMember.value === "") {
-    textErrMember.value = "Please add your member";
+    textErrMember.value = "กรุณาเพิ่มสมาชิก";
     checkInputMember.value = true;
   } else if (newMember.value !== "" && newMember.value !== memberExists) {
     textErrMember.value = "";
@@ -117,9 +117,9 @@ const DoneAddEditGroup = () => {
       }
     }
     if (newGroupName.value === "") {
-      textError.value = "Please add a group name";
+      textError.value = "กรุณาใส่ชื่อกลุ่ม";
     } else if (newGroupName.value === groupNameExists) {
-      textError.value = "Group name already exists";
+      textError.value = "ชื่อกลุ่มนี้มีอยู่แล้ว";
     } else if (
       newGroupName.value !== "" &&
       newGroupName.value !== groupNameExists
@@ -304,7 +304,7 @@ const resetPriceWhenRemove = (index) => {
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input v-model="newGroupName" class="border border-b-black" type="text" placeholder="Add your group name" />
+          <input v-model="newGroupName" class="border border-b-black" type="text" placeholder="กรุณาใส่ชื่อกลุ่ม" />
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
@@ -332,10 +332,10 @@ const resetPriceWhenRemove = (index) => {
           </div>
         </div>
         <div>
-          <input @keypress.enter="addMember" v-model="newMember" class="mt-4 ml-24 text-xl border border-b-black" type="text"
-            placeholder="+ Add a member" />
+          <input @keypress.enter="addMember" v-model="newMember" class="mt-4 ml-24 text-lg border border-b-black" type="text"
+            placeholder="+ ใส่ชื่อสมาชิกทีละคน" />
           <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
-            เพิ่มสมาชิก
+            เพิ่ม
           </button><br />
           <span class="ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
         </div>
