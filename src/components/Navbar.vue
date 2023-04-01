@@ -28,6 +28,7 @@ onMounted(() => {
   if (sessionStorage.getItem("isLoggedIn") === "true" && sessionStorage.getItem("username") !== null) {
     isLoggedIn.value = true;
   }
+  isLoggedIn.value = false;
 });
 const menuOpen = ref(false);
 const toggleMenu = () => {
@@ -51,28 +52,23 @@ const toggleMenu = () => {
         <ul :class="!menuOpen ? 'hidden' : 'visible'"
             class="absolute right-0 z-10 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/"
-                         @click=toggleMenu>อาหาร
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/" @click=toggleMenu>อาหาร
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/eve"
-                         @click=toggleMenu>อีฟ
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/eve" @click=toggleMenu>อีฟ
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/nt"
-                         @click=toggleMenu>เอ็นที
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/nt" @click=toggleMenu>เอ็นที
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/three"
-                         @click=toggleMenu>ทรี
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/three" @click=toggleMenu>ทรี
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/oat"
-                         @click=toggleMenu>โอ๊ต
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/oat" @click=toggleMenu>โอ๊ต
             </router-link>
           </li>
           <li><a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" @click="handleLoginEvent">{{
