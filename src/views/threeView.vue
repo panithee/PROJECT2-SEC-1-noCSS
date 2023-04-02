@@ -22,10 +22,7 @@ const test = (foodName, foodPrice, personsWhoEat) => {
     foodName1.value = foodName
     foodPrice2.value = foodPrice
     personsWhoEat3.value = personsWhoEat
-
-      // console.log(personsWhoEat3.value[0].name)
-      
-      foodlist.value.push({"foodname":foodName1.value,"foodPrice":foodPrice2.value,"name":personsWhoEat3.value})
+    foodlist.value.push({"foodname":foodName1.value,"foodPrice":foodPrice2.value,"name":personsWhoEat3.value})
      
 }
 

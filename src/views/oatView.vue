@@ -1,5 +1,6 @@
 <template>
-  {{ mealData }}
+  {{ member }}
+
   <div v-if="t == false" class="oatView">
     <!-- {{ foodlist}}
     {{ personsWhoEat3 }} -->
@@ -18,7 +19,7 @@
     <div class="container m-auto ">
       <div class="flex flex-col  h-[60vh]">
         <div v-if="foodlist?.length <= 0">
-          <input class="border border-black text-[40px] rounded-full" placeholder="Add ur food ~~" type="text">
+         
         </div>
         <div v-else class=" w-full">
           <ul>
@@ -97,6 +98,12 @@ watch(() => props.mealData, (newVal, oldVal) => {
   console.log(foodlist.value)
 
 })
+
+watch(() => props.member, (newVal, oldVal) => {
+
+  member.value = newVal
+
+})
 const show = () => {
   if (t.value == false) {
     t.value = !t.value
@@ -114,11 +121,8 @@ const test = (foodName, foodPrice, personsWhoEat, tt) => {
   foodPrice2.value = foodPrice
   personsWhoEat3.value = personsWhoEat
 
-  // console.log(personsWhoEat3.value[0].name)
-  // member = personsWhoEat3.value[0].name
 
-  // console.log(  Array.from(personsWhoEat));
-  foodlist.value.push({"foodname": foodName1.value, "foodPrice": foodPrice2.value, "oc": personsWhoEat3.value})
+  foodlist.value.push({"foodname": foodName1.value, "foodPrice": foodPrice2.value, "name": personsWhoEat3.value})
   if (tt == false) {
     t.value = !t.value
   }
