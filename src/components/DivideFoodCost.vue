@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watchEffect } from "vue"
+import { ref, computed, watchEffect, onMounted } from "vue"
 const props = defineProps({
   mode: {
     type: String,
@@ -18,8 +18,8 @@ const switchMenu = (type) => {
   page.value = type === "equal";
   if (!page.value) calculatePriceByPercent();
 };
-let food = ref({});
-const foodName = ref("");
+let foods = ref({});
+const foodName = ref('')
 const foodPrice = ref(undefined)
 const personsWhoEat = ref([])
 const personsList = ref([])

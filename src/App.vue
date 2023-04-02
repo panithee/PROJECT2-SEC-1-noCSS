@@ -1,7 +1,7 @@
 <script setup>
-import {onBeforeMount, ref} from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import Navbar from './components/Navbar.vue'
-import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
+import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
 import Loading from './components/icons/loading.vue'
 
 const username = ref('')
@@ -78,10 +78,5 @@ onBeforeMount(async () => {
     </div>
   </div>
 </template>
-
-
-
-
-
-
-
+ 
+<style scoped></style>
