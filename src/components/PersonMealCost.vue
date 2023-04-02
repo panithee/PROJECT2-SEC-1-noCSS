@@ -22,18 +22,6 @@ const mealsEat = (consumersName = [], meals = []) => {
 };
 
 const mealCalGroup = (consumersName = [], meal = {}) => {
-  // const mealCal = meals.reduce((acc, meal) => {
-  //   meal.foods.forEach((food) => {
-  //     food.consumers.forEach((consumer) => {
-  //       if (consumersName.includes(consumer.name)) {
-  //         console.log(food.name, consumer.price);
-  //         acc += Number(consumer.price);
-  //       }
-  //     });
-  //   });
-  //   return acc
-  // }, 0);
-  // return mealCal;
   const mealCal = meal.foods.reduce((acc, food) => {
     food.consumers.forEach((consumer) => {
       if (consumersName.includes(consumer.name)) {
@@ -53,8 +41,6 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
   <div class="flex flex-col gap-4" v-for="member in memberInGroup">
     <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-if="memberSelected === ''"
       v-for="meal in mealsEat(member.name, mealOfPerson)">
-
-      <!-- <div>{{ member.name }}</div> -->
 
       <div class="flex justify-center">
 
