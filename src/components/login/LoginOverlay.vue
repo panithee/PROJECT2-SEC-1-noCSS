@@ -30,8 +30,8 @@ const loginNavStatus = (status) => {
             </button>
           </div>
 
-          <login-register-interface :login-register="loginRegister ? 'login' : 'register'"
-            @login="loginEmit"></login-register-interface>
+          <loginRegisterInterface :loginRegister="loginRegister ? 'login' : 'register'" @login="loginEmit">
+          </loginRegisterInterface>
         </div>
 
       </div>

@@ -86,11 +86,10 @@ const avgPricePerPerson = computed(() => {
 });
 
 
-
 const inputPercent = (event, index) => {
-  const percentage = event.target.value;
-  personsWhoEat.value[index].percentage = percentage > 100 || percentage < 0 ? 0 : percentage;
-  calculatePriceByPercent();
+ const percentage = event.target.value;
+personsWhoEat.value[index].percentage = percentage > 100 || percentage < 0 ? 0 : percentage;
+calculatePriceByPercent();
 };
 
 
