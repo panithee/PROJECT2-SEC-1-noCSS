@@ -81,13 +81,13 @@ const beforeSave = () => {
   <div v-if="switchFood == false" class="oatView">
     <!-- {{ foodlist}}
                                                                                                                                                                         {{ personsWhoEat3 }} -->
-    <div class="flex justify-between w-40 m-5">
-      <span @click="$emit('back')">Back</span>
-      <span>มื้ออาหาร</span>
+    <div class="flex items-center w-1/2 m-5">
+      <span @click="$emit('back')" class="flex hover:bg-white hover:rounded-xl cursor-pointer p-1 text-xl font-semibold w-fit">ย้อนกลับ</span>
+      <span class="ml-10 text-xl font-semibold flex items-center">มื้ออาหาร</span>
     </div>
-    <div class=" ml-[110px]">
-      <input v-model="mealname" class="border border-b-black text-[25px]" placeholder="Meal name" type="text">
-      <p v-show="isMealNameValid" class="flex justify-center font-bold text-red-500 text-md">*จำเป็น</p>
+    <div class="flex items-center ml-[150px]">
+      <input v-model="mealname" class="border border-b-black text-[25px]" placeholder="ชื่อมื้ออาหาร" type="text">
+      <span v-show="isMealNameValid" class="flex ml-2 justify-center font-bold text-red-500 text-md">*จำเป็น</span>
     </div>
 
     <div class="container m-auto ">
@@ -99,36 +99,41 @@ const beforeSave = () => {
           <ul>
             <br>
             <br>
-            <li v-for="(food, index) in foodlist">
+            <div class="h-36" v-for="(food, index) in foodlist">
               <div class="h-[100px] ">
                 <div>
                   <span class="text-[25px]">{{ food.name }}</span>
                   <span class="text-[25px] float-right">{{ food.price }}</span>
                   <br>
                   <span v-for="(consumer, index) in food.consumers" :id="index" :key="index"
-                        class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200">
+                        class="px-2 mx-2 text-black bg-white border border-black rounded-lg">
                     {{ consumer?.name }}
                   </span>
                 </div>
                 <hr>
                 <div class="flex flex-row ">
-
-                  <button @click="clickEdit(food, index)"> edit</button>
-                  <button @click="deleteMeal(index)"> delete</button>
+                  <button class="border border-black m-[20px] rounded-lg p-1 text-green-800 hover:bg-black hover:text-green-300" @click="clickEdit(food, index)">แก้ไขอาหาร</button>
+                  <button @click="deleteMeal(index)" class="text-red-600 p-1 hover:bg-white hover:rounded-xl hover:border border-red-600 ">ลบอาหาร</button>
                 </div>
 
               </div>
 
-            </li>
+            </div>
           </ul>
 
         </div>
 
       </div>
-      <button class="fixed bottom-0 right-0" @click="clickAdd"><img alt="" src="../assets/img/add-icon.png"></button>
+      <div class="flex justify-end">
+        <button class="flex flex-col mx-auto justify-center bottom-0 right-0" @click="clickAdd"><img class="flex mx-auto" alt="" src="../assets/img/add-icon.png">
+          <span class="flex text-center">คลิ๊กเพิ่อเพิ่มอาหาร</span>
+        </button>
+        <button @click="beforeSave" class="bg-white rounded-lg p-2 text-xl hover:bg-cyan-700 hover:text-white h-20">บันทึกข้อมูล</button>
+      </div>
+
     </div>
 
-    <button @click="beforeSave">save</button>
+    
   </div>
 
   <DivideFoodCost v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
@@ -137,4 +142,6 @@ const beforeSave = () => {
 </template>
 
 
-<style scoped></style>
+<style scoped>
+
+</style>

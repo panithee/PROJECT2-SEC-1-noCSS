@@ -278,6 +278,36 @@
           ]
         }
       ]
+    },
+    {
+      "username": "niyom",
+      "password": "1",
+      "groups": [
+        {
+          "name": "niyom",
+          "members": [
+            {
+              "name": "Hello",
+              "price": 0
+            },
+            {
+              "name": "R",
+              "price": 0
+            },
+            {
+              "name": "D",
+              "price": 0
+            },
+            {
+              "name": "C",
+              "price": 0
+            }
+          ],
+          "meals": []
+        }
+      ],
+      "key": "TcZDa",
+      "id": 2
     }
   ]
 }

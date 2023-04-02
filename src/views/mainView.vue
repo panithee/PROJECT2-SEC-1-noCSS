@@ -70,18 +70,18 @@ const deleteMeal = (index) => {
 
       <label className="sr-only" htmlFor="underline_select">Underline select</label>
       <select id="underline_select" v-model="g_name"
-        className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+        class="block py-2.5 px-0 w-full text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-gray-200 peer text-xl rounded-lg hover:bg-blueEdit hover:text-white"
         @click="show">
         <option value="">กรุณาเลือกกลุ่ม</option>
-        <option v-for="item2 in props.userData ">{{ item2.name }}</option>
+        <option v-for="item2 in props.userData">{{ item2.name }}</option>
 
       </select>
 
-      <div>
-        <span> Member list</span>
-        <ul class="flex">
+      <div class="mt-5">
+        <span class="text-2xl ">รายชื่อคนทั้งหมดในกลุ่ม</span>
+        <ul class="flex mt-3">
           <li v-for="item in g_list.members" class="">
-            <span class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200 "> {{
+            <span class="px-2 mx-2 text-black bg-white border border-black rounded-lg "> {{
               item.name
             }}</span>
 
@@ -92,9 +92,8 @@ const deleteMeal = (index) => {
 
       </div>
 
-      <br>
       <div v-for="(meal, index) in g_list.meals">
-        <div class="border border-black  rounded-lg m-[20px]">
+        <div class="border border-black rounded-lg m-[20px]">
           <p class="m-[20px]"> {{ meal.name }}</p>
 
 
@@ -103,13 +102,14 @@ const deleteMeal = (index) => {
             <hr>
           </div>
           <button class="border border-black m-[20px] rounded-lg p-1 text-green-800 hover:bg-black hover:text-green-300"
-            @click="sw('edit', meal, index)">แก้ไข</button>
+            @click="sw('edit', meal, index)">แก้ไขรายการ</button>
           <button @click="deleteMeal(index)"
             class="p-1 text-red-600 border-red-600 hover:bg-white hover:rounded-xl hover:border ">ลบรายการ</button>
         </div>
       </div>
       <div class=" flex justify-center m-[20px] ">
-        <button @click="sw('add')">ADD</button>
+        <button @click="sw('add')"
+          class="p-2 bg-white rounded-lg shadow-md hover:bg-cyan-700 hover:text-white">เพิ่มมื้ออาหาร</button>
       </div>
     </div>
 
