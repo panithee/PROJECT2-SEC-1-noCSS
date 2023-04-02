@@ -4,7 +4,11 @@
       "id": 1,
       "username": "admin",
       "password": "1",
+<<<<<<< HEAD
       "key": "CxEhD",
+=======
+      "key": "9lM08",
+>>>>>>> cad9ab12c916bdb742cf15e1e497864b70668b2e
       "groups": [
         {
           "name": "ยามเช้า",
