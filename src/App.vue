@@ -62,26 +62,11 @@ onBeforeMount(async () => {
 })
 
 </script>
-
-
+ 
 <template>
-  <div class="w-full min-h-screen bg-cover bg-hero-mobile sm:bg-hero">
-    <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
-    <div class="container mx-auto">
-      <router-view v-if="username !== ''" :userData="userData" @updated="updated"></router-view>
-      <div v-show="!loginAlready" class="p-8 text-2xl text-center">
-        กรุณาเข้าสู่ระบบ
-      </div>
-      <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <Loading />
-      </div>
-    </div>
+  <div>
+
   </div>
 </template>
-
-
-
-
-
-
-
+ 
+<style scoped></style>

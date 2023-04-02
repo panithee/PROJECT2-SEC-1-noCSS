@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import LoginOverlay from "./login/LoginOverlay.vue";
 
 const isLoggedIn = ref(false);
@@ -10,7 +10,6 @@ const toggleLoginOverlay = () => {
 };
 const emitEvents = defineEmits(["setUsername", 'clearData']);
 const handleLoginEvent = (payload) => {
-  toggleMenu();
   if (isLoggedIn.value) {
     sessionStorage.clear();
     emitEvents('clearData');
@@ -32,11 +31,8 @@ onMounted(() => {
   }
   isLoggedIn.value = false;
 });
-const menuOpen = ref(false);
-const toggleMenu = () => {
-  menuOpen.value = !menuOpen.value;
-};
 </script>
+
 <template>
   <div class=" bg-inherit navbar">
     <div class="flex items-center justify-between w-full px-4 py-3">
@@ -74,9 +70,9 @@ const toggleMenu = () => {
             </router-link>
           </li>
           <li><a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" @click="handleLoginEvent">{{
-                        isLoggedIn ?
-                        "ออกจากระบบ" : "เข้าสู่ระบบ"
-                        }}</a></li>
+            isLoggedIn ?
+            "ออกจากระบบ" : "เข้าสู่ระบบ"
+          }}</a></li>
         </ul>
       </div>
     </div>
