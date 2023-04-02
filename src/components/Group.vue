@@ -318,8 +318,8 @@ const resetPriceWhenRemove = (index) => {
         </div>
       </div>
     </div>
-    <div class="mt-5 text-center bg-white">
-      <button class="px-8 py-3 bg-black rounded-full" @click="eventAddEdit(index, 'add')">
+    <div class="mt-5 text-center">
+      <button class="px-8 py-3 bg-black rounded-full text-white" @click="eventAddEdit(index, 'add')">
         เพิ่มกลุ่ม
       </button>
     </div>
