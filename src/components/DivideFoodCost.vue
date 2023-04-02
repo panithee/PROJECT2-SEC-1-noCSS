@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watchEffect } from "vue"
+import { ref, computed, watchEffect ,onMounted} from "vue"
 const props = defineProps({
   mode: {
     type: String,
@@ -11,15 +11,15 @@ const props = defineProps({
   food: {
     type: Object
   }
-})
+})  
 const emit = defineEmits(['sendAllData'])
 const page = ref(true);
 const switchMenu = (type) => {
   page.value = type === "equal";
   if (!page.value) calculatePriceByPercent();
 };
-let food = ref({});
-const foodName = ref("");
+let foods = ref({});
+const foodName = ref('')
 const foodPrice = ref(undefined)
 const personsWhoEat = ref([])
 const personsList = ref([])
@@ -39,14 +39,17 @@ const calculatePriceByPercent = () => {
 }
 watchEffect(() => {
   if (props.mode === 'edit') {
-    food.value = props?.userData[0]?.meals[0].foods[1] || {};
-    personsWhoEat.value = props?.userData[0]?.meals[0].foods[1]?.consumers || [];
-    page.value = props?.userData[0]?.meals[0].foods[1]?.splitMode === "equal";
-    console.log(food.value);
-    foodName.value = food.value.name
-    foodPrice.value = food.value.price
+    // food.value = props?.userData[0]?.meals[0].foods[1] || {};
+    // personsWhoEat.value = props?.userData[0]?.meals[0].foods[1]?.consumers || [];
+    // page.value = props?.userData[0]?.meals[0].foods[1]?.splitMode === "equal";
+    console.log(props.food.name);
+    foods.value = props.food.name
+    // console.log(food.value);
+    // foodPrice.value = props.food.price
+    // personsList =
+    // personsList.value = 0
   }
-  personsList.value = props?.userData[0]?.members || [];
+  // personsList.value = props?.userData[0]?.members || [];
 }
 );
 const togglePersonWhoEat = (event) => {

@@ -1,7 +1,7 @@
 <script setup>
 import DivideFoodCost from '../components/DivideFoodCost.vue';
-
-defineProps({
+import { ref, computed, watchEffect ,onMounted} from "vue"
+const props=defineProps({
   userData: {
     type: Array,
     default: []
