@@ -70,15 +70,16 @@ const memberListByMeal = computed(() => {
 
 <template>
 
-<div class="absolute text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
+<div class="flex justify-center"><div class="w-8/12 text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div></div>
 
-<div class="flex justify-center w-full">
-  <div class="flex justify-start w-7/12 mt-20">
-    <div class="grid grid-cols-3 gap-4">
-      <!-- <DropDown category="Group" :type="selectedGroup" :data-list="groupsOption"/> -->
-      <div>
+<div class="flex justify-center w-full mt-4">
+  
+  <div class="flex justify-start">
+    <div class="flex flex-row gap-4">
+
+      <div class="w-full">
         <div class="text-md">Group</div>
-        <select class="w-32 h-12 text-lg border" v-model="selectedGroup">
+        <select class="w-full h-12 text-lg border" v-model="selectedGroup">
           <option value="">all</option>
           <option v-for="(group, index) in groupsOption" :key="index">
             {{ group.name }}
@@ -86,9 +87,9 @@ const memberListByMeal = computed(() => {
         </select>
       </div>
 
-        <div>
+        <div class="w-full">
           <div class="text-md">Meal</div>
-          <select class="w-32 h-12 text-lg border" v-model="selectedMeal">
+          <select class="w-full h-12 text-lg border" v-model="selectedMeal">
             <option value="">all</option>
             <option v-for="(meal, index) in mealsOption" :key="index">
               {{ meal.name }}
@@ -96,9 +97,9 @@ const memberListByMeal = computed(() => {
           </select>
         </div>
 
-        <div>
+        <div class="w-full">
           <div class="text-md">Member</div>
-          <select class="w-32 h-12 text-lg border" v-model="selectedMember">
+          <select class="w-full h-12 text-lg border" v-model="selectedMember">
             <option value="">all</option>
             <option v-for="(member, index) in membersOption" :key="index">
               {{ member.name }}
@@ -111,7 +112,7 @@ const memberListByMeal = computed(() => {
   </div>
 
 
-  <div class="flex flex-col w-full gap-6 mt-8 px-60" v-for="group in memberListByMeal">
+  <div class="flex flex-col w-full gap-6 mt-8 px-8 sm:px-60" v-for="group in memberListByMeal">
     <PersonMealCost :member-in-group="group.members" :meal-of-person="group.meals" :member-selected="selectedMember" />
 
     <!-- <div class="flex flex-col gap-4" v-for="member in group.members">
