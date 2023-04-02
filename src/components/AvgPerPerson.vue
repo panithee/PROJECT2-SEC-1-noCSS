@@ -81,9 +81,9 @@ const memberListByMeal = computed(() => {
         <div class="flex w-8/12 gap-4">
 
           <div class="w-full">
-            <div class="text-md">Group</div>
+            <div class="text-md">กลุ่ม</div>
             <select v-model="selectedGroup" class="w-full h-12 text-lg">
-              <option value="">all</option>
+              <option value="">ทั้งหมด</option>
               <option v-for="(group, index) in groupsOption" :key="index">
                 {{ group.name }}
               </option>
@@ -91,9 +91,9 @@ const memberListByMeal = computed(() => {
           </div>
 
           <div class="w-full">
-            <div class="text-md">Meal</div>
+            <div class="text-md">มื้ออาหาร</div>
             <select v-model="selectedMeal" class="w-full h-12 text-lg">
-              <option value="">all</option>
+              <option value="">ทั้งหมด</option>
               <option v-for="(meal, index) in mealsOption" :key="index">
                 {{ meal.name }}
               </option>
@@ -101,9 +101,9 @@ const memberListByMeal = computed(() => {
           </div>
 
           <div class="w-full">
-            <div class="text-md">Member</div>
+            <div class="text-md">สมาชิก</div>
             <select v-model="selectedMember" class="w-full h-12 text-lg">
-              <option value="">all</option>
+              <option value="">ทั้งหมด</option>
               <option v-for="(member, index) in membersOption" :key="index">
                 {{ member.name }}
               </option>
