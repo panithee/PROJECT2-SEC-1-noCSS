@@ -1,7 +1,8 @@
 <style scoped></style>
 
 <script setup>
-import { defineProps } from 'vue';
+import {defineProps} from 'vue';
+
 defineProps({
   memberInGroup: Array,
   mealOfPerson: Array,
@@ -10,11 +11,11 @@ defineProps({
 const mealsEat = (consumersName = [], meals = []) => {
   const mealEat = meals.reduce((acc, meal) => {
     const filteredFoods = meal.foods.filter((food) =>
-      food.consumers.some((consumer) => consumersName.includes(consumer.name))
+        food.consumers.some((consumer) => consumersName.includes(consumer.name))
     );
 
     if (filteredFoods.length > 0) {
-      acc.push({ ...meal, foods: filteredFoods });
+      acc.push({...meal, foods: filteredFoods});
     }
 
     return acc;
@@ -52,9 +53,11 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
 <template>
   <!-- {{ memberInGroup }} -->
-  <div class="flex flex-col gap-6" v-for="member in memberInGroup">
-    <div class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}" v-if="memberSelected === ''"
-      v-for="meal in mealsEat(member.name, mealOfPerson)">
+  <div v-for="member in memberInGroup" class="flex flex-col gap-6">
+    <div
+        v-for="meal in mealsEat(member.name, mealOfPerson)"
+        v-if="memberSelected === ''"
+        class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
 
       <div>{{ member.name }}</div>
 
@@ -75,8 +78,10 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
     </div>
 
-    <div class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}" v-else-if="memberSelected === member.name"
-      v-for="meal in mealsEat(member.name, mealOfPerson)">
+    <div
+        v-for="meal in mealsEat(member.name, mealOfPerson)"
+        v-else-if="memberSelected === member.name"
+        class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
       <div>{{ memberSelected }}</div>
 
       <div class="flex justify-center">
@@ -98,5 +103,5 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
   </div>
 </template>
- 
+
 <style scoped></style>

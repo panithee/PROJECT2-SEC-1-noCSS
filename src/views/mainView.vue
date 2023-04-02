@@ -1,6 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
-import mealDetail from "@/components/mealDetail.vue";
+import {ref} from 'vue';
 
 const g_name = ref("")
 const g_list = ref({})
@@ -10,7 +9,7 @@ const props = defineProps({
     type: Array, default: []
   }
 })
-const mealChoose = ref({ data: {}, index: -1 });
+const mealChoose = ref({data: {}, index: -1});
 
 const sw = (mode, meal, index) => {
 
@@ -39,9 +38,9 @@ const updatedMeals = (mealFood, mealName) => {
     return
   }
   if (mealChoose.value.index == -1) {
-    g_list.value.meals.push({ name: mealName, foods: mealFood })
+    g_list.value.meals.push({name: mealName, foods: mealFood})
   } else {
-    g_list.value.meals[mealChoose.value.index] = { name: mealName, foods: mealFood }
+    g_list.value.meals[mealChoose.value.index] = {name: mealName, foods: mealFood}
   }
   showmenu.value = !showmenu.value
   const userDataG = props.userData;
@@ -71,8 +70,8 @@ const deleteMeal = (index) => {
 
       <label className="sr-only" htmlFor="underline_select">Underline select</label>
       <select id="underline_select" v-model="g_name"
-        className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-        @click="show">
+              className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+              @click="show">
         <option value="">กรุณาเลือกกลุ่ม</option>
         <option v-for="item2 in props.userData ">{{ item2.name }}</option>
 
@@ -83,8 +82,8 @@ const deleteMeal = (index) => {
         <ul class="flex">
           <li v-for="item in g_list.members" class="">
             <span class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200 "> {{
-              item.name
-            }}</span>
+                item.name
+              }}</span>
 
 
           </li>
@@ -114,7 +113,7 @@ const deleteMeal = (index) => {
 
     <div v-show="showmenu == true">
       <meal-detail :mealData="mealChoose.data" :member="g_list.members" @back="showmenu = false"
-        @updatedMeals="updatedMeals"></meal-detail>
+                   @updatedMeals="updatedMeals"></meal-detail>
     </div>
   </div>
 </template>

@@ -4,6 +4,7 @@
 
 <script setup>
 import AvgPerPersonVue from '../components/AvgPerPerson.vue'
+
 const props = defineProps({
   userData: {
     type: Array,

@@ -1,7 +1,7 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue'
+import {onBeforeMount, ref} from 'vue'
 import Navbar from './components/Navbar.vue'
-import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
+import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
 import Loading from './components/icons/loading.vue'
 
 const username = ref('')
@@ -75,10 +75,10 @@ onBeforeMount(async () => {
         กรุณาเข้าสู่ระบบ
       </div>
       <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <Loading />
+        <Loading/>
       </div>
     </div>
   </div>
 </template>
- 
+
 <style scoped></style>

@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, watch } from 'vue'
+import {defineProps, ref, watch} from 'vue'
 import DivideFoodCost from './DivideFoodCost.vue';
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
     default: []
   }
 })
-const foodChoose = ref({ data: {}, index: -1 });
+const foodChoose = ref({data: {}, index: -1});
 const selectMode = ref('add')
 const switchFood = ref(false)
 const clickEdit = (food, index) => {
@@ -43,12 +43,12 @@ const show = () => {
   }
 }
 const saveFood = (food) => {
-  
+
   if (selectMode.value == 'add') {
     if (foodlist.value.some((e => e.name == food.name))) {
-    alert("มีชื่อรายการนี้อยู่แล้ว")
-    return
-  }
+      alert("มีชื่อรายการนี้อยู่แล้ว")
+      return
+    }
     foodlist.value.push(food)
   } else {
     foodlist.value[foodChoose.value.index] = food
@@ -106,7 +106,7 @@ const beforeSave = () => {
                   <span class="text-[25px] float-right">{{ food.price }}</span>
                   <br>
                   <span v-for="(consumer, index) in food.consumers" :id="index" :key="index"
-                    class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200">
+                        class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200">
                     {{ consumer?.name }}
                   </span>
                 </div>
@@ -131,9 +131,9 @@ const beforeSave = () => {
     <button @click="beforeSave">save</button>
   </div>
 
-  <DivideFoodCost  v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
-    @back="switchFood = false" @save="saveFood" />
-  
+  <DivideFoodCost v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
+                  @back="switchFood = false" @save="saveFood"/>
+
 </template>
 
 
