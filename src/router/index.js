@@ -1,25 +1,25 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import eveView from "@/views/eveView.vue";
-import ntView from "@/views/ntView.vue";
-import mainView from "@/views/mainView.vue";
+import { createRouter, createWebHistory } from 'vue-router'
+import groupView from "@/views/groupView.vue";
+import billView from "@/views/billView.vue";
+import mainView from "@/views/mealView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
-            path: '/',
-            name: 'home',
+            path: '/meal',
+            name: 'meal',
             component: mainView,
         },
         {
-            path: '/eve',
-            name: 'eve',
-            component: eveView
+            path: '/',
+            name: 'group',
+            component: groupView
         },
         {
-            path: '/nt',
-            name: 'nt',
-            component: ntView
+            path: '/billView',
+            name: 'billView',
+            component: billView
         }
     ]
 })

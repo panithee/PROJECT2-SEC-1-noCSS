@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "qJS4F",
+      "key": "N5qhC",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -371,6 +371,20 @@
       ],
       "key": "XVFCI",
       "id": 3
+    },
+    {
+      "username": "admin1",
+      "password": "2",
+      "groups": [],
+      "key": "",
+      "id": 4
+    },
+    {
+      "username": "test1",
+      "password": "1",
+      "groups": [],
+      "key": "HLGLn",
+      "id": 5
     }
   ]
 }
