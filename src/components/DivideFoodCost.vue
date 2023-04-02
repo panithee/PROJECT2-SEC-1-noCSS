@@ -13,7 +13,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits('sendAllData')
+const emit = defineEmits(['sendAllData'])
 const page = ref(true);
 const switchMenu = (type) => {
   page.value = type === "equal";
