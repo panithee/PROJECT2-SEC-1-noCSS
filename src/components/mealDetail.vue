@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps, onMounted, ref, watch } from 'vue'
-import DivideFoodCost from '../components/DivideFoodCost.vue';
+import DivideFoodCost from './DivideFoodCost.vue';
 
 const props = defineProps({
   mealData: {
@@ -54,14 +54,14 @@ const saveFood = (food) => {
 
 const foodlist = ref([])
 const mealname = ref('')
-
+defineEmits(['back', 'save', 'updatedMeals'])
 
 </script>
 
 <template>
   <div v-if="switchFood == false" class="oatView">
     <!-- {{ foodlist}}
-                                                                                                              {{ personsWhoEat3 }} -->
+                                                                                                                              {{ personsWhoEat3 }} -->
     <div class="flex justify-between w-40 m-5">
       <span @click="$emit('back')">Back</span>
       <span>มื้ออาหาร</span>
@@ -77,11 +77,9 @@ const mealname = ref('')
         </div>
         <div v-else class="w-full ">
           <ul>
-            <!-- {{ foodlist }} -->
             <br>
             <br>
             <li v-for="(food, index) in foodlist">
-              {{ food }}
               <div class="h-[100px] ">
                 <div>
                   <span class="text-[25px]">{{ food.name }}</span>

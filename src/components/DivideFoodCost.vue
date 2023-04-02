@@ -149,7 +149,6 @@ const checkDataBeforeDone = () => {
 
 </script>
 <template>
-  {{ personsWhoEat }}
   <div class="w-full h-full">
     <button @click="$emit('back')"
       class="flex px-2 ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg w-fit backfont">กลับ</button>

@@ -49,12 +49,12 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
 
 <template>
-  {{ memberInGroup }}
+  <!-- {{ memberInGroup }} -->
   <div class="flex flex-col gap-4" v-for="member in memberInGroup">
     <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-if="memberSelected === ''"
       v-for="meal in mealsEat(member.name, mealOfPerson)">
 
-      <div>{{ member.name }}</div>
+      <!-- <div>{{ member.name }}</div> -->
 
       <div class="flex justify-center">
 

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import Group from '../components/Group.vue';
-import OatView from "@/views/oatView.vue";
+import OatView from "@/components/mealDetail.vue";
 
 const g_name = ref("")
 const g_list = ref({})
@@ -47,7 +47,7 @@ const updatedMeals = (mealFood, mealName) => {
 </script>
 <template>
   <div className="mainView">
-    <div className=" h-screen m-[50px]" v-show="showmenu == false">
+    <div v-show="showmenu == false" className=" h-screen m-[50px]">
 
       <span className=" text-[25px]">
         รายการมื้ออาหาร
@@ -68,7 +68,8 @@ const updatedMeals = (mealFood, mealName) => {
         <span> Member list</span>
         <ul class="flex">
           <li v-for="item in g_list.members" class="">
-            <span class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200 "> {{ item.name
+            <span class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200 "> {{
+              item.name
             }}</span>
 
 
@@ -98,12 +99,11 @@ const updatedMeals = (mealFood, mealName) => {
     </div>
 
     <div v-show="showmenu == true">
-      <oat-view :mealData="mealChoose.data" :member="g_list.members" @updatedMeals="updatedMeals"
-        @back="showmenu = false"></oat-view>
+      <oat-view :mealData="mealChoose.data" :member="g_list.members" @back="showmenu = false"
+        @updatedMeals="updatedMeals"></oat-view>
     </div>
   </div>
 </template>
-
 
 
 <style scoped></style>
