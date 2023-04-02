@@ -1,6 +1,7 @@
 <script setup>
-import { computed, ref } from "vue";
+import {computed, ref} from "vue";
 import PersonMealCost from "./PersonMealCost.vue";
+
 const props = defineProps({
   userData: {
     type: Array,
@@ -15,12 +16,12 @@ const mealsOption = computed(() => {
     return [];
   }
   return groupsOption.value.filter(
-    (groups) => groups.name === selectedGroup.value
+      (groups) => groups.name === selectedGroup.value
   )[0]?.meals;
 });
 const membersOption = computed(() => {
   return groupsOption.value.filter(
-    (groups) => groups.name === selectedGroup.value
+      (groups) => groups.name === selectedGroup.value
   )[0]?.members;
 });
 const selectedGroup = ref("");
@@ -32,7 +33,7 @@ const memberListByMeal = computed(() => {
   let filteredGroups = props.userData;
   if (selectedGroup.value) {
     filteredGroups = filteredGroups.filter(
-      (group) => group.name === selectedGroup.value
+        (group) => group.name === selectedGroup.value
     );
   }
   if (selectedMeal.value) {
@@ -51,9 +52,9 @@ const memberListByMeal = computed(() => {
           return {
             ...meal,
             foods: meal.foods.filter((food) =>
-              food.consumers.some(
-                (consumer) => consumer.name === selectedMember.value
-              )
+                food.consumers.some(
+                    (consumer) => consumer.name === selectedMember.value
+                )
             ),
           };
         }),
@@ -64,56 +65,58 @@ const memberListByMeal = computed(() => {
 });
 
 
-
 </script>
 
 <template>
 
-<div class="flex justify-center"><div class="w-8/12 text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div></div>
+  <div class="flex justify-center">
+    <div class="w-8/12 text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
+  </div>
 
-<div class="flex justify-center w-full mt-4">
+  <div class="flex justify-center w-full mt-4">
 
-<div class="flex w-full justify-center">
-  <div class="flex w-10/12 justify-start md:w-8/12 lg:w-6/12">
-    <div class="flex w-8/12 gap-4">
+    <div class="flex w-full justify-center">
+      <div class="flex w-10/12 justify-start md:w-8/12 lg:w-6/12">
+        <div class="flex w-8/12 gap-4">
 
-      <div class="w-full">
-        <div class="text-md">Group</div>
-        <select class="w-full h-12 text-lg" v-model="selectedGroup">
-          <option value="">all</option>
-          <option v-for="(group, index) in groupsOption" :key="index">
-            {{ group.name }}
-          </option>
-        </select>
-      </div>
+          <div class="w-full">
+            <div class="text-md">Group</div>
+            <select v-model="selectedGroup" class="w-full h-12 text-lg">
+              <option value="">all</option>
+              <option v-for="(group, index) in groupsOption" :key="index">
+                {{ group.name }}
+              </option>
+            </select>
+          </div>
 
-        <div class="w-full">
-          <div class="text-md">Meal</div>
-          <select class="w-full h-12 text-lg" v-model="selectedMeal">
-            <option value="">all</option>
-            <option v-for="(meal, index) in mealsOption" :key="index">
-              {{ meal.name }}
-            </option>
-          </select>
+          <div class="w-full">
+            <div class="text-md">Meal</div>
+            <select v-model="selectedMeal" class="w-full h-12 text-lg">
+              <option value="">all</option>
+              <option v-for="(meal, index) in mealsOption" :key="index">
+                {{ meal.name }}
+              </option>
+            </select>
+          </div>
+
+          <div class="w-full">
+            <div class="text-md">Member</div>
+            <select v-model="selectedMember" class="w-full h-12 text-lg">
+              <option value="">all</option>
+              <option v-for="(member, index) in membersOption" :key="index">
+                {{ member.name }}
+              </option>
+            </select>
+          </div>
+
         </div>
-
-        <div class="w-full">
-          <div class="text-md">Member</div>
-          <select class="w-full h-12 text-lg" v-model="selectedMember">
-            <option value="">all</option>
-            <option v-for="(member, index) in membersOption" :key="index">
-              {{ member.name }}
-            </option>
-          </select>
-        </div>
-
       </div>
     </div>
   </div>
-</div>
 
-  <div class="flex flex-col w-full gap-6 mt-4 px-8 sm:px-16 md:px-32 lg:px-60 xl:px-70" v-for="group in memberListByMeal">
-    <PersonMealCost :member-in-group="group.members" :meal-of-person="group.meals" :member-selected="selectedMember" />
+  <div v-for="group in memberListByMeal"
+       class="flex flex-col w-full gap-6 mt-4 px-8 sm:px-16 md:px-32 lg:px-60 xl:px-70">
+    <PersonMealCost :meal-of-person="group.meals" :member-in-group="group.members" :member-selected="selectedMember"/>
 
   </div>
 </template>
