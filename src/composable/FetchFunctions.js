@@ -1,4 +1,4 @@
-import { generateRandomId } from "./generateKey";
+import { generateRandomId } from "./generateKey.js";
 
 const URL_API = "http://localhost:5000";
 const ERR_INPUT = "Error Input";

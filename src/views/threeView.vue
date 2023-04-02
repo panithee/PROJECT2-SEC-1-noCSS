@@ -1,5 +1,6 @@
 <script setup>
 import DivideFoodCost from '../components/DivideFoodCost.vue';
+
 defineProps({
   userData: {
     type: Array,
@@ -12,7 +13,6 @@ defineProps({
     <DivideFoodCost :userData="userData" :mode="'add'"></DivideFoodCost>
   </div>
 </template>
-
 
 
 <style scoped>

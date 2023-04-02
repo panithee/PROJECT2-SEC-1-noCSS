@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <script setup>
 import { ref, computed, watchEffect } from "vue"
 const props = defineProps({
@@ -158,12 +159,12 @@ const checkDataBeforeDone = () => {
     <p class="flex justify-center mt-3 text-lg text-gray-600">รายชื่อคนทั้งหมดในกลุ่ม</p>
     <p v-show="isPersonsWhoEatValid" class="flex justify-center text-red-500 text-md font-bold">*จำเป็น</p>
     <div class="flex justify-between w-64 mx-auto bg-white mt-2 overflow-x-scroll pb-2">
-      <button class="px-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index" :id="index"
+      <button class="px-2 mx-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index" :id="index"
         @click="togglePersonWhoEat($event)" :class="
           checkPersonEating(person.id)
             ? 'bg-white hover:bg-gray-200  border-black text-black'
-            : 'bg-white hover:bg-gray-200 hover:text-black border-gray-200 text-gray-300'
-        ">
+            : 'bg-white hover:bg-gray-200 hover:text-black border-gray-200 text-gray-300'" 
+           >
         {{ person?.name }}
       </button>
     </div>
@@ -171,16 +172,16 @@ const checkDataBeforeDone = () => {
     <div class="flex w-3/5 p-4 mx-auto overflow-y-scroll h-96 m-height m-table" v-if="page">
       <table class="w-full mx-auto mt-4">
         <thead>
-          <tr>
-            <th class="text-left">คนจ่าย</th>
-            <th class="text-right">ราคา</th>
-          </tr>
+        <tr>
+          <th class="text-left">คนจ่าย</th>
+          <th class="text-right">ราคา</th>
+        </tr>
         </thead>
         <tbody>
-          <tr class="border-b border-gray-300" v-for="(person, index) in personsWhoEat" :key="index">
-            <td class="text-xl text-left">{{ person?.name }}</td>
-            <td class="text-xl text-end">{{ avgPricePerPerson }}</td>
-          </tr>
+        <tr v-for="(person, index) in personsWhoEat" :key="index" class="border-b border-gray-300">
+          <td class="text-xl text-left">{{ person?.name }}</td>
+          <td class="text-xl text-end">{{ avgPricePerPerson }}</td>
+        </tr>
         </tbody>
       </table>
     </div>
