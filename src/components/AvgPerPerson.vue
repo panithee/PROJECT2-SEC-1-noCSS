@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import PersonMealCost from "./PersonMealCost.vue";
 
 const props = defineProps({
@@ -28,7 +28,13 @@ const selectedGroup = ref("");
 const selectedMember = ref("");
 const selectedMeal = ref("");
 
-
+watch(
+  () => selectedGroup.value,
+  () => {
+    selectedMember.value = "";
+    selectedMeal.value = "";
+  }
+);
 const memberListByMeal = computed(() => {
   let filteredGroups = props.userData;
   if (selectedGroup.value) {
