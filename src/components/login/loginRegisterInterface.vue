@@ -134,7 +134,7 @@ const checkConfirm = computed(() => {
             <input v-model="passwordInput" class="w-full input input-bordered" placeholder="พิมพ์ที่นี่"
               type="password" />
             <label class="label ">
-              <ErrorText></ErrorText>
+
             </label>
           </div>
           <div class="max-w-md form-control basis-full">

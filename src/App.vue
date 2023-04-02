@@ -20,6 +20,7 @@ const checkLogin = async () => {
     sessionStorage.setItem("isLoggedIn", "false")
   }
   try {
+    console.log('check login')
     const userKey = await findKey(storedUsername)
     const key = sessionStorage.getItem('key')
     if (userKey !== key) {
@@ -30,6 +31,7 @@ const checkLogin = async () => {
       console.log('key not match')
       loginAlready.value = false
     } else {
+      console.log('key match')
       loginAlready.value = true
       username.value = storedUsername
       await fetchUserData()

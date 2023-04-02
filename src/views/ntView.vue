@@ -1,6 +1,4 @@
 <template>
-  <div class="ntView"> </div>
-  <h1>ntView</h1>
   <AvgPerPersonVue :userData="userData"></AvgPerPersonVue>
 </template>
 
