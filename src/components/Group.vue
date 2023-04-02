@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { onBeforeMount, onBeforeUpdate, onMounted, ref, watch } from "vue";
 import ArrowDown from "./icons/arrowDown.vue";
 import ArrowUp from "./icons/arrowUp.vue";
 import Close from "./icons/close.vue";
@@ -39,6 +39,10 @@ onBeforeMount(() => {
   allGroupArr.value = props.userData;
   sumPrice()
 });
+
+onBeforeUpdate(() =>{
+  sumPrice()
+})
 
 // console.log(meals.value)
 const sumPrice =  () => {
