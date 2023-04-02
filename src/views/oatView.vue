@@ -1,5 +1,5 @@
 <template>
-  {{ member }}
+  <!-- {{ member }} -->
 
   <div v-if="t == false" class="oatView">
     <!-- {{ foodlist}}
