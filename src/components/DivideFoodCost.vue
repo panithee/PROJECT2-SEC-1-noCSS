@@ -156,8 +156,8 @@ const checkDataBeforeDone = () => {
 </script>
 <template>
   <div class="w-full h-full">
-    <button class="flex px-2 ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg w-fit backfont"
-            @click="$emit('back')">กลับ
+    <button class="flex px-2 ml-10 text-xl font-semibold hover:bg-white hover:text-black hover:rounded-lg w-fit backfont"
+            @click="$emit('back')">ย้อนกลับ
     </button>
     <input v-model="foodName" class="flex justify-center mx-auto text-2xl text-center border rounded-lg"
            placeholder="กรุณาใส่ชื่ออาหาร"

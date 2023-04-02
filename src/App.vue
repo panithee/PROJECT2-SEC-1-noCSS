@@ -67,7 +67,7 @@ onBeforeMount(async () => {
 
 
 <template>
-  <div class="w-full min-h-screen overflow-hidden bg-fixed bg-cover bg-hero-mobile sm:bg-hero">
+  <div class="w-full min-h-screen overflow-y-scroll bg-fixed bg-cover bg-hero-mobile sm:bg-hero">
     <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
     <div class="container mx-auto">
       <router-view v-if="username !== ''" :userData="userData" @updated="updated"></router-view>
