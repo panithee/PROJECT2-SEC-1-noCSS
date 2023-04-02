@@ -1,4 +1,5 @@
 <template>
+  <!--  {{ userData }}a-->
   <div className="mainView">
     <div className=" h-screen m-[50px]">
 
@@ -53,6 +54,7 @@
       <oat-view :mealData="mealChoose.data" :member="g_list.members"></oat-view>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -79,7 +81,7 @@ const show = () => {
   }
 
 }
-
+defineEmits(['updated'])
 
 </script>
 

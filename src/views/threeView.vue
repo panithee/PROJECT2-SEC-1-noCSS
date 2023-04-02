@@ -1,9 +1,7 @@
-
-
 <script setup>
-import { defineProps, onMounted, ref } from 'vue'
 import DivideFoodCost from '../components/DivideFoodCost.vue';
-const props = defineProps({
+
+defineProps({
   userData: {
     type: Array,
     default: []
@@ -29,15 +27,12 @@ const test = (foodName, foodPrice, personsWhoEat) => {
 test()
 //console.log(foodlist);
 </script>
-
 <template>
   <div class="threeView">
     <h1>threeView</h1>
-    
-  <DivideFoodCost :userData="userData" @sendAllData="test" :mode="'add'" />
+    <DivideFoodCost :userData="userData"></DivideFoodCost>
   </div>
 </template>
-
 
 
 <style scoped>
