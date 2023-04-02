@@ -54,24 +54,48 @@
 
 
   </div>
-  <br>
-  <br>
-  HI
-  {{ test }}
+
+  <DivideFoodCost v-if="t == true" :food="foodEdit" :member="member" :mode="selectMode" @sendAllData="test" />
 </template>
 
 <script setup>
-import {defineProps, ref, watch} from 'vue'
+import { defineProps, onMounted, ref, watch } from 'vue'
+import DivideFoodCost from '../components/DivideFoodCost.vue';
 
 const props = defineProps({
   userData: {
     type: Array,
     default: []
+  },
+  mealData: {
+    type: Object,
+    default: {}
+  },
+  member: {
+    type: Array,
+    default: []
   }
 })
+const foodEdit = ref({})
+const selectMode = ref('add')
+const t = ref(false)
+const clickEdit = (food) => {
+  foodEdit.value = { food }
+  selectMode.value = 'edit'
+  t.value = true
+}
+const clickAdd = () => {
+  foodEdit.value = {}
+  selectMode.value = 'add'
+  t.value = true
+}
+watch(() => props.mealData, (newVal, oldVal) => {
+  console.log(newVal)
+  mealname.value = newVal.name
+  console.log(mealname.value)
+  foodlist.value = newVal.foods
+  console.log(foodlist.value)
 
-watch(() => props.userData, (newVal) => {
-  test.value = newVal
 })
 
 watch(() => props.member, (newVal, oldVal) => {
