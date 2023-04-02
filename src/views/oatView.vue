@@ -1,6 +1,7 @@
 <template>
-  {{ member }}
+  {{ foodlist }}
 
+  {{ datalist }}
   <div v-if="t == false" class="oatView">
     <!-- {{ foodlist}}
     {{ personsWhoEat3 }} -->
@@ -74,7 +75,14 @@ const props = defineProps({
   member: {
     type: Array,
     default: []
-  }
+  },
+  g_name: {
+    type: String,
+    default: ""
+  }, datalist: {
+    type: Object,
+    default: {}
+  },
 })
 const foodEdit = ref({})
 const selectMode = ref('add')
