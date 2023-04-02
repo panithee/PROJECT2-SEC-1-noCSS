@@ -18,7 +18,7 @@ const switchMenu = (type) => {
   page.value = type === "equal";
   if (!page.value) calculatePriceByPercent();
 };
-let foods = ref({});
+let food = ref({});
 const foodName = ref('')
 const foodPrice = ref(undefined)
 const personsWhoEat = ref([])

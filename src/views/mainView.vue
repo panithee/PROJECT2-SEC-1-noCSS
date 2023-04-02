@@ -51,7 +51,7 @@
     </div>
 
     <div>
-      <oat-view :mealData="mealChoose.data" :member="g_list.members"></oat-view>
+      <oat-view :mealData="mealChoose.data" :members="g_list.members"></oat-view>
     </div>
   </div>
 
