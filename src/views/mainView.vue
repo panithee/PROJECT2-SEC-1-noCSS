@@ -19,8 +19,8 @@
      {{ g_list }} -->
       <label className="sr-only" htmlFor="underline_select">Underline select</label>
       <select id="underline_select" v-model="g_name"
-              className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-              @click="show">
+        className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+        @click="show">
 
         <option v-for="item2 in props.userData ">{{ item2.name }}</option>
 
@@ -39,7 +39,7 @@
       </div>
 
       <br>
-      <div v-for="(meal,index) in g_list.meals">
+      <div v-for="(meal, index) in g_list.meals">
         <div>
           <p> {{ meal.name }}</p>
           <!--          {{ meals.foods }}-->
@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import {ref, watch} from 'vue';
+import { ref, watch } from 'vue';
 import Group from '../components/Group.vue';
 import OatView from "@/views/oatView.vue";
 
@@ -69,7 +69,7 @@ const props = defineProps({
     type: Array, default: []
   }
 })
-const mealChoose = ref({data: {}, index: -1});
+const mealChoose = ref({ data: {}, index: -1 });
 // watch(mealChoose, (val) => {
 //   console.log(val)
 // })
@@ -81,7 +81,7 @@ const show = () => {
   }
 
 }
-
+defineEmits(['updated'])
 
 </script>
 
