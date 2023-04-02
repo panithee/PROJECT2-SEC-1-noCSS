@@ -1,7 +1,5 @@
 <template>
   <div class="eveView">
-    <h1>eveView</h1>
-    <!-- <div>{{ userData }}</div> -->
     <Group :userData="userData" @updated="updated"></Group>
   </div>
 </template>

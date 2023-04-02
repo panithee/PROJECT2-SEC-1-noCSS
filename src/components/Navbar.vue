@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import LoginOverlay from "./login/LoginOverlay.vue";
 
 const isLoggedIn = ref(false);
@@ -15,6 +15,7 @@ const handleLoginEvent = (payload) => {
     sessionStorage.clear();
     emitEvents('clearData');
     isLoggedIn.value = false;
+
   } else if (payload.status === "login") {
     sessionStorage.setItem("isLoggedIn", "true");
     isLoggedIn.value = true;
@@ -23,6 +24,7 @@ const handleLoginEvent = (payload) => {
   } else {
     toggleLoginOverlay();
   }
+  menuOpen.value = false;
 };
 onMounted(() => {
   if (sessionStorage.getItem("isLoggedIn") === "true" && sessionStorage.getItem("username") !== null) {
@@ -36,45 +38,38 @@ const toggleMenu = () => {
 };
 </script>
 <template>
-  <div class="navbar bg-base-100">
+  <div class=" bg-inherit navbar">
     <div class="flex items-center justify-between w-full px-4 py-3">
       <a class="text-xl normal-case btn btn-ghost">NO CSS</a>
       <div class="right-0 flex-none">
         <button class="right-0 block text-gray-400 " @click="toggleMenu">
           <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
             <path v-if="!menuOpen" clip-rule="evenodd" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"
-                  fill-rule="evenodd"/>
+              fill-rule="evenodd" />
             <path v-else clip-rule="evenodd"
-                  d="M4.414 4.586a2 2 0 0 1 2.828 0L12 9.172l4.758-4.758a2 2 0 1 1 2.828 2.828L14.828 12l4.758 4.758a2 2 0 1 1-2.828 2.828L12 14.828l-4.758 4.758a2 2 0 0 1-2.828-2.828L9.172 12 4.414 7.242a2 2 0 0 1 0-2.828z"
-                  fill-rule="evenodd"/>
+              d="M4.414 4.586a2 2 0 0 1 2.828 0L12 9.172l4.758-4.758a2 2 0 1 1 2.828 2.828L14.828 12l4.758 4.758a2 2 0 1 1-2.828 2.828L12 14.828l-4.758 4.758a2 2 0 0 1-2.828-2.828L9.172 12 4.414 7.242a2 2 0 0 1 0-2.828z"
+              fill-rule="evenodd" />
           </svg>
         </button>
         <ul :class="!menuOpen ? 'hidden' : 'visible'"
-            class="absolute right-0 z-10 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
+          class="absolute right-0 z-10 w-48 bg-white border border-gray-300 rounded-lg shadow-lg bg-opacity-80">
           <li>
             <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/" @click=toggleMenu>อาหาร
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/eve" @click=toggleMenu>อีฟ
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/eve" @click=toggleMenu>กลุ่ม
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/nt" @click=toggleMenu>เอ็นที
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/nt" @click=toggleMenu>สรุปค่าใช่จ่าย
             </router-link>
           </li>
-          <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/three" @click=toggleMenu>ทรี
-            </router-link>
-          </li>
-          <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/oat" @click=toggleMenu>โอ๊ต
-            </router-link>
-          </li>
+
           <li><a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" @click="handleLoginEvent">{{
-              isLoggedIn ?
-                  "ออกจากระบบ" : "เข้าสู่ระบบ"
-            }}</a></li>
+            isLoggedIn ?
+            "ออกจากระบบ" : "เข้าสู่ระบบ"
+          }}</a></li>
         </ul>
       </div>
     </div>

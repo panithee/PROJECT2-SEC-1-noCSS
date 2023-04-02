@@ -393,10 +393,10 @@ const resetPriceWhenRemove = (index) => {
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
-        <div class="sm:mt-4 sm:ml-20 text-xl">
+        <div class="text-xl sm:mt-4 sm:ml-20">
           <p>รายชื่อสมาชิก</p>
         </div>
-        <div class="w-full sm:h-24 overflow-y-scroll h-10">
+        <div class="w-full h-10 overflow-y-scroll sm:h-24">
           <div class="sm:ml-24">
             <div
               v-for="(member, index) in membersInGroupTarget"

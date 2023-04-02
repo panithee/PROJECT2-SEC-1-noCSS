@@ -1,8 +1,6 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import eveView from "@/views/eveView.vue";
-import threeView from "@/views/threeView.vue";
 import ntView from "@/views/ntView.vue";
-import oatView from "@/views/oatView.vue";
 import mainView from "@/views/mainView.vue";
 
 const router = createRouter({
@@ -16,27 +14,12 @@ const router = createRouter({
         {
             path: '/eve',
             name: 'eve',
-            component: eveView,
-            props: true
+            component: eveView
         },
-        {
-            path: '/three',
-            name: 'three',
-            component: threeView,
-            props: true
-        }
-        ,
         {
             path: '/nt',
             name: 'nt',
-            component: ntView,
-            props: true
-        },
-        {
-            path: '/oat',
-            name: 'oat',
-            component: oatView,
-            props: true
+            component: ntView
         }
     ]
 })
