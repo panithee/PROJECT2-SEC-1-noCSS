@@ -6,18 +6,9 @@
       <span className=" text-[25px]">
         รายการมื้ออาหาร
       </span>
-      <h1>testtt</h1>
-      <!--      {{ props.userData }}-->
       <hr>
-      list
+      
 
-      <!--      {{ g_list }}-->
-      <!--
-     {{ g_list }} -->
-      <!-- {{ userData.filter( e => e.name = "a") }} -->
-      <!-- <div>{{ userData }}</div> -->
-      <!--
-     {{ g_list }} -->
       <label className="sr-only" htmlFor="underline_select">Underline select</label>
       <select id="underline_select" v-model="g_name"
               className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
@@ -29,9 +20,10 @@
 
       <div>
         <span> Member list</span>
-        <ul>
-          <li v-for="item in g_list.members">
-            {{ item }}
+        <ul class="flex">
+          <li v-for="item in g_list.members" class="">
+            <span class="px-2 mx-2 border border-black rounded-lg bg-white hover:bg-gray-200  border-black text-black ">   {{ item.name }}</span>
+         
 
           </li>
         </ul>
@@ -40,18 +32,24 @@
       </div>
 
       <br>
-      <div v-for="(meal, index) in g_list.meals">
-        <div>
-          <p> {{ meal.name }}</p>
-          <!--          {{ meals.foods }}-->
-          <button @click="mealChoose.data = meal">Edit</button>
-          <div v-for="food in meal.foods">
+      <div v-for="(meal,index) in g_list.meals" >
+        <div class="border border-black  rounded-lg m-[20px]">
+          <p class="m-[20px]"> {{ meal.name }}</p>
+          
+          
+          <div v-for="food in meal.foods" class="m-[20px]">
 
-            <li>{{ food.name }} : {{ food.price }}</li>
+            <li class=" list-none"><span>{{ food.name }} </span> <span class="float-right">{{ food.price }}</span></li>
+            <hr>
           </div>
+          <button class="border border-black m-[20px] rounded-lg " @click="mealChoose.data = meal">Edit</button>
         </div>
       </div>
+      <div class="flex justify-center m-[20px] ">  
+       <button @click="mealChoose.data = g_list.members" >ADD</button>
     </div>
+    </div>
+
     <div>
       <oat-view :mealData="mealChoose.data" :member="g_list.members"></oat-view>
     </div>
