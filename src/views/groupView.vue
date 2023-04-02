@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, watch } from 'vue'
+import {defineProps, ref, watch} from 'vue'
 
 const props = defineProps({
   userData: {
@@ -21,20 +21,20 @@ watch(() => props.userData, (newVal) => {
     <table class="table w-full border border-separate border-spacing-2 border-slate-500 table-compact ">
 
       <tbody>
-        <tr v-for="(meals) in data.meals">
-          <td>{{ meals.name }}</td>
-          <td>
-            <ul>
-              <li v-for="(food) in meals.foods">
-                <p>{{ food.name }}</p>
-                <p>{{ food.price }}</p>
+      <tr v-for="(meals) in data.meals">
+        <td>{{ meals.name }}</td>
+        <td>
+          <ul>
+            <li v-for="(food) in meals.foods">
+              <p>{{ food.name }}</p>
+              <p>{{ food.price }}</p>
 
-                <!--          <li v-for=" (consumer) in food.consumers">{{ consumer.id }}</li>-->
-              </li>
-            </ul>
-          </td>
+              <!--          <li v-for=" (consumer) in food.consumers">{{ consumer.id }}</li>-->
+            </li>
+          </ul>
+        </td>
 
-        </tr>
+      </tr>
       </tbody>
     </table>
     <br>
