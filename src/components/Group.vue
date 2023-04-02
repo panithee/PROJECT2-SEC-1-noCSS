@@ -122,12 +122,12 @@ const addMember = () => {
 //Done (add value to allGroupArr)
 const DoneAddEditGroup = () => {
   let groupNameExists = "";
-  if (modeTarget.value === "add") {
-    for (const group of allGroupArr.value) {
-      if (group.name === newGroupName.value) {
-        groupNameExists = group.name;
-      }
+  for (const group of allGroupArr.value) {
+    if (group.name === newGroupName.value) {
+      groupNameExists = group.name;
     }
+  }
+  if (modeTarget.value === "add") {
     if (newGroupName.value === "") {
       textError.value = "กรุณาใส่ชื่อกลุ่ม";
     } else if (newGroupName.value === groupNameExists) {
@@ -147,15 +147,17 @@ const DoneAddEditGroup = () => {
     }
   }
   if (modeTarget.value === "edit") {
-    if (newGroupName.value === "") {
+    if (newGroupName.value === groupNameExists && newGroupName.value !== targetGroupForEdit.value.name) {
+      textError.value = "ชื่อกลุ่มนี้มีอยู่แล้ว";
+    } else if (newGroupName.value === "") {
       textError.value = "กรุณาใส่ชื่อกลุ่ม";
     } else {
-    showEditMembers.value = true;
-    let currentGroup = allGroupArr.value[targetGroupForEditIndex.value];
-    currentGroup.name = newGroupName.value;
-    currentGroup.members = membersInGroupTarget.value.concat(memberList.value);
-    currentGroup.meals = targetGroupForEdit.value.meals;
-    showInsertGroupPopUp();
+      showEditMembers.value = true;
+      let currentGroup = allGroupArr.value[targetGroupForEditIndex.value];
+      currentGroup.name = newGroupName.value;
+      currentGroup.members = membersInGroupTarget.value.concat(memberList.value);
+      currentGroup.meals = targetGroupForEdit.value.meals;
+      showInsertGroupPopUp();
     }
   }
   emit("updated", allGroupArr.value);
