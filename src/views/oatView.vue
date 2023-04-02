@@ -19,7 +19,7 @@
     <div class="container m-auto ">
       <div class="flex flex-col  h-[60vh]">
         <div v-if="foodlist?.length <= 0">
-         
+
         </div>
         <div v-else class="w-full ">
           <ul>
@@ -54,8 +54,8 @@
 
 
   </div>
-
-  <DivideFoodCost v-if="t == true" :foods="foodEdit" :members="member" :mode="selectMode" @sendAllData="test" />
+  {{ member }}
+  <DivideFoodCost v-if="t == true" :foods="foodEdit" :member="member" :mode="selectMode" @sendAllData="test" />
 </template>
 
 <script setup>
@@ -101,11 +101,6 @@ watch(() => props.mealData, (newVal, oldVal) => {
 
 })
 
-watch(() => props.member, (newVal, oldVal) => {
-
-  member.value = newVal
-
-})
 const show = () => {
   if (t.value == false) {
     t.value = !t.value
@@ -123,7 +118,7 @@ const test = (foodName, foodPrice, personsWhoEat, tt) => {
   personsWhoEat3.value = personsWhoEat
 
 
-  foodlist.value.push({"foodname": foodName1.value, "foodPrice": foodPrice2.value, "name": personsWhoEat3.value})
+  foodlist.value.push({ "foodname": foodName1.value, "foodPrice": foodPrice2.value, "name": personsWhoEat3.value })
   if (tt == false) {
     t.value = !t.value
   }

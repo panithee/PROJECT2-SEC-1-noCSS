@@ -5,7 +5,7 @@ const props = defineProps({
     type: String,
     default: "add"
   },
-  members: {
+  member: {
     type: Array
   },
   foods: {
@@ -48,7 +48,7 @@ watchEffect(() => {
     foodName.value = food.value.name
     foodPrice.value = food.value.price
   }
-  personsList.value = props.members;
+  personsList.value = props.member;
   console.log(personsList.value)
 }
 );
@@ -131,7 +131,7 @@ const checkDataBeforeDone = () => {
   <p>{{ foods }}</p>
   <br>
   <br>
-  <p>{{ members }}</p>
+  <p>{{ member }}</p>
   <br>
   <br>
   <p>{{ personsWhoEat }}</p>
