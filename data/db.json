@@ -4,11 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-<<<<<<< HEAD
       "key": "9ZALL",
-=======
-      "key": "ZqM1Q",
->>>>>>> main
       "groups": [
         {
           "name": "ยามเช้า",
