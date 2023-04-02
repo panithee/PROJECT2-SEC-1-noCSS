@@ -40,15 +40,15 @@ onBeforeMount(() => {
   sumPrice()
 });
 
-// onBeforeUpdate(() =>{
-//   sumPrice()
-// })
+onBeforeUpdate(() =>{
+  sumPrice()
+})
 
-// console.log(meals.value)
 const sumPrice =  () => {
   for (const groupArr of allGroupArr.value) {
     let total = 0;
     for (const meal of groupArr.meals) {
+      total = 0
       for (const food of meal.foods) {
         total += food.price;
       }
