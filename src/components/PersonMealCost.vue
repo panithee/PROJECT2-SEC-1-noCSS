@@ -1,3 +1,5 @@
+<style scoped></style>
+
 <script setup>
 import { defineProps } from 'vue';
 defineProps({
@@ -22,6 +24,18 @@ const mealsEat = (consumersName = [], meals = []) => {
 };
 
 const mealCalGroup = (consumersName = [], meal = {}) => {
+  // const mealCal = meals.reduce((acc, meal) => {
+  //   meal.foods.forEach((food) => {
+  //     food.consumers.forEach((consumer) => {
+  //       if (consumersName.includes(consumer.name)) {
+  //         console.log(food.name, consumer.price);
+  //         acc += Number(consumer.price);
+  //       }
+  //     });
+  //   });
+  //   return acc
+  // }, 0);
+  // return mealCal;
   const mealCal = meal.foods.reduce((acc, food) => {
     food.consumers.forEach((consumer) => {
       if (consumersName.includes(consumer.name)) {
@@ -38,15 +52,17 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
 <template>
   <!-- {{ memberInGroup }} -->
-  <div class="flex flex-col gap-4" v-for="member in memberInGroup">
-    <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-if="memberSelected === ''"
+  <div class="flex flex-col gap-6" v-for="member in memberInGroup">
+    <div class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}" v-if="memberSelected === ''"
       v-for="meal in mealsEat(member.name, mealOfPerson)">
+
+      <div>{{ member.name }}</div>
 
       <div class="flex justify-center">
 
         <div class="flex flex-col w-11/12 gap-1 text-base">
           <div v-for="food in meal.foods">
-            <div class="flex flex-row justify-between w-full">
+            <div class="flex flex-row justify-between w-full border-b-[0.25px] border-b-black/40">
               <span>{{ food.name }}</span>
               <span>{{ food.consumers.find((consumer) => consumer.name === member.name).price }}</span>
             </div>
@@ -59,7 +75,7 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
     </div>
 
-    <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-else-if="memberSelected === member.name"
+    <div class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}" v-else-if="memberSelected === member.name"
       v-for="meal in mealsEat(member.name, mealOfPerson)">
       <div>{{ memberSelected }}</div>
 
@@ -67,7 +83,7 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
         <div class="flex flex-col w-11/12 gap-1 text-base">
           <div v-for="food in meal.foods">
-            <div class="flex flex-row justify-between w-full">
+            <div class="flex flex-row justify-between w-full border-b-[0.25px] border-b-black/40">
               <span>{{ food.name }}</span>
               <span>{{ food.consumers.find((consumer) => consumer.name === memberSelected).price }}</span>
             </div>
