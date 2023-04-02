@@ -1,13 +1,9 @@
 <script setup>
-import {onBeforeMount, ref} from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import Navbar from './components/Navbar.vue'
-import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
+import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
 import Loading from './components/icons/loading.vue'
 
-const username = ref('')
-const userData = ref([])
-const loginAlready = ref(false)
-const loading = ref(true);
 const fetchUserData = async () => {
   userData.value = await getUserGroups(username.value)
 }
@@ -46,11 +42,36 @@ const setUsername = async (name) => {
 }
 
 const clearUserData = () => {
-  loginAlready.value = false
-  userData.value = []
-  username.value = ''
-  sessionStorage.clear()
-}
+  loginAlready.value = true;
+  userData.value = [];
+  username.value = '';
+  sessionStorage.clear();
+};
+
+onBeforeMount(async () => {
+  console.log('before mount');
+  const storedUsername = sessionStorage.getItem('username');
+  if (!storedUsername) {
+    userData.value = [];
+    loginAlready.value = true;
+    return;
+  }
+  try {
+    const userKey = await findKey(storedUsername);
+    const key = sessionStorage.getItem('key');
+    if (userKey !== key) {
+      sessionStorage.clear();
+      username.value = '';
+      userData.value = [];
+    } else {
+      loginAlready.value = false;
+      username.value = storedUsername;
+      await fetchUserData();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 const updated = (data) => {
   updateGroups(username.value, data)
@@ -62,7 +83,6 @@ onBeforeMount(async () => {
 })
 
 </script>
-
 
 <template>
   <div class="w-full min-h-screen bg-cover bg-hero-mobile sm:bg-hero">
@@ -78,10 +98,6 @@ onBeforeMount(async () => {
     </div>
   </div>
 </template>
-
-
-
-
 
 
 
