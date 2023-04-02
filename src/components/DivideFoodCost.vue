@@ -80,7 +80,7 @@ const togglePersonWhoEat = (event) => {
     console.log(personsWhoEat.value)
     personsWhoEat.value.sort((a, b) => a.id - b.id)
   } else {
-    personsWhoEat.value = personsWhoEat.value.filter((person) => person.id !== personsList.value[index].id)
+    personsWhoEat.value = personsWhoEat.value.filter((person) => person.name !== personsList.value[index].name)
   }
 }
 const avgPricePerPerson = computed(() => {
