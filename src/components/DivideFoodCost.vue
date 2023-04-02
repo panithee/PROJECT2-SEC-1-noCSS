@@ -119,6 +119,11 @@ const checkFoodPrice = () => {
   if (foodPrice.value < 0) {
     foodPrice.value = 0
   }
+  if (page.value) {
+    saveAvgPrice();
+  } else {
+    calculatePriceByPercent();
+  }
 }
 const checkDataBeforeDone = () => {
   if (foodName.value.trim() === "") {

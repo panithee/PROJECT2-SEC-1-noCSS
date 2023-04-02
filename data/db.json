@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "dSMN0",
+      "key": "nMwJu",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -253,7 +253,12 @@
               "price": 0
             }
           ],
-          "meals": []
+          "meals": [
+            {
+              "name": "ab",
+              "foods": []
+            }
+          ]
         }
       ]
     }

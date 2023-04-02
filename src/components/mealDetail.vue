@@ -55,13 +55,18 @@ const saveFood = (food) => {
 const foodlist = ref([])
 const mealname = ref('')
 defineEmits(['back', 'save', 'updatedMeals'])
+const deleteMeal = (index) => {
+  if (confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) {
+    foodlist.value.splice(index, 1)
 
+  }
+}
 </script>
 
 <template>
   <div v-if="switchFood == false" class="oatView">
     <!-- {{ foodlist}}
-                                                                                                                              {{ personsWhoEat3 }} -->
+                                                                                                                                          {{ personsWhoEat3 }} -->
     <div class="flex justify-between w-40 m-5">
       <span @click="$emit('back')">Back</span>
       <span>มื้ออาหาร</span>
@@ -94,7 +99,7 @@ defineEmits(['back', 'save', 'updatedMeals'])
                 <div class="flex flex-row ">
 
                   <button @click="clickEdit(food, index)"> edit</button>
-
+                  <button @click="deleteMeal(index)"> delete</button>
                 </div>
 
               </div>
