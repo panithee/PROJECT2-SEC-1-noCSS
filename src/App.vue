@@ -1,7 +1,7 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue'
+import {onBeforeMount, ref} from 'vue'
 import Navbar from './components/Navbar.vue'
-import { findKey, getUserGroups, updateGroups } from './composable/FetchFunctions.js'
+import {findKey, getUserGroups, updateGroups} from './composable/FetchFunctions.js'
 import Loading from './components/icons/loading.vue'
 
 const username = ref('')
@@ -20,6 +20,7 @@ const checkLogin = async () => {
     sessionStorage.setItem("isLoggedIn", "false")
   }
   try {
+    console.log('check login')
     const userKey = await findKey(storedUsername)
     const key = sessionStorage.getItem('key')
     if (userKey !== key) {
@@ -30,6 +31,7 @@ const checkLogin = async () => {
       console.log('key not match')
       loginAlready.value = false
     } else {
+      console.log('key match')
       loginAlready.value = true
       username.value = storedUsername
       await fetchUserData()
@@ -65,7 +67,7 @@ onBeforeMount(async () => {
 
 
 <template>
-  <div class="w-full min-h-screen bg-cover bg-hero-mobile sm:bg-hero">
+  <div class="w-full min-h-screen overflow-hidden bg-fixed bg-cover bg-hero-mobile sm:bg-hero">
     <Navbar @clearData=clearUserData @setUsername=setUsername></Navbar>
     <div class="container mx-auto">
       <router-view v-if="username !== ''" :userData="userData" @updated="updated"></router-view>
@@ -73,10 +75,10 @@ onBeforeMount(async () => {
         กรุณาเข้าสู่ระบบ
       </div>
       <div v-show="loading" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <Loading />
+        <Loading/>
       </div>
     </div>
   </div>
 </template>
- 
+
 <style scoped></style>
