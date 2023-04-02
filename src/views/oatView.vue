@@ -1,16 +1,69 @@
+<script setup>
+import { defineProps, onMounted, ref, watch } from 'vue'
+import DivideFoodCost from '../components/DivideFoodCost.vue';
+
+const props = defineProps({
+  mealData: {
+    type: Object,
+    default: {}
+  },
+  member: {
+    type: Array,
+    default: []
+  }
+})
+const foodChoose = ref({ data: {}, index: -1 });
+const selectMode = ref('add')
+const switchFood = ref(false)
+const clickEdit = (food, index) => {
+  foodChoose.value.data = food
+  foodChoose.value.index = index
+
+  selectMode.value = 'edit'
+  switchFood.value = true
+}
+const clickAdd = () => {
+  foodChoose.value.data = {}
+  foodChoose.value.index = -1
+  selectMode.value = 'add'
+  switchFood.value = true
+}
+watch(() => props.mealData, (newVal, oldVal) => {
+  console.log(newVal)
+  mealname.value = newVal.name
+  console.log(mealname.value)
+  foodlist.value = newVal.foods
+  console.log(foodlist.value)
+
+})
+
+const show = () => {
+  if (switchFood.value == false) {
+    switchFood.value = !switchFood.value
+  }
+}
+const saveFood = (food) => {
+  if (selectMode.value == 'add') {
+    foodlist.value.push(food)
+  } else {
+    foodlist.value[foodChoose.value.index] = food
+  }
+  console.log(foodlist.value)
+  switchFood.value = !switchFood.value
+}
+
+const foodlist = ref([])
+const mealname = ref('')
+
+
+</script>
+
 <template>
-  {{ foodlist }}
-
-  {{ datalist }}
-  <div v-if="t == false" class="oatView">
+  <div v-if="switchFood == false" class="oatView">
     <!-- {{ foodlist}}
-    {{ personsWhoEat3 }} -->
-
-    <span class="text-white bg-black">
-      กลุ่มโม
-    </span>
+                                                                                                              {{ personsWhoEat3 }} -->
     <div class="flex justify-between w-40 m-5">
-      <span>Black</span>
+      <span @click="$emit('back')">Back</span>
       <span>มื้ออาหาร</span>
     </div>
     <div class=" ml-[110px]">
@@ -24,7 +77,11 @@
         </div>
         <div v-else class="w-full ">
           <ul>
-            <li v-for="food in foodlist">
+            <!-- {{ foodlist }} -->
+            <br>
+            <br>
+            <li v-for="(food, index) in foodlist">
+              {{ food }}
               <div class="h-[100px] ">
                 <div>
                   <span class="text-[25px]">{{ food.name }}</span>
@@ -38,7 +95,7 @@
                 <hr>
                 <div class="flex flex-row ">
 
-                  <button @click="clickEdit(food)"> edit</button>
+                  <button @click="clickEdit(food, index)"> edit</button>
 
                 </div>
 
@@ -50,92 +107,16 @@
         </div>
 
       </div>
-      <button class="float-right" @click="clickAdd"><img alt="" src="../assets/img/add-icon.png"></button>
+      <button class="fixed bottom-0 right-0" @click="clickAdd"><img alt="" src="../assets/img/add-icon.png"></button>
     </div>
 
 
   </div>
 
-  <DivideFoodCost v-if="t == true" :food="foodEdit" :member="member" :mode="selectMode" :data="datalist.member"
-    @sendAllData="test" />
+  <DivideFoodCost v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
+    @back="switchFood = false" @save="saveFood" />
+  <button @click="$emit('updatedMeals', foodlist, mealname)">save</button>
 </template>
 
-<script setup>
-import { defineProps, onMounted, ref, watch } from 'vue'
-import DivideFoodCost from '../components/DivideFoodCost.vue';
-
-const props = defineProps({
-  userData: {
-    type: Array,
-    default: []
-  },
-  mealData: {
-    type: Object,
-    default: {}
-  },
-  member: {
-    type: Array,
-    default: []
-  },
-  g_name: {
-    type: String,
-    default: ""
-  }, datalist: {
-    type: Object,
-    default: {}
-  },
-})
-const foodEdit = ref({})
-const selectMode = ref('add')
-const t = ref(false)
-const clickEdit = (food) => {
-  console.log("🚀 ~ file: oatView.vue:82 ~ clickEdit ~ food:", food)
-  foodEdit.value = food
-  console.log("🚀 ~ file: oatView.vue:83 ~ clickEdit ~ foodEdit.value = { food }:", foodEdit.value)
-
-  selectMode.value = 'edit'
-  t.value = true
-}
-const clickAdd = () => {
-  foodEdit.value = {}
-  selectMode.value = 'add'
-  t.value = true
-}
-watch(() => props.mealData, (newVal, oldVal) => {
-  console.log(newVal)
-  mealname.value = newVal.name
-  console.log(mealname.value)
-  foodlist.value = newVal.foods
-  console.log(foodlist.value)
-
-})
-
-const show = () => {
-  if (t.value == false) {
-    t.value = !t.value
-  }
-}
-
-const foodlist = ref([])
-const mealname = ref('')
-const foodName1 = ref('')
-const foodPrice2 = ref()
-const personsWhoEat3 = ref([])
-const test = (foodName, foodPrice, personsWhoEat, tt) => {
-  foodName1.value = foodName
-  foodPrice2.value = foodPrice
-  personsWhoEat3.value = personsWhoEat
-
-
-  foodlist.value.push({ "foodname": foodName1.value, "foodPrice": foodPrice2.value, "name": personsWhoEat3.value })
-  if (tt == false) {
-    t.value = !t.value
-  }
-
-
-}
-
-//console.log(foodlist);
-</script>
 
 <style scoped></style>

@@ -12,7 +12,7 @@ const props = defineProps({
     type: Object
   }
 })
-const emit = defineEmits(['sendAllData'])
+const emit = defineEmits(['back', 'save'])
 const page = ref(true);
 const switchMenu = (type) => {
   page.value = type === "equal";
@@ -29,8 +29,9 @@ const isPersonsWhoEatValid = ref(false);
 const calculatePriceByPercent = () => {
   if (personsWhoEat.value?.length === undefined) return;
   personsWhoEat.value.map((person) => {
-    if (foodPrice.value === undefined) {
+    if (foodPrice.value === undefined || foodPrice.value === 0) {
       person.price = 0;
+      person.percentage = 0;
       return person
     }
     console.log(person.percentage)
@@ -52,6 +53,16 @@ watchEffect(() => {
   console.log(personsList.value)
 }
 );
+
+const saveAvgPrice = () => {
+  if (foodPrice.value === undefined) return 0;
+  const avg = (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
+  personsWhoEat.value = personsWhoEat.value.map((a) => {
+    a.price = avg;
+    a.percentage = 0;
+    return a
+  })
+}
 const togglePersonWhoEat = (event) => {
   const index = event.target.id;
   if (!checkPersonEating(personsList.value[index].id)) {
@@ -61,6 +72,9 @@ const togglePersonWhoEat = (event) => {
       "percentage": 0,
       "price": 0
     })
+    if (page.value) {
+      saveAvgPrice();
+    }
     personsWhoEat.value.sort((a, b) => a.id - b.id)
   }
   else {
@@ -73,6 +87,8 @@ const avgPricePerPerson = computed(() => {
     const avg = (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
     personsWhoEat.value = personsWhoEat.value.map((a) => {
       a.price = avg;
+      a.percentage = 0;
+      console.log(a)
       return a
     })
   }
@@ -121,26 +137,22 @@ const checkDataBeforeDone = () => {
     isPersonsWhoEatValid.value = false
   }
   if (foodName.value.trim() !== "" && foodPrice.value !== undefined && foodPrice.value > 0 && personsWhoEat.value.length >= 1) {
-    return emit('sendAllData', foodName.value, foodPrice.value, personsWhoEat.value);
+    food.value = {
+      "name": foodName.value,
+      "price": foodPrice.value,
+      "consumers": personsWhoEat.value,
+      "splitMode": page.value ? "equal" : "percent"
+    }
+    return emit('save', food.value);
   }
 }
+
 </script>
 <template>
-  <br>
-  <br>
-  <p>{{ foods }}</p>
-  <br>
-  <br>
-  <p>{{ member }}</p>
-  <br>
-  <br>
-  <p>{{ personsWhoEat }}</p>
-  <br>
-  <br>
-  <p>{{ foodPrice }}</p>
+  {{ personsWhoEat }}
   <div class="w-full h-full">
-    <router-link to="/"
-      class="flex px-2 ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg w-fit backfont">กลับ</router-link>
+    <button @click="$emit('back')"
+      class="flex px-2 ml-10 text-3xl hover:bg-gray-200 hover:text-black hover:rounded-lg w-fit backfont">กลับ</button>
     <input type="text" placeholder="กรุณาใส่ชื่ออาหาร" v-model="foodName"
       class="flex justify-center mx-auto text-2xl text-center border rounded-lg">
     <p v-show="isFoodNameValid" class="flex justify-center font-bold text-red-500 text-md">*จำเป็น</p>
