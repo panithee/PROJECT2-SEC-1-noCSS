@@ -55,8 +55,9 @@
 
 
   </div>
-  {{ member }}
-  <DivideFoodCost v-if="t == true" :foods="foodEdit" :member="member" :mode="selectMode" @sendAllData="test" />
+
+  <DivideFoodCost v-if="t == true" :food="foodEdit" :member="member" :mode="selectMode" :data="datalist.member"
+    @sendAllData="test" />
 </template>
 
 <script setup>
