@@ -22,7 +22,7 @@ const test = ref(props.userData.value)
 watch(() => props.userData, (newVal) => {
   test.value = newVal
 })
-console.log(props.userData.value)
+console.log(props.userData)
 </script>
 
 <style scoped></style>

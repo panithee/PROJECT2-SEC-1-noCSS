@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "U51Dv",
+      "key": "bs1sI",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -282,10 +282,14 @@
           "meals": []
         },
         {
-          "name": "xsa",
+          "name": "BTS",
           "members": [
             {
-              "name": "sax",
+              "name": "v",
+              "price": 0
+            },
+            {
+              "name": "jungkook",
               "price": 0
             }
           ],

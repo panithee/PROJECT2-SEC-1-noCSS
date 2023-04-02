@@ -1,5 +1,5 @@
 <script setup>
-import {onBeforeMount, ref, watch} from "vue";
+import { onBeforeMount, onMounted, ref, watch } from "vue";
 import ArrowDown from "./icons/arrowDown.vue";
 import ArrowUp from "./icons/arrowUp.vue";
 import Close from "./icons/close.vue";
@@ -11,7 +11,7 @@ const memberList = ref([]);
 const textErrMember = ref("");
 const textError = ref("");
 const modeTarget = ref("");
-const totalPrice = ref(0);
+const totalPrice = ref([]);
 
 //Edit
 const showEditMembers = ref(false);
@@ -20,7 +20,6 @@ const targetGroupForEdit = ref([]);
 const targetGroupForEditIndex = ref(-1);
 const showDetailsOfGroup = ref([]);
 
-
 const props = defineProps({
   userData: {
     type: Array,
@@ -28,17 +27,31 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['updated'])
+const emit = defineEmits(["updated"]);
 
 watch(
-    () => props.userData,
-    (newVal) => {
-      allGroupArr.value = newVal;
-    }
+  () => props.userData,
+  (newVal) => {
+    allGroupArr.value = newVal;
+  }
 );
 onBeforeMount(() => {
   allGroupArr.value = props.userData;
+  sumPrice()
 });
+
+// console.log(meals.value)
+const sumPrice =  () => {
+  for (const groupArr of allGroupArr.value) {
+    let total = 0;
+    for (const meal of groupArr.meals) {
+      for (const food of meal.foods) {
+        total += food.price;
+      }
+      totalPrice.value.push(total);
+    }
+  }
+};
 
 // show pop-up
 const popup = ref(false);
@@ -52,7 +65,6 @@ const showInsertGroupPopUp = () => {
 
 const newGroupName = ref("");
 const newMember = ref("");
-
 
 // set start value on popup
 const eventAddEdit = (index, mode) => {
@@ -69,7 +81,9 @@ const eventAddEdit = (index, mode) => {
     for (let i = 0; i < allGroupArr.value.length; i++) {
       if (i === index) {
         targetGroupForEditIndex.value = i;
-        targetGroupForEdit.value = JSON.parse(JSON.stringify(allGroupArr.value[i]));
+        targetGroupForEdit.value = JSON.parse(
+          JSON.stringify(allGroupArr.value[i])
+        );
         newGroupName.value = targetGroupForEdit.value.name;
         membersInGroupTarget.value = targetGroupForEdit.value.members;
       }
@@ -122,8 +136,8 @@ const DoneAddEditGroup = () => {
     } else if (newGroupName.value === groupNameExists) {
       textError.value = "ชื่อกลุ่มนี้มีอยู่แล้ว";
     } else if (
-        newGroupName.value !== "" &&
-        newGroupName.value !== groupNameExists
+      newGroupName.value !== "" &&
+      newGroupName.value !== groupNameExists
     ) {
       allGroupArr.value.push({
         name: newGroupName.value,
@@ -143,100 +157,129 @@ const DoneAddEditGroup = () => {
     currentGroup.meals = targetGroupForEdit.value.meals;
     showInsertGroupPopUp();
   }
-  emit("updated", allGroupArr.value)
+  emit("updated", allGroupArr.value);
 };
 
 // show member toggle
-const showGroupDetails = (index) => {
-  showDetailsOfGroup.value.push(index);
-};
-const unshowGroupDetails = (index) => {
-  showDetailsOfGroup.value.splice(showDetailsOfGroup.value.indexOf(index), 1);
+const showGroupDetails = (index, display) => {
+  if (display === "unshow") {
+    showDetailsOfGroup.value.push(index);
+  } else if (display === "show") {
+    showDetailsOfGroup.value.splice(showDetailsOfGroup.value.indexOf(index), 1);
+  }
 };
 
 // delete group and members
 const deleteGroupAndMembers = (index, groupOrMember) => {
-
   if (groupOrMember === "group") {
-    if (confirm('คุณต้องการลบข้อมูลกลุ่มใช่หรือไม่')) {
+    if (confirm("คุณต้องการลบข้อมูลกลุ่มใช่หรือไม่")) {
       allGroupArr.value.splice(index, 1);
     }
   } else if (groupOrMember === "member") {
-    if (confirm('คุณต้องการลบสมาชิกใช่หรือไม่?')) {
+    if (confirm("คุณต้องการลบสมาชิกใช่หรือไม่?")) {
       resetPriceWhenRemove(index);
       membersInGroupTarget.value.splice(index, 1);
     }
   } else if (groupOrMember === "newAddMember") {
-    if (confirm('คุณต้องการลบสมาชิกใช่หรือไม่?')) {
+    if (confirm("คุณต้องการลบสมาชิกใช่หรือไม่?")) {
       memberList.value.splice(index, 1);
     }
   }
-  emit("updated", allGroupArr.value)
+  emit("updated", allGroupArr.value);
 };
 
 const resetPriceWhenRemove = (index) => {
-  const {name: memberRemoveName} = membersInGroupTarget.value[index];
-  console.log(typeof targetGroupForEdit.value.meals, targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce((acc, {
-    name,
-    foods
-  }) => {
-    acc = [...acc, {
-      name,
-      foods: foods.map(food => {
-        if (food.consumers === []) {
-          return food;
-        }
-        if (food.consumers.some(consumer => consumer?.name === memberRemoveName)) {
-          const consumerData = food.consumers.find(consumer => consumer.name === memberRemoveName);
-          console.log("food in loop", food)
-          let filteredConsumers = food.consumers.filter(consumer => {
-            console.log("🚀 ~ file: Group.vue:181 ~ filteredConsumers ~ consumer:", consumer)
-            return consumer.name !== memberRemoveName
-          });
-
-          if (food.splitMode === "equal") {
-            let modifyPriceConsumers = filteredConsumers.map(consumer => ({
-              ...consumer,
-              price: (food.price / filteredConsumers.length).toFixed(2)
-            }));
-            return {
-              ...food,
-              consumers: filteredConsumers.length > 0 ? modifyPriceConsumers : [],
-            }
-          } else if (food.splitMode === "percentage") {
-            console.log("filteredConsumers in percentage", filteredConsumers)
-            let modifyPriceConsumers = filteredConsumers.map((consumer, index) => {
-              if (index === 0) {
-                console.log(consumerData)
-                console.log("consumer", consumer)
-                let newPercentage = Number(consumerData.percentage + consumer.percentage).toFixed(2);
-                let newPrice = ((food.price * newPercentage) / 100).toFixed(2);
-                return {
-                  ...consumer,
-                  price: Number(newPrice),
-                  percentage: Number(newPercentage)
-                }
+  const { name: memberRemoveName } = membersInGroupTarget.value[index];
+  console.log(
+    typeof targetGroupForEdit.value.meals,
+    (targetGroupForEdit.value.meals = targetGroupForEdit.value.meals.reduce(
+      (acc, { name, foods }) => {
+        acc = [
+          ...acc,
+          {
+            name,
+            foods: foods.map((food) => {
+              if (food.consumers === []) {
+                return food;
               }
-              return consumer;
-            });
-            return {
-              ...food,
-              consumers: filteredConsumers.length > 0 ? modifyPriceConsumers : [],
-            }
-          }
-        } else {
-          return food;
-        }
-      })
-    }];
-    return acc;
-  }, []));
+              if (
+                food.consumers.some(
+                  (consumer) => consumer?.name === memberRemoveName
+                )
+              ) {
+                const consumerData = food.consumers.find(
+                  (consumer) => consumer.name === memberRemoveName
+                );
+                console.log("food in loop", food);
+                let filteredConsumers = food.consumers.filter((consumer) => {
+                  console.log(
+                    "🚀 ~ file: Group.vue:181 ~ filteredConsumers ~ consumer:",
+                    consumer
+                  );
+                  return consumer.name !== memberRemoveName;
+                });
+
+                if (food.splitMode === "equal") {
+                  let modifyPriceConsumers = filteredConsumers.map(
+                    (consumer) => ({
+                      ...consumer,
+                      price: (food.price / filteredConsumers.length).toFixed(2),
+                    })
+                  );
+                  return {
+                    ...food,
+                    consumers:
+                      filteredConsumers.length > 0 ? modifyPriceConsumers : [],
+                  };
+                } else if (food.splitMode === "percentage") {
+                  console.log(
+                    "filteredConsumers in percentage",
+                    filteredConsumers
+                  );
+                  let modifyPriceConsumers = filteredConsumers.map(
+                    (consumer, index) => {
+                      if (index === 0) {
+                        console.log(consumerData);
+                        console.log("consumer", consumer);
+                        let newPercentage = Number(
+                          consumerData.percentage + consumer.percentage
+                        ).toFixed(2);
+                        let newPrice = (
+                          (food.price * newPercentage) /
+                          100
+                        ).toFixed(2);
+                        return {
+                          ...consumer,
+                          price: Number(newPrice),
+                          percentage: Number(newPercentage),
+                        };
+                      }
+                      return consumer;
+                    }
+                  );
+                  return {
+                    ...food,
+                    consumers:
+                      filteredConsumers.length > 0 ? modifyPriceConsumers : [],
+                  };
+                }
+              } else {
+                return food;
+              }
+            }),
+          },
+        ];
+        return acc;
+      },
+      []
+    ))
+  );
 };
-
-
 </script>
 
 <template>
+  <!-- {{ allGroupArr }} -->
+  {{ allGroupArr }}
   <!--  <br>-->
   <!--  <br>-->
   <!--    <p v-for="group in userData ">-->
@@ -252,37 +295,63 @@ const resetPriceWhenRemove = (index) => {
     </div>
     <div v-for="(group, index) in allGroupArr" key="index">
       <div>
-        <div class="grid w-5/6 sm:w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md sm:pl-14 pl-5">
-          <p> {{ group.name }} </p>
-          <button v-if="showDetailsOfGroup.includes(index)" :id="index" class="flex justify-end pr-5"
-                  @click="unshowGroupDetails(index)">
+        <div
+          class="grid w-5/6 sm:w-3/5 grid-cols-2 py-2 m-auto mt-5 border border-black rounded-md sm:pl-14 pl-5"
+        >
+          <p>{{ group.name }}</p>
+          <button
+            v-if="showDetailsOfGroup.includes(index)"
+            :id="index"
+            class="flex justify-end pr-5"
+            @click="showGroupDetails(index, 'show')"
+          >
             <ArrowDown></ArrowDown>
           </button>
-          <button v-else :id="index" class="flex justify-end pr-5" @click="showGroupDetails(index)">
+          <button
+            v-else
+            :id="index"
+            class="flex justify-end pr-5"
+            @click="showGroupDetails(index, 'unshow')"
+          >
             <ArrowUp></ArrowUp>
           </button>
         </div>
-        <div v-if="showDetailsOfGroup.includes(index)"
-             class="flex flex-col items-center w-5/6 sm:w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md">
+        <div
+          v-if="showDetailsOfGroup.includes(index)"
+          class="flex flex-col items-center w-5/6 sm:w-3/5 gap-2 py-2 pr-2 m-auto border border-black rounded-md"
+        >
           <div class="flex flex-col items-start w-4/5 gap-2">
             <span class="py-2 text-xl">รายชื่อสมาชิก</span>
-            <div :id="index" class="flex w-full gap-2 overflow-x-scroll flex-nowrap h-11">
-              <span v-for="member in group.members" key="index" class="px-3 text-lg border border-black rounded-xl">
+            <div
+              :id="index"
+              class="flex w-full gap-2 overflow-x-scroll flex-nowrap h-11"
+            >
+              <span
+                v-for="member in group.members"
+                key="index"
+                class="px-3 text-lg border border-black rounded-xl"
+              >
                 {{ member.name }}
               </span>
             </div>
           </div>
-          <div class="grid grid-cols-2 text-xl text-center">
+          <div class="grid grid-cols-2 gap-5 text-xl text-center">
             <span>จำนวนคน: {{ group.members.length }}</span>
-            <span>ราคาทั้งหมด: {{ totalPrice }}</span>
+            <span>ราคาทั้งหมด: {{ totalPrice[index] }}</span>
           </div>
           <div class="flex flex-row justify-end w-full gap-2 pr-2 text-base">
-            <button :id="index" class="border border-b-black border-x-white border-t-white"
-                    @click="eventAddEdit(index, 'edit')">
+            <button
+              :id="index"
+              class="border border-b-black border-x-white border-t-white"
+              @click="eventAddEdit(index, 'edit')"
+            >
               แก้ไขกลุ่ม
             </button>
-            <button :id="index" class="border border-b-black border-x-white border-t-white"
-                    @click="deleteGroupAndMembers(index, 'group')">
+            <button
+              :id="index"
+              class="border border-b-black border-x-white border-t-white"
+              @click="deleteGroupAndMembers(index, 'group')"
+            >
               ลบกลุ่ม
             </button>
           </div>
@@ -290,13 +359,19 @@ const resetPriceWhenRemove = (index) => {
       </div>
     </div>
     <div class="mt-5 text-center bg-white">
-      <button class="px-8 py-3 text-white bg-black rounded-full" @click="eventAddEdit(index, 'add')">
+      <button
+        class="px-8 py-3 text-white bg-black rounded-full"
+        @click="eventAddEdit(index, 'add')"
+      >
         เพิ่มกลุ่ม
       </button>
     </div>
 
     <!-- pop-up -->
-    <div v-show="popup" class="fixed inset-0 z-50 flex items-center justify-center">
+    <div
+      v-show="popup"
+      class="fixed inset-0 z-50 flex items-center justify-center"
+    >
       <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
       <div class="container absolute w-3/5 px-2 pt-2 bg-white rounded-lg h-96">
         <div class="flex justify-end">
@@ -305,7 +380,12 @@ const resetPriceWhenRemove = (index) => {
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input v-model="newGroupName" class="border border-b-black w-36 sm:w-64" type="text" placeholder="กรุณาใส่ชื่อกลุ่ม" />
+          <input
+            v-model="newGroupName"
+            class="border border-b-black w-36 sm:w-64"
+            type="text"
+            placeholder="กรุณาใส่ชื่อกลุ่ม"
+          />
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
@@ -314,34 +394,59 @@ const resetPriceWhenRemove = (index) => {
         </div>
         <div class="w-full sm:h-24 overflow-y-scroll h-10">
           <div class="sm:ml-24">
-            <div v-for="(member, index) in membersInGroupTarget" v-show="showEditMembers" key="index">
+            <div
+              v-for="(member, index) in membersInGroupTarget"
+              v-show="showEditMembers"
+              key="index"
+            >
               <button @click="deleteGroupAndMembers(index, 'member')">
                 <Delete></Delete>
               </button>
-              <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
-                {{ member.name }} <br/>
+              <span
+                class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
+              >
+                {{ member.name }} <br />
               </span>
             </div>
             <span v-for="(member, index) in memberList" key="index">
-              <button v-show="showEditMembers" :id="index" @click="deleteGroupAndMembers(index, 'newAddMember')">
+              <button
+                v-show="showEditMembers"
+                :id="index"
+                @click="deleteGroupAndMembers(index, 'newAddMember')"
+              >
                 <Delete></Delete>
               </button>
-              <span class="px-3 mt-4 ml-3 text-xl border border-black rounded-full">
-                {{ member.name }}
-              </span><br v-show="showEditMembers"/>
+              <span
+                class="px-3 mt-4 ml-3 text-xl border border-black rounded-full"
+              >
+                {{ member.name }} </span
+              ><br v-show="showEditMembers" />
             </span>
           </div>
         </div>
         <div class="text-center sm:text-left">
-          <input @keypress.enter="addMember" v-model="newMember" class="mt-4 sm:ml-24 text-lg border border-b-black" type="text"
-            placeholder="+ ใส่ชื่อสมาชิกทีละคน" />
-          <button @click="addMember" class="px-2 text-xl text-black border border-black rounded-full">
-            เพิ่ม
-          </button><br />
-          <span class="sm:ml-24 text-lg text-red-600"> {{ textErrMember }}</span>
+          <input
+            @keypress.enter="addMember"
+            v-model="newMember"
+            class="mt-4 sm:ml-24 text-lg border border-b-black"
+            type="text"
+            placeholder="+ ใส่ชื่อสมาชิกทีละคน"
+          />
+          <button
+            @click="addMember"
+            class="px-2 text-xl text-black border border-black rounded-full"
+          >
+            เพิ่ม</button
+          ><br />
+          <span class="sm:ml-24 text-lg text-red-600">
+            {{ textErrMember }}</span
+          >
         </div>
         <div class="flex justify-center">
-          <button class="px-5 py-3 mt-3 sm:mt-0 text-white bg-black rounded-full " @click="DoneAddEditGroup">
+          <button
+            class="px-5 py-3 mt-3 sm:mt-0 text-white bg-black rounded-full"
+            @click="DoneAddEditGroup"
+          >
             บันทึกกลุ่ม
           </button>
         </div>
