@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "aMFKs",
+      "key": "qJS4F",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -308,6 +308,69 @@
       ],
       "key": "TcZDa",
       "id": 2
+    },
+    {
+      "username": "moniyom",
+      "password": "1",
+      "groups": [
+        {
+          "name": "a",
+          "members": [
+            {
+              "name": "m",
+              "price": 0
+            },
+            {
+              "name": "o",
+              "price": 0
+            },
+            {
+              "name": "n",
+              "price": 0
+            },
+            {
+              "name": "i",
+              "price": 0
+            }
+          ],
+          "meals": [
+            {
+              "name": "a",
+              "foods": [
+                {
+                  "name": "test",
+                  "price": 300,
+                  "consumers": [
+                    {
+                      "name": "m",
+                      "percentage": 0,
+                      "price": "75.00"
+                    },
+                    {
+                      "name": "o",
+                      "percentage": 0,
+                      "price": "75.00"
+                    },
+                    {
+                      "name": "n",
+                      "percentage": 0,
+                      "price": "75.00"
+                    },
+                    {
+                      "name": "i",
+                      "percentage": 0,
+                      "price": "75.00"
+                    }
+                  ],
+                  "splitMode": "equal"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "key": "XVFCI",
+      "id": 3
     }
   ]
 }

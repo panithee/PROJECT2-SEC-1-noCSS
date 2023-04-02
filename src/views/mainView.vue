@@ -33,11 +33,12 @@ const show = () => {
 }
 const emit = defineEmits(['updated'])
 const updatedMeals = (mealFood, mealName) => {
-  if (g_list.value.meals.some((e => e.name == mealName))) {
-    alert("มีชื่อรายการนี้อยู่แล้ว")
-    return
-  }
+
   if (mealChoose.value.index == -1) {
+    if (g_list.value.meals.some((e => e.name == mealName))) {
+      alert("มีชื่อรายการนี้อยู่แล้ว")
+      return
+    }
     g_list.value.meals.push({ name: mealName, foods: mealFood })
   } else {
     g_list.value.meals[mealChoose.value.index] = { name: mealName, foods: mealFood }
