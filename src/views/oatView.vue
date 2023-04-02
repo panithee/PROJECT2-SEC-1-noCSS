@@ -4,10 +4,10 @@
     <!-- {{ foodlist}}
     {{ personsWhoEat3 }} -->
 
-    <span class="bg-black text-white">
-        กลุ่มโม
-     </span>
-    <div class="flex justify-between  w-40 m-5">
+    <span class="text-white bg-black">
+      กลุ่มโม
+    </span>
+    <div class="flex justify-between w-40 m-5">
       <span>Black</span>
       <span>มื้ออาหาร</span>
     </div>
@@ -20,7 +20,7 @@
         <div v-if="foodlist?.length <= 0">
           <input class="border border-black text-[40px] rounded-full" placeholder="Add ur food ~~" type="text">
         </div>
-        <div v-else class=" w-full">
+        <div v-else class="w-full ">
           <ul>
             <li v-for="food in foodlist">
               <div class="h-[100px] ">
@@ -28,9 +28,8 @@
                   <span class="text-[25px]">{{ food.name }}</span>
                   <span class="text-[25px] float-right">{{ food.price }}</span>
                   <br>
-                  <span v-for="(consumer, index) in food.consumers" :id="index"
-                        :key="index"
-                        class="px-2 mx-2 border border-black rounded-lg bg-white hover:bg-gray-200  border-black text-black">
+                  <span v-for="(consumer, index) in food.consumers" :id="index" :key="index"
+                    class="px-2 mx-2 text-black bg-white border border-black rounded-lg hover:bg-gray-200">
                     {{ consumer?.name }}
                   </span>
                 </div>
@@ -55,11 +54,11 @@
 
   </div>
 
-  <DivideFoodCost v-if="t == true" :food="foodEdit" :member="member" :mode="selectMode" @sendAllData="test"/>
+  <DivideFoodCost v-if="t == true" :food="foodEdit" :member="member" :mode="selectMode" @sendAllData="test" />
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref, watch} from 'vue'
+import { defineProps, onMounted, ref, watch } from 'vue'
 import DivideFoodCost from '../components/DivideFoodCost.vue';
 
 const props = defineProps({
@@ -80,7 +79,7 @@ const foodEdit = ref({})
 const selectMode = ref('add')
 const t = ref(false)
 const clickEdit = (food) => {
-  foodEdit.value = {food}
+  foodEdit.value = { food }
   selectMode.value = 'edit'
   t.value = true
 }
@@ -118,7 +117,7 @@ const test = (foodName, foodPrice, personsWhoEat, tt) => {
   // member = personsWhoEat3.value[0].name
 
   // console.log(  Array.from(personsWhoEat));
-  foodlist.value.push({"foodname": foodName1.value, "foodPrice": foodPrice2.value, "oc": personsWhoEat3.value})
+  foodlist.value.push({ "foodname": foodName1.value, "foodPrice": foodPrice2.value, "oc": personsWhoEat3.value })
   if (tt == false) {
     t.value = !t.value
   }

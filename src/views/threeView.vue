@@ -3,7 +3,8 @@
 <script setup>
 import { defineProps, onMounted, ref } from 'vue'
 import DivideFoodCost from '../components/DivideFoodCost.vue';
-const props = defineProps({
+
+defineProps({
   userData: {
     type: Array,
     default: []
@@ -19,14 +20,14 @@ const foodName1 = ref('')
 const foodPrice2 = ref()
 const personsWhoEat3 = ref([])
 const test = (foodName, foodPrice, personsWhoEat) => {
-    foodName1.value = foodName
-    foodPrice2.value = foodPrice
-    personsWhoEat3.value = personsWhoEat
+  foodName1.value = foodName
+  foodPrice2.value = foodPrice
+  personsWhoEat3.value = personsWhoEat
 
-      // console.log(personsWhoEat3.value[0].name)
-      
-      foodlist.value.push({"foodname":foodName1.value,"foodPrice":foodPrice2.value,"name":personsWhoEat3.value})
-     
+  // console.log(personsWhoEat3.value[0].name)
+
+  foodlist.value.push({ "foodname": foodName1.value, "foodPrice": foodPrice2.value, "name": personsWhoEat3.value })
+
 }
 
 test()
@@ -36,13 +37,10 @@ test()
 <template>
   <div class="threeView">
     <h1>threeView</h1>
-    
-  <DivideFoodCost :userData="userData" @sendAllData="test" :mode="'add'" />
+
+    <DivideFoodCost :userData="userData" @sendAllData="test" :mode="'add'" />
   </div>
 </template>
 
 
-
-<style scoped>
-
-</style>
+<style scoped></style>

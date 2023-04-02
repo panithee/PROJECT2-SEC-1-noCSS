@@ -1,4 +1,4 @@
-import {generateRandomId} from "./generateKey";
+import { generateRandomId } from "./generateKey.js";
 
 const checkUsernameExists = async (username) => {
     if (username === undefined) {
@@ -138,5 +138,5 @@ const updateGroups = async (username, groups) => {
         console.log(e);
     }
 }
-export {checkUsernameExists, registerUser, loginUser, getUserGroups, findKey, updateGroups};
+export { checkUsernameExists, registerUser, loginUser, getUserGroups, findKey, updateGroups };
 
