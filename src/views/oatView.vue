@@ -54,7 +54,7 @@
 
   </div>
 
-  <DivideFoodCost v-if="t == true" :food="foodEdit" :member="member" :mode="selectMode" @sendAllData="test" />
+  <DivideFoodCost v-if="t == true" :foods="foodEdit" :members="member" :mode="selectMode" @sendAllData="test" />
 </template>
 
 <script setup>
@@ -79,7 +79,10 @@ const foodEdit = ref({})
 const selectMode = ref('add')
 const t = ref(false)
 const clickEdit = (food) => {
-  foodEdit.value = { food }
+  console.log("🚀 ~ file: oatView.vue:82 ~ clickEdit ~ food:", food)
+  foodEdit.value = food
+  console.log("🚀 ~ file: oatView.vue:83 ~ clickEdit ~ foodEdit.value = { food }:", foodEdit.value)
+
   selectMode.value = 'edit'
   t.value = true
 }
@@ -107,7 +110,6 @@ const mealname = ref('')
 const foodName1 = ref('')
 const foodPrice2 = ref()
 const personsWhoEat3 = ref([])
-const member = ref([])
 const test = (foodName, foodPrice, personsWhoEat, tt) => {
   foodName1.value = foodName
   foodPrice2.value = foodPrice
