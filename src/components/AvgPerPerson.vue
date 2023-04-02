@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref } from "vue";
+import { ref, computed, watch } from "vue";
 // import DropDown from "./DropDown.vue";
-import PersonMealCost from "./PersonMealCost.vue";
+// import PersonMealCost from "./PersonMealCost.vue";
 const props = defineProps({
   userData: {
     type: Array,
@@ -65,36 +65,75 @@ const memberListByMeal = computed(() => {
 });
 
 
+const mealsEat = (consumersName = [], meals = []) => {
+  const mealEat = meals.reduce((acc, meal) => {
+    const filteredFoods = meal.foods.filter((food) =>
+      food.consumers.some((consumer) => consumersName.includes(consumer.name))
+    );
+
+    if (filteredFoods.length > 0) {
+      acc.push({ ...meal, foods: filteredFoods });
+    }
+
+    return acc;
+  }, []);
+
+  return mealEat;
+};
+
+const mealCalGroup = (consumersName = [], meal = {}) => {
+  // const mealCal = meals.reduce((acc, meal) => {
+  //   meal.foods.forEach((food) => {
+  //     food.consumers.forEach((consumer) => {
+  //       if (consumersName.includes(consumer.name)) {
+  //         console.log(food.name, consumer.price);
+  //         acc += Number(consumer.price);
+  //       }
+  //     });
+  //   });
+  //   return acc
+  // }, 0);
+  // return mealCal;
+  const mealCal = meal.foods.reduce((acc, food) => {
+    food.consumers.forEach((consumer) => {
+      if (consumersName.includes(consumer.name)) {
+        acc += Number(consumer.price)
+      }
+    })
+    return acc
+  }, 0)
+  return mealCal
+};
 
 </script>
 
 <template>
   <button class="absolute text-xl top-18 left-14 text-slate-500 hover:text-black">
-  Back
-</button>
-<div class="absolute text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
+    Back
+  </button>
+  <div class="absolute text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
 
-<div class="flex justify-center w-full">
-  <div class="flex justify-start w-7/12 mt-20">
-    <div class="grid grid-cols-3 gap-4">
-      <!-- <DropDown
-                                                              :name-drop-down="'test'"
-                                                                :default-option="'all'"
-                                                                :selected-fn="selectedGroup"
-                                                                :data-option="groupsOption"
-                                                                @select="(select) => (selectedGroup = select)"
-                                                              ></DropDown
-                                                              > -->
-      <!-- <div>Selected: {{ selectedGroup }}</div> -->
-      <div>
-        <div class="text-md">Group</div>
-        <select class="w-32 h-12 text-lg border" v-model="selectedGroup">
-          <option value="">all</option>
-          <option v-for="(group, index) in groupsOption" :key="index">
-            {{ group.name }}
-          </option>
-        </select>
-      </div>
+  <div class="flex justify-center w-full">
+    <div class="flex justify-start w-7/12 mt-20">
+      <div class="grid grid-cols-3 gap-4">
+        <!-- <DropDown
+                                                                  :name-drop-down="'test'"
+                                                                    :default-option="'all'"
+                                                                    :selected-fn="selectedGroup"
+                                                                    :data-option="groupsOption"
+                                                                    @select="(select) => (selectedGroup = select)"
+                                                                  ></DropDown
+                                                                  > -->
+        <!-- <div>Selected: {{ selectedGroup }}</div> -->
+        <div>
+          <div class="text-md">Group</div>
+          <select class="w-32 h-12 text-lg border" v-model="selectedGroup">
+            <option value="">all</option>
+            <option v-for="(group, index) in groupsOption" :key="index">
+              {{ group.name }}
+            </option>
+          </select>
+        </div>
 
         <div>
           <div class="text-md">Meal</div>
@@ -114,58 +153,57 @@ const memberListByMeal = computed(() => {
             </option>
           </select>
         </div>
-        <!-- {{ memberListByMeal }} -->
+
       </div>
     </div>
   </div>
 
-
   <div class="flex flex-col w-full gap-4 mt-8 px-28" v-for="group in memberListByMeal">
-    <PersonMealCost :member-in-group="group" :meal-of-person="group.meals" :member-selected="selectedMember" />
 
-    <!-- <div class="flex flex-col gap-4" v-for="member in group.members">
-                  <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-if="selectedMember === ''"
-                    v-for="meal in mealsEat(member.name, group.meals)">
+    <!-- <PersonMealCost test="group"/> -->
 
-                    <div>{{ member.name }}</div>
+    <div class="flex flex-col gap-4" v-for="member in group.members">
+      <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-if="selectedMember === ''"
+        v-for="meal in mealsEat(member.name, group.meals)">
 
-                    <div class="flex justify-center">
+        <div>{{ member.name }}</div>
 
-                      <div class="flex flex-col w-11/12 gap-1 text-base">
-                        <div v-for="food in meal.foods">
-                          <div class="flex flex-row justify-between w-full">
-                            <span>{{ food.name }}</span>
-                            <span>{{ food.consumers.find((consumer) => consumer.name === member.name).price }}</span>
-                          </div>
-                        </div>
-                      </div>
+        <div class="flex justify-center">
+          <div class="flex flex-col w-11/12 gap-1 text-base">
+            <div v-for="food in meal.foods">
+              <div class="flex flex-row justify-between w-full">
+                <span>{{ food.name }}</span>
+                <span>{{ food.consumers.find((consumer) => consumer.name === member.name).price }}</span>
+              </div>
+            </div>
+          </div>
 
-                    </div>
+        </div>
 
-                    <div class="text-lg">ราคามื้อ {{ mealCalGroup(member.name, meal) }} บาท</div>
+        <div class="text-lg">ราคามื้อ {{ mealCalGroup(member.name, meal) }} บาท</div>
 
-                  </div>
+      </div>
 
-                  <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-else-if="selectedMember === member.name"
-                    v-for="meal in mealsEat(member.name, group.meals)">
-                    <div>{{ selectedMember }}</div>
+      <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-else-if="selectedMember === member.name"
+        v-for="meal in mealsEat(member.name, group.meals)">
+        <div>{{ selectedMember }}</div>
 
-                    <div class="flex justify-center">
-                      <div class="flex flex-col w-11/12 gap-1 text-base">
-                        <div v-for="food in meal.foods">
-                          <div class="flex flex-row justify-between w-full">
-                            <span>{{ food.name }}</span>
-                            <span>{{ food.consumers.find((consumer) => consumer.name === selectedMember).price }}</span>
-                          </div>
-                        </div>
-                      </div>
+        <div class="flex justify-center">
+          <div class="flex flex-col w-11/12 gap-1 text-base">
+            <div v-for="food in meal.foods">
+              <div class="flex flex-row justify-between w-full">
+                <span>{{ food.name }}</span>
+                <span>{{ food.consumers.find((consumer) => consumer.name === selectedMember).price }}</span>
+              </div>
+            </div>
+          </div>
 
-                    </div>
+        </div>
 
-                    <div class="text-lg">ราคามื้อ {{ mealCalGroup(member.name, meal) }} บาท</div>
-                  </div>
+        <div class="text-lg">ราคามื้อ {{ mealCalGroup(member.name, meal) }} บาท</div>
+      </div>
 
-                </div> -->
+    </div>
 
   </div>
 </template>

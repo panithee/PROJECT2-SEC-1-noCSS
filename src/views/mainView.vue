@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue';
-import Group from '../components/Group.vue';
-import OatView from "@/components/mealDetail.vue";
+import mealDetail from "@/components/mealDetail.vue";
 
 const g_name = ref("")
 const g_list = ref({})
@@ -99,8 +98,8 @@ const updatedMeals = (mealFood, mealName) => {
     </div>
 
     <div v-show="showmenu == true">
-      <oat-view :mealData="mealChoose.data" :member="g_list.members" @back="showmenu = false"
-        @updatedMeals="updatedMeals"></oat-view>
+      <meal-detail :mealData="mealChoose.data" :member="g_list.members" @back="showmenu = false"
+        @updatedMeals="updatedMeals"></meal-detail>
     </div>
   </div>
 </template>

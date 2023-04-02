@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "AzoZi",
+      "key": "yohiA",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -39,8 +39,14 @@
                     {
                       "id": 1,
                       "name": "กล้า",
-                      "percentage": 100,
-                      "price": 100
+                      "percentage": 0,
+                      "price": "50.00"
+                    },
+                    {
+                      "id": 2,
+                      "name": "เอก",
+                      "percentage": 0,
+                      "price": "50.00"
                     }
                   ],
                   "splitMode": "equal"
@@ -286,6 +292,20 @@
           "members": [
             {
               "name": "sax",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "hi",
+          "members": [
+            {
+              "name": "a",
+              "price": 0
+            },
+            {
+              "name": "w",
               "price": 0
             }
           ],

@@ -12,7 +12,6 @@ const props = defineProps({
     default: []
   }
 })
-defineEmits(['updated'])
 
 console.log('ntView', props.userData)
 </script>

@@ -1,5 +1,5 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
 import LoginOverlay from "./login/LoginOverlay.vue";
 
 const isLoggedIn = ref(false);
@@ -58,25 +58,18 @@ const toggleMenu = () => {
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/eve" @click=toggleMenu>อีฟ
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/eve" @click=toggleMenu>กลุ่ม
             </router-link>
           </li>
           <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/nt" @click=toggleMenu>เอ็นที
+            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/nt" @click=toggleMenu>สรุปค่าใช่จ่าย
             </router-link>
           </li>
-          <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/three" @click=toggleMenu>ทรี
-            </router-link>
-          </li>
-          <li>
-            <router-link class="block px-4 py-2 text-gray-800 hover:bg-gray-100" to="/oat" @click=toggleMenu>โอ๊ต
-            </router-link>
-          </li>
+
           <li><a class="block px-4 py-2 text-gray-800 hover:bg-gray-100" @click="handleLoginEvent">{{
-                        isLoggedIn ?
-                        "ออกจากระบบ" : "เข้าสู่ระบบ"
-                        }}</a></li>
+            isLoggedIn ?
+            "ออกจากระบบ" : "เข้าสู่ระบบ"
+          }}</a></li>
         </ul>
       </div>
     </div>
