@@ -40,9 +40,9 @@ onBeforeMount(() => {
   sumPrice()
 });
 
-onBeforeUpdate(() =>{
-  sumPrice()
-})
+// onBeforeUpdate(() =>{
+//   sumPrice()
+// })
 
 // console.log(meals.value)
 const sumPrice =  () => {
@@ -364,7 +364,7 @@ const resetPriceWhenRemove = (index) => {
     </div>
     <div class="mt-5 text-center bg-white">
       <button
-        class="px-8 py-3 text-white bg-black rounded-full"
+        class="px-8 py-3 bg-black rounded-full"
         @click="eventAddEdit(index, 'add')"
       >
         เพิ่มกลุ่ม
