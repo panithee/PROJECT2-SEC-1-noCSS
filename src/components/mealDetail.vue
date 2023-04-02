@@ -43,11 +43,12 @@ const show = () => {
   }
 }
 const saveFood = (food) => {
-  if (foodlist.value.some((e => e.name == food.name))) {
+  
+  if (selectMode.value == 'add') {
+    if (foodlist.value.some((e => e.name == food.name))) {
     alert("มีชื่อรายการนี้อยู่แล้ว")
     return
   }
-  if (selectMode.value == 'add') {
     foodlist.value.push(food)
   } else {
     foodlist.value[foodChoose.value.index] = food
@@ -127,12 +128,12 @@ const beforeSave = () => {
       <button class="fixed bottom-0 right-0" @click="clickAdd"><img alt="" src="../assets/img/add-icon.png"></button>
     </div>
 
-
+    <button @click="beforeSave">save</button>
   </div>
 
-  <DivideFoodCost v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
+  <DivideFoodCost  v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
     @back="switchFood = false" @save="saveFood" />
-  <button @click="beforeSave">save</button>
+  
 </template>
 
 

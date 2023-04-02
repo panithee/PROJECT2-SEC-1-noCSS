@@ -170,7 +170,7 @@ const checkDataBeforeDone = () => {
     </div>
     <p class="flex justify-center mt-3 text-lg text-gray-600">รายชื่อคนทั้งหมดในกลุ่ม</p>
     <p v-show="isPersonsWhoEatValid" class="flex justify-center font-bold text-red-500 text-md">*จำเป็น</p>
-    <div class="flex justify-between w-64 pb-2 mx-auto mt-2 overflow-x-scroll bg-white">
+    <div class="flex justify-between w-64 pb-2 mx-auto mt-2 overflow-x-scroll">
       <button class="px-2 mx-2 border border-black rounded-lg" v-for="(person, index) in personsList" :key="index"
         :id="index" @click="togglePersonWhoEat($event)" :class="
           checkPersonEating(person.id)
@@ -233,7 +233,7 @@ const checkDataBeforeDone = () => {
       </div>
     </div>
     <button @click="checkDataBeforeDone"
-      class="flex justify-center px-2 mx-auto mt-5 text-2xl hover:bg-gray-200 hover:text-black hover:rounded-lg">ยืนยันการทำรายการ</button>
+      class="flex justify-center px-2 mx-auto mt-5 text-2xl hover:bg-white shadow-md hover:text-black hover:rounded-lg">ยืนยันการทำรายการ</button>
   </div>
 </template>
 <style scoped>
