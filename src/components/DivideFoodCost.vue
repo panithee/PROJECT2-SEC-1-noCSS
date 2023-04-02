@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script setup>
 import { ref, computed, watchEffect } from "vue"
 const props = defineProps({
@@ -234,3 +235,8 @@ const checkDataBeforeDone = () => {
     height: 20em;
   }
 }</style>
+=======
+<template>
+  
+</template>
+>>>>>>> main

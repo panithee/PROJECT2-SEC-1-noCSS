@@ -7,6 +7,25 @@ defineProps({
     default: []
   }
 })
+onMounted(() => {
+  console.log(props.userData.value)
+})
+console.log(props.userData.value)
+const foodlist = ref([])
+const mealname = ref('')
+const foodName1 = ref('')
+const foodPrice2 = ref()
+const personsWhoEat3 = ref([])
+const test = (foodName, foodPrice, personsWhoEat) => {
+    foodName1.value = foodName
+    foodPrice2.value = foodPrice
+    personsWhoEat3.value = personsWhoEat
+    foodlist.value.push({"foodname":foodName1.value,"foodPrice":foodPrice2.value,"name":personsWhoEat3.value})
+     
+}
+
+test()
+//console.log(foodlist);
 </script>
 <template>
   <div class="threeView">
