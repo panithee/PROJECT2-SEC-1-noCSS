@@ -60,7 +60,7 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
         <div class="flex flex-col w-11/12 gap-1 text-base">
           <div v-for="food in meal.foods">
-            <div class="flex flex-row justify-between w-full">
+            <div class="flex flex-row justify-between w-full border-b-[0.25px] border-b-black/40">
               <span>{{ food.name }}</span>
               <span>{{ food.consumers.find((consumer) => consumer.name === member.name).price }}</span>
             </div>
