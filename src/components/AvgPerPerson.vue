@@ -69,23 +69,13 @@ const memberListByMeal = computed(() => {
 </script>
 
 <template>
-  <button class="absolute text-xl top-18 left-14 text-slate-500 hover:text-black">
-  Back
-</button>
+
 <div class="absolute text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
 
 <div class="flex justify-center w-full">
   <div class="flex justify-start w-7/12 mt-20">
     <div class="grid grid-cols-3 gap-4">
-      <!-- <DropDown
-                                                              :name-drop-down="'test'"
-                                                                :default-option="'all'"
-                                                                :selected-fn="selectedGroup"
-                                                                :data-option="groupsOption"
-                                                                @select="(select) => (selectedGroup = select)"
-                                                              ></DropDown
-                                                              > -->
-      <!-- <div>Selected: {{ selectedGroup }}</div> -->
+      <!-- <DropDown category="Group" :type="selectedGroup" :data-list="groupsOption"/> -->
       <div>
         <div class="text-md">Group</div>
         <select class="w-32 h-12 text-lg border" v-model="selectedGroup">
@@ -105,6 +95,7 @@ const memberListByMeal = computed(() => {
             </option>
           </select>
         </div>
+
         <div>
           <div class="text-md">Member</div>
           <select class="w-32 h-12 text-lg border" v-model="selectedMember">
@@ -114,14 +105,14 @@ const memberListByMeal = computed(() => {
             </option>
           </select>
         </div>
-        <!-- {{ memberListByMeal }} -->
+
       </div>
     </div>
   </div>
 
 
-  <div class="flex flex-col w-full gap-4 mt-8 px-28" v-for="group in memberListByMeal">
-    <PersonMealCost :member-in-group="group" :meal-of-person="group.meals" :member-selected="selectedMember" />
+  <div class="flex flex-col w-full gap-6 mt-8 px-60" v-for="group in memberListByMeal">
+    <PersonMealCost :member-in-group="group.members" :meal-of-person="group.meals" :member-selected="selectedMember" />
 
     <!-- <div class="flex flex-col gap-4" v-for="member in group.members">
                   <div class="flex flex-col gap-2 px-8 py-4 text-xl border" v-if="selectedMember === ''"
