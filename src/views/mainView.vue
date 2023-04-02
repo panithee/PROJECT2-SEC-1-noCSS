@@ -83,8 +83,6 @@ const show = () => {
   }
 
 }
-defineEmits(['updated'])
-
 </script>
 
 <style scoped></style>
