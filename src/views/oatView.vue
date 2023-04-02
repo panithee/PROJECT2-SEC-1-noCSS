@@ -1,5 +1,5 @@
 <template>
-  <!-- {{ member }} -->
+  {{ member }}
 
   <div v-if="t == false" class="oatView">
     <!-- {{ foodlist}}
@@ -69,7 +69,7 @@ const props = defineProps({
     default: []
   }
 })
-const test = ref(props.userData.value)
+
 watch(() => props.userData, (newVal) => {
   test.value = newVal
 })
