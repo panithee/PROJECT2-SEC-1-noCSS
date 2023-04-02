@@ -131,6 +131,7 @@ const checkDataBeforeDone = () => {
   } else {
     isFoodNameValid.value = false
   }
+  console.log(foodPrice.value)
   if (foodPrice.value === undefined || foodPrice.value <= 0) {
     isFoodPriceValid.value = true
   } else {
@@ -228,7 +229,7 @@ const checkDataBeforeDone = () => {
         <input v-model="foodPrice" type="number" @input="checkFoodPrice"
           :placeholder="foodPrice === 0 || isNaN(foodPrice) ? 'กรุณาใส่ราคาอาหาร' : foodPrice"
           class="justify-end text-xl text-center border border-gray-500 rounded-lg inputfoodprice">
-        <p v-show="isPersonsWhoEatValid" class="flex justify-center ml-1 font-bold text-red-500 text-md">*จำเป็น</p>
+        <p v-show="isFoodPriceValid" class="flex justify-center ml-1 font-bold text-red-500 text-md">*จำเป็น</p>
       </div>
     </div>
     <button @click="checkDataBeforeDone"

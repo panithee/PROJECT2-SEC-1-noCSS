@@ -255,6 +255,23 @@
           ],
           "meals": [
             {
+              "name": "a",
+              "foods": [
+                {
+                  "name": "test",
+                  "price": 20,
+                  "consumers": [
+                    {
+                      "name": "a",
+                      "percentage": 0,
+                      "price": "20.00"
+                    }
+                  ],
+                  "splitMode": "equal"
+                }
+              ]
+            },
+            {
               "name": "ab",
               "foods": []
             }

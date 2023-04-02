@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, onMounted, ref, watch } from 'vue'
+import { defineProps, ref, watch } from 'vue'
 import DivideFoodCost from './DivideFoodCost.vue';
 
 const props = defineProps({
@@ -43,6 +43,10 @@ const show = () => {
   }
 }
 const saveFood = (food) => {
+  if (foodlist.value.some((e => e.name == food.name))) {
+    alert("มีชื่อรายการนี้อยู่แล้ว")
+    return
+  }
   if (selectMode.value == 'add') {
     foodlist.value.push(food)
   } else {
@@ -54,11 +58,20 @@ const saveFood = (food) => {
 
 const foodlist = ref([])
 const mealname = ref('')
-defineEmits(['back', 'save', 'updatedMeals'])
+const emit = defineEmits(['back', 'updatedMeals'])
 const deleteMeal = (index) => {
   if (confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) {
     foodlist.value.splice(index, 1)
 
+  }
+}
+const isMealNameValid = ref(false)
+const beforeSave = () => {
+  if (mealname.value == '') {
+    isMealNameValid.value = true
+  } else {
+    isMealNameValid.value = false
+    emit('updatedMeals', foodlist.value, mealname.value)
   }
 }
 </script>
@@ -66,13 +79,14 @@ const deleteMeal = (index) => {
 <template>
   <div v-if="switchFood == false" class="oatView">
     <!-- {{ foodlist}}
-                                                                                                                                          {{ personsWhoEat3 }} -->
+                                                                                                                                                                        {{ personsWhoEat3 }} -->
     <div class="flex justify-between w-40 m-5">
       <span @click="$emit('back')">Back</span>
       <span>มื้ออาหาร</span>
     </div>
     <div class=" ml-[110px]">
       <input v-model="mealname" class="border border-b-black text-[25px]" placeholder="Meal name" type="text">
+      <p v-show="isMealNameValid" class="flex justify-center font-bold text-red-500 text-md">*จำเป็น</p>
     </div>
 
     <div class="container m-auto ">
@@ -118,7 +132,7 @@ const deleteMeal = (index) => {
 
   <DivideFoodCost v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
     @back="switchFood = false" @save="saveFood" />
-  <button @click="$emit('updatedMeals', foodlist, mealname)">save</button>
+  <button @click="beforeSave">save</button>
 </template>
 
 
