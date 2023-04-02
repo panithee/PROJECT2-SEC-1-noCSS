@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "I9jkp",
+      "key": "kivsX",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -244,6 +244,16 @@
               ]
             }
           ]
+        },
+        {
+          "name": "ยามเช้า",
+          "members": [
+            {
+              "name": "อีฟ",
+              "price": 0
+            }
+          ],
+          "meals": []
         }
       ]
     },

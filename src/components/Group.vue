@@ -147,12 +147,16 @@ const DoneAddEditGroup = () => {
     }
   }
   if (modeTarget.value === "edit") {
+    if (newGroupName.value === "") {
+      textError.value = "กรุณาใส่ชื่อกลุ่ม";
+    } else {
     showEditMembers.value = true;
     let currentGroup = allGroupArr.value[targetGroupForEditIndex.value];
     currentGroup.name = newGroupName.value;
     currentGroup.members = membersInGroupTarget.value.concat(memberList.value);
     currentGroup.meals = targetGroupForEdit.value.meals;
     showInsertGroupPopUp();
+    }
   }
   emit("updated", allGroupArr.value);
 };
