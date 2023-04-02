@@ -6,6 +6,10 @@ const props = defineProps({
   userData: {
     type: Array,
     default: []
+  },
+  data: {
+    type: Array,
+    default: []
   }
 })
 const page = computed(() => {
@@ -107,7 +111,8 @@ const checkPersonEating = (id) => {
 </script>
 
 <template>
-  {{ userData[0]?.meals[0].foods[1] }}
+  <!-- {{ userData[0]?.meals[0].foods[1] }} -->
+  {{ person }}
   <br/>
   <div class="w-full h-full">
     <button class="flex ml-10 text-3xl">Back</button>

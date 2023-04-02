@@ -1,7 +1,8 @@
 <template>
-  <!--  {{ userData }}a-->
-  <div className="mainView">
-    <div className=" h-screen m-[50px]">
+
+  {{ showmenu }}
+  <div className="mainView" >
+    <div className=" h-screen m-[50px]"  v-show="showmenu == false">
 
       <span className=" text-[25px]">
         รายการมื้ออาหาร
@@ -42,16 +43,16 @@
             <li class=" list-none"><span>{{ food.name }} </span> <span class="float-right">{{ food.price }}</span></li>
             <hr>
           </div>
-          <button class="border border-black m-[20px] rounded-lg " @click="mealChoose.data = meal">Edit</button>
+          <button class="border border-black m-[20px] rounded-lg " @click="mealChoose.data = meal,showmenu = true">Edit</button>
         </div>
       </div>
       <div class="flex justify-center m-[20px] ">  
-       <button @click="mealChoose.data = g_list.members" >ADD</button>
+       <button @click="sw(g_name,g_list.members)">ADD</button>
     </div>
     </div>
 
-    <div>
-      <oat-view :mealData="mealChoose.data" :member="g_list.members"></oat-view>
+    <div v-show="showmenu == true">
+      <oat-view  :mealData="mealChoose.data" :member="g_list.members " :g_name="g_name" :datalist="dataa"></oat-view>
     </div>
   </div>
 
@@ -64,6 +65,8 @@ import OatView from "@/views/oatView.vue";
 
 const g_name = ref("")
 const g_list = ref({})
+const showmenu = ref(false)
+const dataa = ref({})
 const props = defineProps({
   userData: {
     type: Array, default: []
@@ -73,13 +76,18 @@ const mealChoose = ref({data: {}, index: -1});
 // watch(mealChoose, (val) => {
 //   console.log(val)
 // })
+const sw = (data1,data2) =>{
+  showmenu.value = !showmenu.value
+  mealChoose.data = g_list.members
+  dataa.value = {"groupname":data1,"member":data2}
+}
 const show = () => {
   if (g_name.value == "") {
     g_list.value = {}
   } else {
     g_list.value = (props.userData.find(e => e.name == g_name.value))
   }
-
+ 
 }
 defineEmits(['updated'])
 
