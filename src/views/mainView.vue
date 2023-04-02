@@ -1,4 +1,5 @@
 <template>
+  <!--  {{ userData }}a-->
   <div className="mainView">
     <div className=" h-screen m-[50px]">
 
@@ -39,7 +40,7 @@
       </div>
 
       <br>
-      <div v-for="(meal,index) in g_list.meals">
+      <div v-for="(meal, index) in g_list.meals">
         <div>
           <p> {{ meal.name }}</p>
           <!--          {{ meals.foods }}-->
@@ -55,6 +56,7 @@
       <oat-view :mealData="mealChoose.data" :member="g_list.members"></oat-view>
     </div>
   </div>
+
 </template>
 
 <script setup>
@@ -81,7 +83,7 @@ const show = () => {
   }
 
 }
-
+defineEmits(['updated'])
 
 </script>
 
