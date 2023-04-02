@@ -102,8 +102,10 @@ const deleteMeal = (index) => {
             <li class="list-none "><span>{{ food.name }} </span> <span class="float-right">{{ food.price }}</span></li>
             <hr>
           </div>
-          <button class="border border-black m-[20px] rounded-lg p-1 text-green-800 hover:bg-black hover:text-green-300" @click="sw('edit', meal, index)">แก้ไข</button>
-          <button @click="deleteMeal(index)" class="text-red-600 p-1 hover:bg-white hover:rounded-xl hover:border border-red-600 ">ลบรายการ</button>
+          <button class="border border-black m-[20px] rounded-lg p-1 text-green-800 hover:bg-black hover:text-green-300"
+            @click="sw('edit', meal, index)">แก้ไข</button>
+          <button @click="deleteMeal(index)"
+            class="p-1 text-red-600 border-red-600 hover:bg-white hover:rounded-xl hover:border ">ลบรายการ</button>
         </div>
       </div>
       <div class=" flex justify-center m-[20px] ">
