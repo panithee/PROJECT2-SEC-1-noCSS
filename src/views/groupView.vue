@@ -8,7 +8,7 @@ const props = defineProps({
   }
 })
 const datas = ref(props.userData);
-watch(() => props.userData, (newVal, oldVal) => {
+watch(() => props.userData, (newVal) => {
   console.log('watch: ' + newVal);
   datas.value = newVal;
 })
@@ -24,12 +24,14 @@ watch(() => props.userData, (newVal, oldVal) => {
       <tr v-for="(meals) in data.meals">
         <td>{{ meals.name }}</td>
         <td>
-          <li v-for="(food) in meals.foods">
-            <p>{{ food.name }}</p>
-            <p>{{ food.price }}</p>
+          <ul>
+            <li v-for="(food) in meals.foods">
+              <p>{{ food.name }}</p>
+              <p>{{ food.price }}</p>
 
-          <li v-for=" (consumer) in food.consumers">{{ consumer.id }}</li>
-          </li>
+              <!--          <li v-for=" (consumer) in food.consumers">{{ consumer.id }}</li>-->
+            </li>
+          </ul>
         </td>
 
       </tr>

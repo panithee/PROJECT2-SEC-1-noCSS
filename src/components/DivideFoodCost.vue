@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <script setup>
 import {computed, onBeforeUpdate, ref} from "vue"
 
@@ -113,12 +114,12 @@ const checkPersonEating = (id) => {
     <p class="flex justify-center pt-5 text-4xl">{{ food?.name }}</p>
     <p class="flex justify-center mt-5 text-lg text-gray-600">Average by</p>
     <div class="flex justify-center">
-      <img :class="page === true ? 'opacity-100' : 'opacity-10'" class="mr-2 cursor-pointer"
-           src="../assets/AkarIconsEqual.svg"
-           @click="switchMenu('equal')"/>
-      <img :class="page === false ? 'opacity-100' : 'opacity-10'" class="cursor-pointer"
-           src="../assets/MdiPercentCircleOutline.svg"
-           @click="switchMenu('percentage')"/>
+      <img :class="page === true ? 'opacity-100' : 'opacity-10'" alt=""
+           class="mr-2 cursor-pointer"
+           src="../assets/AkarIconsEqual.svg" @click="switchMenu('equal')"/>
+      <img :class="page === false ? 'opacity-100' : 'opacity-10'" alt=""
+           class="cursor-pointer"
+           src="../assets/MdiPercentCircleOutline.svg" @click="switchMenu('percentage')"/>
     </div>
 
     <p class="flex justify-center mt-5 text-lg text-gray-600">Member</p>
@@ -155,7 +156,7 @@ const checkPersonEating = (id) => {
         <thead>
         <tr>
           <th class="text-left">คนจ่าย</th>
-          <img class="mx-auto" src="../assets/MaterialSymbolsPercentSharp.svg"/>
+          <img alt="" class="mx-auto" src="../assets/MaterialSymbolsPercentSharp.svg"/>
           <th class="text-end">ราคา</th>
         </tr>
         </thead>
