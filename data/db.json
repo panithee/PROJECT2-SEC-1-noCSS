@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "ijv9D",
+      "key": "nMwJu",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -242,6 +242,21 @@
                   "splitMode": "percentage"
                 }
               ]
+            }
+          ]
+        },
+        {
+          "name": "a",
+          "members": [
+            {
+              "name": "a",
+              "price": 0
+            }
+          ],
+          "meals": [
+            {
+              "name": "ab",
+              "foods": []
             }
           ]
         }

@@ -5,7 +5,6 @@ import mealDetail from "@/components/mealDetail.vue";
 const g_name = ref("")
 const g_list = ref({})
 const showmenu = ref(false)
-const data = ref({})
 const props = defineProps({
   userData: {
     type: Array, default: []
@@ -41,7 +40,19 @@ const updatedMeals = (mealFood, mealName) => {
     g_list.value.meals[mealChoose.value.index] = { name: mealName, foods: mealFood }
   }
   showmenu.value = !showmenu.value
-  emit('updated', g_list.value)
+  const userDataG = props.userData;
+  const index = userDataG.findIndex(e => e.name == g_name.value)
+  userDataG[index] = g_list.value
+  emit('updated', userDataG)
+}
+const deleteMeal = (index) => {
+  if (confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) {
+    g_list.value.meals.splice(index, 1)
+    const userDataG = props.userData;
+    const index2 = userDataG.findIndex(e => e.name == g_name.value)
+    userDataG[index2] = g_list.value
+    emit('updated', userDataG)
+  }
 }
 </script>
 <template>
@@ -58,7 +69,7 @@ const updatedMeals = (mealFood, mealName) => {
       <select id="underline_select" v-model="g_name"
         className="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
         @click="show">
-
+        <option value="">กรุณาเลือกกลุ่ม</option>
         <option v-for="item2 in props.userData ">{{ item2.name }}</option>
 
       </select>
@@ -84,12 +95,12 @@ const updatedMeals = (mealFood, mealName) => {
           <p class="m-[20px]"> {{ meal.name }}</p>
 
 
-          <div v-for="food in meal.foods" class="m-[20px]">
-
+          <div v-for="(food, index) in meal.foods" class="m-[20px]">
             <li class="list-none "><span>{{ food.name }} </span> <span class="float-right">{{ food.price }}</span></li>
             <hr>
           </div>
           <button class="border border-black m-[20px] rounded-lg " @click="sw('edit', meal, index)">Edit</button>
+          <button @click="deleteMeal(index)">delete</button>
         </div>
       </div>
       <div class=" flex justify-center m-[20px] ">
