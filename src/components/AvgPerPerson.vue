@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref} from "vue";
+import { computed, ref, watch } from "vue";
 import PersonMealCost from "./PersonMealCost.vue";
 
 const props = defineProps({
@@ -24,12 +24,18 @@ const selectedGroup = ref("");
 const selectedMember = ref("");
 const selectedMeal = ref("");
 
-
+watch(
+  () => selectedGroup.value,
+  () => {
+    selectedMember.value = "";
+    selectedMeal.value = "";
+  }
+);
 const memberListByMeal = computed(() => {
   let filteredGroups = props.userData;
   if (selectedGroup.value) {
     filteredGroups = filteredGroups.filter(
-        (group) => group.name === selectedGroup.value
+      (group) => group.name === selectedGroup.value
     );
   }
   if (selectedMeal.value) {
@@ -48,9 +54,9 @@ const memberListByMeal = computed(() => {
           return {
             ...meal,
             foods: meal.foods.filter((food) =>
-                food.consumers.some(
-                    (consumer) => consumer.name === selectedMember.value
-                )
+              food.consumers.some(
+                (consumer) => consumer.name === selectedMember.value
+              )
             ),
           };
         }),
@@ -64,15 +70,14 @@ const memberListByMeal = computed(() => {
 </script>
 
 <template>
-
   <div class="flex justify-center">
     <div class="w-8/12 text-2xl left-40 top-24">ค่าใช้จ่ายต่อคน</div>
   </div>
 
   <div class="flex justify-center w-full mt-4">
 
-    <div class="flex w-full justify-center">
-      <div class="flex w-10/12 justify-start md:w-8/12 lg:w-6/12">
+    <div class="flex justify-center w-full">
+      <div class="flex justify-start w-10/12 md:w-8/12 lg:w-6/12">
         <div class="flex w-8/12 gap-4">
 
           <div class="w-full">
@@ -110,9 +115,8 @@ const memberListByMeal = computed(() => {
     </div>
   </div>
 
-  <div v-for="group in memberListByMeal"
-       class="flex flex-col w-full gap-6 mt-4 px-8 sm:px-16 md:px-32 lg:px-60 xl:px-70">
-    <PersonMealCost :meal-of-person="group.meals" :member-in-group="group.members" :member-selected="selectedMember"/>
+  <div v-for="group in memberListByMeal" class="flex flex-col w-full gap-6 px-8 mt-4 sm:px-16 md:px-32 lg:px-60 xl:px-70">
+    <PersonMealCost :meal-of-person="group.meals" :member-in-group="group.members" :member-selected="selectedMember" />
 
   </div>
 </template>
