@@ -83,6 +83,17 @@
 //   calculatePriceByPercent();
 // };
 
+console.log("pers");
+personsWhoEat.value.map((person) => {
+  person.price = parseFloat((food.price * person.percentage) / 100).toFixed(2)
+  return person;
+})
+}
+const inputPercent = (event, index) => {
+  const percentage = event.target.value
+  personsWhoEat.value[index].percentage = Number(percentage);
+  calculatePriceByPercent();
+}
 
 // const calculateTotalPercent = () => {
 //   if (personsWhoEat.value?.length === undefined) return 0;
@@ -102,6 +113,8 @@
 // }
 // const checkPersonEating = (id) => personsWhoEat.value?.some((person) => person.id === id);
 
+}
+</script>
 
 < !--
 </script>-->
