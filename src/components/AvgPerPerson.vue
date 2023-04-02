@@ -15,14 +15,10 @@ const mealsOption = computed(() => {
   if (selectedGroup === "") {
     return [];
   }
-  return groupsOption.value.filter(
-    (groups) => groups.name === selectedGroup.value
-  )[0]?.meals;
+  return groupsOption.value.filter((groups) => groups.name === selectedGroup.value)[0]?.meals;
 });
 const membersOption = computed(() => {
-  return groupsOption.value.filter(
-    (groups) => groups.name === selectedGroup.value
-  )[0]?.members;
+  return groupsOption.value.filter((groups) => groups.name === selectedGroup.value)[0]?.members;
 });
 const selectedGroup = ref("");
 const selectedMember = ref("");
