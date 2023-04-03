@@ -14,6 +14,10 @@ const mealChoose = ref({ data: {}, index: -1 });
 const sw = (mode, meal, index) => {
 
   if (mode == 'add') {
+    if (g_name.value == "") {
+      alert("กรุณาเลือกกลุ่ม")
+      return
+    }
     showmenu.value = !showmenu.value
   }
   if (mode == 'edit') {
