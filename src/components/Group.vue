@@ -149,7 +149,7 @@ const DoneAddEditGroup = () => {
   if (modeTarget.value === "edit") {
     if (newGroupName.value === groupNameExists && newGroupName.value !== targetGroupForEdit.value.name) {
       textError.value = "กรุณาใส่ชื่อกลุ่ม";
-    } else if (newGroupName.value === "") {
+    } else if (newGroupName.value === "" || newGroupName.value === undefined) {
       textError.value = "กรุณาใส่ชื่อกลุ่ม";
     } else {
       showEditMembers.value = true;
