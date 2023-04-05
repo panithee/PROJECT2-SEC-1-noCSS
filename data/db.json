@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "1QzNR",
+      "key": "QOY1F",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -248,6 +248,38 @@
         {
           "name": "ยามเช้า2",
           "members": [],
+          "meals": []
+        },
+        {
+          "name": "อีฟฟฟฟ",
+          "members": [
+            {
+              "name": "PP",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "อีฟ",
+          "members": [
+            {
+              "name": "เนม",
+              "price": 0
+            },
+            {
+              "name": "โม",
+              "price": 0
+            },
+            {
+              "name": "นต",
+              "price": 0
+            },
+            {
+              "name": "vua",
+              "price": 0
+            }
+          ],
           "meals": []
         }
       ]

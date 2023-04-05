@@ -64,7 +64,7 @@ const newGroupName = ref("");
 const newMember = ref("");
 
 // set start value on popup
-const eventAddEdit = (index, mode) => {
+const eventAddEdit = (mode,index) => {
   if (mode === "add") {
     showEditMembers.value = false;
     modeTarget.value = "add";
@@ -173,7 +173,7 @@ const showGroupDetails = (index, display) => {
 };
 
 // delete group and members
-const deleteGroupAndMembers = (index, groupOrMember) => {
+const deleteGroupAndMembers = (index,groupOrMember) => {
   if (groupOrMember === "group") {
     if (confirm("คุณต้องการลบข้อมูลกลุ่มใช่หรือไม่")) {
       allGroupArr.value.splice(index, 1);
@@ -285,7 +285,7 @@ const resetPriceWhenRemove = (index) => {
     <div class="text-center sm:grid sm:grid-cols-2 sm:pr-96">
       <h1>รายชื่อกลุ่ม</h1>
     </div>
-    <div v-for="(group, index) in allGroupArr" key="index">
+    <div v-for="(group, index) in allGroupArr" :key="index">
       <div>
         <div class="grid w-5/6 grid-cols-2 py-2 pl-5 m-auto mt-5 border border-black rounded-md sm:w-3/5 sm:pl-14">
           <p>{{ group.name }}</p>
@@ -302,7 +302,7 @@ const resetPriceWhenRemove = (index) => {
           <div class="flex flex-col items-start w-4/5 gap-2">
             <span class="py-2 text-xl">รายชื่อสมาชิก</span>
             <div :id="index" class="flex w-full gap-2 overflow-x-scroll flex-nowrap h-11">
-              <span v-for="member in group.members" key="index" class="px-3 text-lg border border-black rounded-xl">
+              <span v-for="member in group.members" :key="index" class="px-3 text-lg border border-black rounded-xl">
                 {{ member.name }}
               </span>
             </div>
@@ -313,7 +313,7 @@ const resetPriceWhenRemove = (index) => {
           </div>
           <div class="flex flex-row justify-end w-full gap-2 pr-2 text-base">
             <button :id="index" class="border border-b-black border-x-white border-t-white"
-              @click="eventAddEdit(index, 'edit')">
+              @click="eventAddEdit('edit', index)">
               แก้ไขกลุ่ม
             </button>
             <button :id="index" class="border border-b-black border-x-white border-t-white"
@@ -325,7 +325,7 @@ const resetPriceWhenRemove = (index) => {
       </div>
     </div>
     <div class="mt-5 text-center">
-      <button class="px-8 py-3 text-white bg-black rounded-full" @click="eventAddEdit(index, 'add')">
+      <button class="px-8 py-3 text-white bg-black rounded-full" @click="eventAddEdit('add')">
         เพิ่มกลุ่ม
       </button>
     </div>
@@ -340,7 +340,7 @@ const resetPriceWhenRemove = (index) => {
           </button>
         </div>
         <div class="w-5/6 py-4 pl-5 border border-black rounded-lg">
-          <input v-model="newGroupName" class="border border-b-black w-36 sm:w-64" placeholder="กรุณาใส่ชื่อกลุ่ม"
+          <input v-model.trim="newGroupName" class="border border-b-black w-36 sm:w-64" placeholder="กรุณาใส่ชื่อกลุ่ม"
             type="text" />
           <Pen class="inline mx-3"></Pen>
           <span class="text-lg text-red-600"> {{ textError }}</span>
@@ -350,7 +350,7 @@ const resetPriceWhenRemove = (index) => {
         </div>
         <div class="w-full h-10 overflow-y-scroll sm:h-24">
           <div class="sm:ml-24">
-            <div v-for="(member, index) in membersInGroupTarget" v-show="showEditMembers" key="index">
+            <div v-for="(member, index) in membersInGroupTarget" v-show="showEditMembers" :key="index">
               <button @click="deleteGroupAndMembers(index, 'member')">
                 <Delete></Delete>
               </button>
@@ -358,7 +358,7 @@ const resetPriceWhenRemove = (index) => {
                 {{ member.name }} <br />
               </span>
             </div>
-            <span v-for="(member, index) in memberList" key="index">
+            <span v-for="(member, index) in memberList" :key="index">
               <button v-show="showEditMembers" :id="index" @click="deleteGroupAndMembers(index, 'newAddMember')">
                 <Delete></Delete>
               </button>
@@ -368,7 +368,7 @@ const resetPriceWhenRemove = (index) => {
           </div>
         </div>
         <div class="text-center sm:text-left">
-          <input v-model="newMember" class="mt-4 text-lg border sm:ml-24 border-b-black"
+          <input v-model.trim="newMember" class="mt-4 text-lg border sm:ml-24 border-b-black"
             placeholder="+ ใส่ชื่อสมาชิกทีละคน" type="text" @keypress.enter="addMember" />
           <button class="px-2 text-xl text-black border border-black rounded-full" @click="addMember">
             เพิ่ม

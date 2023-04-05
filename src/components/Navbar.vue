@@ -11,6 +11,7 @@ const toggleLoginOverlay = () => {
 const emitEvents = defineEmits(["setUsername", 'clearData']);
 const handleLoginEvent = (payload) => {
   toggleMenu();
+  // console.log(isLoggedIn.value);
   if (isLoggedIn.value) {
     sessionStorage.clear();
     emitEvents('clearData');
@@ -27,10 +28,14 @@ const handleLoginEvent = (payload) => {
   menuOpen.value = false;
 };
 onMounted(() => {
+  console.log(sessionStorage.getItem("isLoggedIn"));
+  console.log("refresh");
   if (sessionStorage.getItem("isLoggedIn") === "true" && sessionStorage.getItem("username") !== null) {
     isLoggedIn.value = true;
   }
-  isLoggedIn.value = false;
+  else {
+    isLoggedIn.value = false;
+  }
 });
 const menuOpen = ref(false);
 const toggleMenu = () => {
