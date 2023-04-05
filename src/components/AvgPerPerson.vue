@@ -115,7 +115,7 @@ const memberListByMeal = computed(() => {
     </div>
   </div>
 
-  <div v-for="group in memberListByMeal" class="flex flex-col w-full gap-6 px-8 mt-4 sm:px-16 md:px-32 lg:px-60 xl:px-70">
+  <div v-for="(group, index) in memberListByMeal" :key="index" class="flex flex-col w-full gap-6 px-8 mt-4 sm:px-16 md:px-32 lg:px-60 xl:px-70">
     <PersonMealCost :meal-of-person="group.meals" :member-in-group="group.members" :member-selected="selectedMember" />
 
   </div>
