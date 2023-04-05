@@ -78,7 +78,7 @@ const togglePersonWhoEat = (event) => {
       saveAvgPrice();
     }
     console.log(personsWhoEat.value)
-    personsWhoEat.value.sort((a, b) => a.id - b.id)
+    personsWhoEat.value.sort((a, b) => a.name - b.name)
   } else {
     personsWhoEat.value = personsWhoEat.value.filter((person) => person.name !== personsList.value[index].name)
   }
