@@ -1,4 +1,4 @@
-import {generateRandomId} from "./generateKey.js";
+import { generateRandomId } from "./generateKey.js";
 
 const URL_API = "http://localhost:5000";
 const ERR_INPUT = "Error Input";
@@ -139,5 +139,5 @@ const updateGroups = async (username, groups) => {
         console.log(e);
     }
 }
-export {checkUsernameExists, registerUser, loginUser, getUserGroups, findKey, updateGroups};
+export { checkUsernameExists, registerUser, loginUser, getUserGroups, findKey, updateGroups };
 
