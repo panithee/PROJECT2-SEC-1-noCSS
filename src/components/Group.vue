@@ -106,7 +106,7 @@ const addMember = () => {
     }
   }
 
-  if (newMember.value === "") {
+  if (newMember.value === "" || newMember.value === undefined) {
     textErrMember.value = "กรุณาเพิ่มสมาชิก";
     checkInputMember.value = true;
   } else if (newMember.value !== "" && newMember.value !== memberExists) {
@@ -128,7 +128,7 @@ const DoneAddEditGroup = () => {
     }
   }
   if (modeTarget.value === "add") {
-    if (newGroupName.value === "") {
+    if (newGroupName.value === "" || newGroupName.value === undefined) {
       textError.value = "กรุณาใส่ชื่อกลุ่ม";
     } else if (newGroupName.value === groupNameExists) {
       textError.value = "ชื่อกลุ่มนี้มีอยู่แล้ว";
