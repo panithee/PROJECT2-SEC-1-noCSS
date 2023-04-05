@@ -149,7 +149,7 @@ const checkDataBeforeDone = () => {
       "name": foodName.value,
       "price": foodPrice.value,
       "consumers": personsWhoEat.value,
-      "splitMode": page.value ? "equal" : "percent"
+      "splitMode": page.value ? "equal" : "percentage"
     }
     return emit('save', food.value);
   }
