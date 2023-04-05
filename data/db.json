@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "wMz2F",
+      "key": "QOY1F",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -246,10 +246,95 @@
           ]
         },
         {
+          "name": "ยามเช้า2",
+          "members": [],
+          "meals": []
+        },
+        {
+          "name": "อีฟฟฟฟ",
+          "members": [
+            {
+              "name": "PP",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "อีฟ",
+          "members": [
+            {
+              "name": "เนม",
+              "price": 0
+            },
+            {
+              "name": "โม",
+              "price": 0
+            },
+            {
+              "name": "นต",
+              "price": 0
+            },
+            {
+              "name": "vua",
+              "price": 0
+            }
+          ],
+          "meals": []
+        }
+      ]
+    },
+    {
+      "username": "niyom",
+      "password": "1",
+      "groups": [
+        {
+          "name": "niyom",
+          "members": [
+            {
+              "name": "Hello",
+              "price": 0
+            },
+            {
+              "name": "R",
+              "price": 0
+            },
+            {
+              "name": "D",
+              "price": 0
+            },
+            {
+              "name": "C",
+              "price": 0
+            }
+          ],
+          "meals": []
+        }
+      ],
+      "key": "TcZDa",
+      "id": 2
+    },
+    {
+      "username": "moniyom",
+      "password": "1",
+      "groups": [
+        {
           "name": "a",
           "members": [
             {
-              "name": "a",
+              "name": "m",
+              "price": 0
+            },
+            {
+              "name": "o",
+              "price": 0
+            },
+            {
+              "name": "n",
+              "price": 0
+            },
+            {
+              "name": "i",
               "price": 0
             }
           ],
@@ -259,25 +344,186 @@
               "foods": [
                 {
                   "name": "test",
-                  "price": 20,
+                  "price": 300,
                   "consumers": [
                     {
-                      "name": "a",
+                      "name": "m",
                       "percentage": 0,
-                      "price": "20.00"
+                      "price": "75.00"
+                    },
+                    {
+                      "name": "o",
+                      "percentage": 0,
+                      "price": "75.00"
+                    },
+                    {
+                      "name": "n",
+                      "percentage": 0,
+                      "price": "75.00"
+                    },
+                    {
+                      "name": "i",
+                      "percentage": 0,
+                      "price": "75.00"
                     }
                   ],
                   "splitMode": "equal"
                 }
               ]
-            },
-            {
-              "name": "ab",
-              "foods": []
             }
           ]
         }
-      ]
+      ],
+      "key": "XVFCI",
+      "id": 3
+    },
+    {
+      "username": "admin1",
+      "password": "2",
+      "groups": [],
+      "key": "",
+      "id": 4
+    },
+    {
+      "username": "test1",
+      "password": "1",
+      "groups": [],
+      "key": "HLGLn",
+      "id": 5
+    },
+    {
+      "username": "test",
+      "password": "1",
+      "groups": [],
+      "key": "",
+      "id": 6
+    },
+    {
+      "username": "test2",
+      "password": "1",
+      "groups": [
+        {
+          "name": "test1",
+          "members": [
+            {
+              "name": "1",
+              "price": 0
+            },
+            {
+              "name": "2",
+              "price": 0
+            }
+          ],
+          "meals": [
+            {
+              "name": "Meal2",
+              "foods": [
+                {
+                  "name": "food",
+                  "price": 20,
+                  "consumers": [
+                    {
+                      "name": "1",
+                      "percentage": "100",
+                      "price": "20.00"
+                    }
+                  ],
+                  "splitMode": "percent"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "key": "nRrHS",
+      "id": 7
+    },
+    {
+      "username": "etst2",
+      "password": "2",
+      "groups": [
+        {
+          "name": "ครอบครัว",
+          "members": [
+            {
+              "name": "พ่อ",
+              "price": 0
+            },
+            {
+              "name": "แม่",
+              "price": 0
+            }
+          ],
+          "meals": [
+            {
+              "name": "มื้อเช้า",
+              "foods": [
+                {
+                  "name": "ข้าวสวย",
+                  "price": 200,
+                  "consumers": [
+                    {
+                      "name": "พ่อ",
+                      "percentage": "100",
+                      "price": "200.00"
+                    }
+                  ],
+                  "splitMode": "percent"
+                },
+                {
+                  "name": "กุ่ง",
+                  "price": 300,
+                  "consumers": [
+                    {
+                      "name": "แม่",
+                      "percentage": 0,
+                      "price": "300.00"
+                    }
+                  ],
+                  "splitMode": "equal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "เพื่อน",
+          "members": [
+            {
+              "name": "ฟ",
+              "price": 0
+            },
+            {
+              "name": "b",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "ชื่อกลุ่ม",
+          "members": [
+            {
+              "name": "สมาA",
+              "price": 0
+            },
+            {
+              "name": "สมาB",
+              "price": 0
+            }
+          ],
+          "meals": []
+        }
+      ],
+      "key": "GLt2R",
+      "id": 8
+    },
+    {
+      "username": "user",
+      "password": "1",
+      "groups": [],
+      "key": "",
+      "id": 9
     }
   ]
 }

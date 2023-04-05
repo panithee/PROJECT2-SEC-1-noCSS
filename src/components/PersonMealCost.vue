@@ -25,18 +25,6 @@ const mealsEat = (consumersName = [], meals = []) => {
 };
 
 const mealCalGroup = (consumersName = [], meal = {}) => {
-  // const mealCal = meals.reduce((acc, meal) => {
-  //   meal.foods.forEach((food) => {
-  //     food.consumers.forEach((consumer) => {
-  //       if (consumersName.includes(consumer.name)) {
-  //         console.log(food.name, consumer.price);
-  //         acc += Number(consumer.price);
-  //       }
-  //     });
-  //   });
-  //   return acc
-  // }, 0);
-  // return mealCal;
   const mealCal = meal.foods.reduce((acc, food) => {
     food.consumers.forEach((consumer) => {
       if (consumersName.includes(consumer.name)) {
@@ -53,9 +41,9 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
 <template>
   <!-- {{ memberInGroup }} -->
-  <div v-for="member in memberInGroup" class="flex flex-col gap-6">
+  <div v-for="(member, index) in memberInGroup" :key="index" class="flex flex-col gap-6">
     <div
-        v-for="meal in mealsEat(member.name, mealOfPerson)"
+        v-for="meal, index in mealsEat(member.name, mealOfPerson)" :key="index"
         v-if="memberSelected === ''"
         class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
 
@@ -64,7 +52,7 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
       <div class="flex justify-center">
 
         <div class="flex flex-col w-11/12 gap-1 text-base">
-          <div v-for="food in meal.foods">
+          <div v-for="food, index in meal.foods" :key="index">
             <div class="flex flex-row justify-between w-full border-b-[0.25px] border-b-black/40">
               <span>{{ food.name }}</span>
               <span>{{ food.consumers.find((consumer) => consumer.name === member.name).price }}</span>
@@ -79,7 +67,7 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
     </div>
 
     <div
-        v-for="meal in mealsEat(member.name, mealOfPerson)"
+        v-for="meal in mealsEat(member.name, mealOfPerson)" 
         v-else-if="memberSelected === member.name"
         class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
       <div>{{ memberSelected }}</div>
