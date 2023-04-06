@@ -78,7 +78,7 @@ const togglePersonWhoEat = (event) => {
       saveAvgPrice();
     }
     console.log(personsWhoEat.value)
-    personsWhoEat.value.sort((a, b) => a.id - b.id)
+    personsWhoEat.value.sort((a, b) => a.name - b.name)
   } else {
     personsWhoEat.value = personsWhoEat.value.filter((person) => person.name !== personsList.value[index].name)
   }
@@ -149,7 +149,7 @@ const checkDataBeforeDone = () => {
       "name": foodName.value,
       "price": foodPrice.value,
       "consumers": personsWhoEat.value,
-      "splitMode": page.value ? "equal" : "percent"
+      "splitMode": page.value ? "equal" : "percentage"
     }
     return emit('save', food.value);
   }

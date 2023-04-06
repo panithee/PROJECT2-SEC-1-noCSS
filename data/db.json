@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "1QzNR",
+      "key": "NP35m",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -249,6 +249,38 @@
           "name": "ยามเช้า2",
           "members": [],
           "meals": []
+        },
+        {
+          "name": "อีฟฟฟฟ",
+          "members": [
+            {
+              "name": "PP",
+              "price": 0
+            }
+          ],
+          "meals": []
+        },
+        {
+          "name": "อีฟ",
+          "members": [
+            {
+              "name": "เนม",
+              "price": 0
+            },
+            {
+              "name": "โม",
+              "price": 0
+            },
+            {
+              "name": "นต",
+              "price": 0
+            },
+            {
+              "name": "vua",
+              "price": 0
+            }
+          ],
+          "meals": []
         }
       ]
     },
@@ -355,15 +387,102 @@
     {
       "username": "test1",
       "password": "1",
-      "groups": [],
-      "key": "HLGLn",
+      "groups": [
+        {
+          "name": "ABC",
+          "members": [
+            {
+              "name": "DD",
+              "price": 0
+            },
+            {
+              "name": "EE",
+              "price": 0
+            },
+            {
+              "name": "FF",
+              "price": 0
+            },
+            {
+              "name": "GG",
+              "price": 0
+            },
+            {
+              "name": "HH",
+              "price": 0
+            },
+            {
+              "name": "KK",
+              "price": 0
+            }
+          ],
+          "meals": []
+        }
+      ],
+      "key": "uQqFw",
       "id": 5
     },
     {
       "username": "test",
       "password": "1",
-      "groups": [],
-      "key": "",
+      "groups": [
+        {
+          "name": "ABC",
+          "members": [
+            {
+              "name": "1",
+              "price": 0
+            },
+            {
+              "name": "2",
+              "price": 0
+            },
+            {
+              "name": "3",
+              "price": 0
+            },
+            {
+              "name": "4",
+              "price": 0
+            }
+          ],
+          "meals": [
+            {
+              "name": "เช้า",
+              "foods": [
+                {
+                  "name": "ped",
+                  "price": 400,
+                  "consumers": [
+                    {
+                      "name": "1",
+                      "percentage": "50",
+                      "price": "200.00"
+                    },
+                    {
+                      "name": "2",
+                      "percentage": "20",
+                      "price": "80.00"
+                    },
+                    {
+                      "name": "3",
+                      "percentage": "10",
+                      "price": "40.00"
+                    },
+                    {
+                      "name": "4",
+                      "percentage": "20",
+                      "price": "80.00"
+                    }
+                  ],
+                  "splitMode": "percent"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "key": "le88K",
       "id": 6
     },
     {
