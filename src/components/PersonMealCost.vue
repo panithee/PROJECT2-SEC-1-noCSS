@@ -66,7 +66,7 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
     </div>
 
     <div
-        v-for="(meal, index) in mealsEat(member.name, mealOfPerson)" :key="index"
+        v-for="(meal, index) in mealsEat(member.name, mealOfPerson)" 
         v-else-if="memberSelected === member.name"
         class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
       <div>{{ memberSelected }}</div>
