@@ -14,11 +14,7 @@ const props = defineProps({
   }
 })
 const emit = defineEmits(['back', 'save'])
-const page = ref(true);
-const switchMenu = (type) => {
-  page.value = type === "equal";
-  if (!page.value) calculatePriceByPercent();
-};
+
 let food = ref({});
 const foodName = ref('')
 const foodPrice = ref(undefined)
@@ -27,6 +23,12 @@ const personsList = ref([])
 const isFoodNameValid = ref(false);
 const isFoodPriceValid = ref(false);
 const isPersonsWhoEatValid = ref(false);
+
+const page = ref(true);
+const switchMenu = (type) => {
+  page.value = type === "equal";
+  if (!page.value) calculatePriceByPercent();
+};
 
 watchEffect(() => {
   if (props.mode === 'edit') {
