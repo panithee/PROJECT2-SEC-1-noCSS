@@ -1,7 +1,7 @@
 <style scoped></style>
 
 <script setup>
-import {defineProps} from 'vue';
+import { defineProps } from 'vue';
 
 defineProps({
   memberInGroup: Array,
@@ -11,11 +11,11 @@ defineProps({
 const mealsEat = (consumersName = [], meals = []) => {
   const mealEat = meals.reduce((acc, meal) => {
     const filteredFoods = meal.foods.filter((food) =>
-        food.consumers.some((consumer) => consumersName.includes(consumer.name))
+      food.consumers.some((consumer) => consumersName.includes(consumer.name))
     );
 
     if (filteredFoods.length > 0) {
-      acc.push({...meal, foods: filteredFoods});
+      acc.push({ ...meal, foods: filteredFoods });
     }
 
     return acc;
@@ -33,7 +33,7 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
     })
     return acc
   }, 0)
-  return mealCal
+  return Number(mealCal).toFixed(2);
 }
 
 </script>
@@ -41,10 +41,8 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
 <template>
   <div v-for="(member, index) in memberInGroup" :key="index" class="flex flex-col gap-6">
-    <div
-        v-for="(meal, index) in mealsEat(member.name, mealOfPerson)" :key="index"
-        v-if="memberSelected === ''"
-        class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
+    <div v-for="(meal, index) in mealsEat(member.name, mealOfPerson)" :key="index" v-if="memberSelected === ''"
+      class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
 
       <div>{{ member.name }}</div>
 
@@ -65,10 +63,8 @@ const mealCalGroup = (consumersName = [], meal = {}) => {
 
     </div>
 
-    <div
-        v-for="(meal, index) in mealsEat(member.name, mealOfPerson)" 
-        v-else-if="memberSelected === member.name"
-        class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
+    <div v-for="(meal, index) in mealsEat(member.name, mealOfPerson)" v-else-if="memberSelected === member.name"
+      class="flex flex-col gap-2 px-8 py-4 text-xl backdrop-blur-3xl bg-gradient-to-r from-white/40 via-white/30 to-white/40 rounded-lg shadow-lg shadow-{AEAEC0}">
       <div>{{ memberSelected }}</div>
 
       <div class="flex justify-center">
