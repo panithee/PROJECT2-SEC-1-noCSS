@@ -165,9 +165,9 @@ const DoneAddEditGroup = () => {
 
 // show member toggle
 const showGroupDetails = (index, display) => {
-  if (display === "unshow") {
+  if (display === "show") {
     showDetailsOfGroup.value.push(index);
-  } else if (display === "show") {
+  } else if (display === "unshow") {
     showDetailsOfGroup.value.splice(showDetailsOfGroup.value.indexOf(index), 1);
   }
 };
@@ -290,10 +290,10 @@ const resetPriceWhenRemove = (index) => {
         <div class="grid w-5/6 grid-cols-2 py-2 pl-5 m-auto mt-5 border border-black rounded-md sm:w-3/5 sm:pl-14">
           <p>{{ group.name }}</p>
           <button v-if="showDetailsOfGroup.includes(index)" :id="index" class="flex justify-end pr-5"
-            @click="showGroupDetails(index, 'show')">
+            @click="showGroupDetails(index, 'unshow')">
             <ArrowDown></ArrowDown>
           </button>
-          <button v-else :id="index" class="flex justify-end pr-5" @click="showGroupDetails(index, 'unshow')">
+          <button v-else :id="index" class="flex justify-end pr-5" @click="showGroupDetails(index, 'show')">
             <ArrowUp></ArrowUp>
           </button>
         </div>
