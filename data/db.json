@@ -4,7 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-      "key": "0XdGu",
+      "key": "J22Ai",
       "groups": [
         {
           "name": "ยามเช้า",
@@ -281,6 +281,69 @@
             }
           ],
           "meals": []
+        },
+        {
+          "name": "เพื่อนเก่า",
+          "members": [
+            {
+              "name": "เก่ง",
+              "price": 0
+            },
+            {
+              "name": "เจ",
+              "price": 0
+            },
+            {
+              "name": "โม",
+              "price": 0
+            }
+          ],
+          "meals": [
+            {
+              "name": "เลี้ยงส่ง",
+              "foods": [
+                {
+                  "name": "ปลาทอด",
+                  "price": 200,
+                  "consumers": [
+                    {
+                      "name": "โม",
+                      "percentage": "10",
+                      "price": "20.00"
+                    },
+                    {
+                      "name": "เจ",
+                      "percentage": "90",
+                      "price": "180.00"
+                    }
+                  ],
+                  "splitMode": "percentage"
+                },
+                {
+                  "name": "ข้าวสวย",
+                  "price": 50,
+                  "consumers": [
+                    {
+                      "name": "เก่ง",
+                      "percentage": 0,
+                      "price": "16.67"
+                    },
+                    {
+                      "name": "เจ",
+                      "percentage": 0,
+                      "price": "16.67"
+                    },
+                    {
+                      "name": "โม",
+                      "percentage": 0,
+                      "price": "16.67"
+                    }
+                  ],
+                  "splitMode": "equal"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
