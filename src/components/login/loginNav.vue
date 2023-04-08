@@ -11,7 +11,7 @@ const props = defineProps({
 let loginBarStatus = computed(() => {
   return props.loginStatus;
 });
-
+defineEmits(['login'])
 </script>
 <template>
   <div class="tabs tabs-boxed bg-inherit">
