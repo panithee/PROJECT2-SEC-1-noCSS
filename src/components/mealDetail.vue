@@ -73,6 +73,8 @@ const beforeSave = () => {
   } else {
     isMealNameValid.value = false
     emit('updatedMeals', foodlist.value, mealname.value)
+    foodlist.value = []
+    mealname.value = ""
   }
 }
 </script>
