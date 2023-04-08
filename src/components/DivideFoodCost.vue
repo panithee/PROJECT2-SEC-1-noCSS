@@ -20,9 +20,9 @@ const foodName = ref('')
 const foodPrice = ref(undefined)
 const personsWhoEat = ref([])
 const personsList = ref([])
-const isFoodNameValid = ref(false);
-const isFoodPriceValid = ref(false);
-const isPersonsWhoEatValid = ref(false);
+const isFoodNameValid = ref(true);
+const isFoodPriceValid = ref(true);
+const isPersonsWhoEatValid = ref(true);
 
 const page = ref(true);
 const switchMenu = (type) => {
@@ -138,7 +138,6 @@ const checkDataBeforeDone = () => {
   } else {
     isFoodNameValid.value = false
   }
-  console.log(foodPrice.value)
   if (foodPrice.value === undefined || foodPrice.value <= 0) {
     isFoodPriceValid.value = true
   } else {
