@@ -28,7 +28,7 @@ const clickAdd = () => {
   selectMode.value = 'add'
   switchFood.value = true
 }
-watch(() => props.mealData, (newVal, oldVal) => {
+watch(() => props.mealData, (newVal) => {
   console.log(newVal)
   mealname.value = newVal.name
   console.log(mealname.value)
