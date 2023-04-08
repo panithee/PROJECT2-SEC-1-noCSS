@@ -54,7 +54,7 @@ const calculatePriceByPercent = () => {
       return person
     }
     console.log(person.percentage)
-    person.price = ((foodPrice.value * Number(person.percentage)) / 100).toFixed(2)
+    person.price = ((foodPrice.value * person.percentage) / 100).toFixed(2)
     return person;
   })
 }
