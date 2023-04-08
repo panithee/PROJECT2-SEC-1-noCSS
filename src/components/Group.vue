@@ -343,6 +343,7 @@ const resetPriceWhenRemove = (index) => {
           <input v-model.trim="newGroupName" class="border border-b-black w-36 sm:w-64" placeholder="กรุณาใส่ชื่อกลุ่ม"
             type="text" />
           <Pen class="inline mx-3"></Pen>
+          <span class="text-lg text-red-600">*จำเป็น</span>&nbsp
           <span class="text-lg text-red-600"> {{ textError }}</span>
         </div>
         <div class="text-xl sm:mt-4 sm:ml-20">
