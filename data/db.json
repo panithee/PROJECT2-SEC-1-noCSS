@@ -703,38 +703,10 @@
               "price": 0
             }
           ],
-          "meals": [
-            {
-              "name": "DD",
-              "foods": [
-                {
-                  "name": "d",
-                  "price": 123,
-                  "consumers": [
-                    {
-                      "name": "a",
-                      "percentage": 0,
-                      "price": "41.00"
-                    },
-                    {
-                      "name": "b",
-                      "percentage": 0,
-                      "price": "41.00"
-                    },
-                    {
-                      "name": "c",
-                      "percentage": 0,
-                      "price": "41.00"
-                    }
-                  ],
-                  "splitMode": "equal"
-                }
-              ]
-            }
-          ]
+          "meals": []
         }
       ],
-      "key": "MsQWp",
+      "key": "9n3sB",
       "id": 10
     }
   ]
