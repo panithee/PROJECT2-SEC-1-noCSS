@@ -9,13 +9,13 @@ const props = defineProps({
 })
 const color = computed(() => {
   if (props.errorName === "ลงทะเบียนสำเร็จ") {
-    return "green"
+    return "text-green-600"
   }
-  return "red"
+  return "text-red-600"
 })
 </script>
 <template>
-  <span :class="`text-${color}-600`" class=" label-text-alt">{{ errorName }}</span>
+  <span :class="color" class=" label-text-alt">{{ errorName }}</span>
 </template>
 
 
