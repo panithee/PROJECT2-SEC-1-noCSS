@@ -38,14 +38,14 @@ watch(() => props.mealData, (newVal, oldVal) => {
 })
 
 const show = () => {
-  if (switchFood.value == false) {
+  if (switchFood.value === false) {
     switchFood.value = !switchFood.value
   }
 }
 const saveFood = (food) => {
 
-  if (selectMode.value == 'add') {
-    if (foodlist.value.some((e => e.name == food.name))) {
+  if (selectMode.value === 'add') {
+    if (foodlist.value.some((e => e.name === food.name))) {
       alert("มีชื่อรายการนี้อยู่แล้ว")
       return
     }
@@ -68,7 +68,7 @@ const deleteMeal = (index) => {
 }
 const isMealNameValid = ref(false)
 const beforeSave = () => {
-  if (mealname.value == '') {
+  if (mealname.value === '') {
     isMealNameValid.value = true
   } else {
     isMealNameValid.value = false
@@ -80,7 +80,7 @@ const beforeSave = () => {
 </script>
 
 <template>
-  <div v-if="switchFood == false" class="oatView">
+  <div v-if="switchFood === false" class="oatView">
     <!-- {{ foodlist}}
                                                                                                                                                                         {{ personsWhoEat3 }} -->
     <div class="flex items-center w-1/2 m-5">
@@ -138,7 +138,7 @@ const beforeSave = () => {
     
   </div>
 
-  <DivideFoodCost v-if="switchFood == true" :foods="foodChoose.data" :member="member" :mode="selectMode"
+  <DivideFoodCost v-if="switchFood === true" :foods="foodChoose.data" :member="member" :mode="selectMode"
                   @back="switchFood = false" @save="saveFood"/>
 
 </template>
