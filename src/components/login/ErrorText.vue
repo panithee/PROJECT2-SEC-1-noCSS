@@ -1,5 +1,5 @@
 <script setup>
-import {computed} from "vue";
+import { computed } from "vue";
 
 const props = defineProps({
   errorName: {
@@ -8,7 +8,7 @@ const props = defineProps({
   }
 })
 const color = computed(() => {
-  if (props.errorName === "Register success") {
+  if (props.errorName === "ลงทะเบียนสำเร็จ") {
     return "green"
   }
   return "red"
