@@ -13,14 +13,14 @@ const mealChoose = ref({ data: {}, index: -1 });
 
 const sw = (mode, meal, index) => {
 
-  if (mode == 'add') {
-    if (g_name.value == "") {
+  if (mode === 'add') {
+    if (g_name.value === "") {
       alert("กรุณาเลือกกลุ่ม")
       return
     }
     showmenu.value = !showmenu.value
   }
-  if (mode == 'edit') {
+  if (mode === 'edit') {
     mealChoose.value.data = meal
     mealChoose.value.index = index
     showmenu.value = !showmenu.value
@@ -28,18 +28,18 @@ const sw = (mode, meal, index) => {
   }
 }
 const show = () => {
-  if (g_name.value == "") {
+  if (g_name.value === "") {
     g_list.value = {}
   } else {
-    g_list.value = (props.userData.find(e => e.name == g_name.value))
+    g_list.value = (props.userData.find(e => e.name === g_name.value))
   }
 
 }
 const emit = defineEmits(['updated'])
 const updatedMeals = (mealFood, mealName) => {
 
-  if (mealChoose.value.index == -1) {
-    if (g_list.value.meals.some((e => e.name == mealName))) {
+  if (mealChoose.value.index === -1) {
+    if (g_list.value.meals.some((e => e.name === mealName))) {
       alert("มีชื่อรายการนี้อยู่แล้ว")
       return
     }
@@ -49,7 +49,7 @@ const updatedMeals = (mealFood, mealName) => {
   }
   showmenu.value = !showmenu.value
   const userDataG = props.userData;
-  const index = userDataG.findIndex(e => e.name == g_name.value)
+  const index = userDataG.findIndex(e => e.name === g_name.value)
   userDataG[index] = g_list.value
   emit('updated', userDataG)
 }
@@ -57,7 +57,7 @@ const deleteMeal = (index) => {
   if (confirm("ต้องการลบรายการนี้ใช่หรือไม่?")) {
     g_list.value.meals.splice(index, 1)
     const userDataG = props.userData;
-    const index2 = userDataG.findIndex(e => e.name == g_name.value)
+    const index2 = userDataG.findIndex(e => e.name === g_name.value)
     userDataG[index2] = g_list.value
     emit('updated', userDataG)
   }
@@ -65,7 +65,7 @@ const deleteMeal = (index) => {
 </script>
 <template>
   <div className="mainView">
-    <div v-show="showmenu == false" className=" h-screen m-[50px]">
+    <div v-show="showmenu === false" className=" h-screen m-[50px]">
 
       <span className=" text-[25px]">
         รายการมื้ออาหาร
@@ -118,7 +118,7 @@ const deleteMeal = (index) => {
       </div>
     </div>
 
-    <div v-show="showmenu == true">
+    <div v-show="showmenu === true">
       <meal-detail :mealData="mealChoose.data" :member="g_list.members" @back="showmenu = false"
         @updatedMeals="updatedMeals"></meal-detail>
     </div>
