@@ -36,7 +36,7 @@ const calculatePriceByPercent = () => {
       return person
     }
     console.log(person.percentage)
-    person.price = parseFloat((foodPrice.value * Number(person.percentage)) / 100).toFixed(2)
+    person.price = ((foodPrice.value * Number(person.percentage)) / 100).toFixed(2)
     return person;
   })
 }
@@ -86,13 +86,6 @@ const togglePersonWhoEat = (event) => {
 const avgPricePerPerson = computed(() => {
   if (isNaN(foodPrice.value) || foodPrice.value < 0) {
     foodPrice.value = 0
-    const avg = (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
-    personsWhoEat.value = personsWhoEat.value.map((a) => {
-      a.price = avg;
-      a.percentage = 0;
-      console.log(a)
-      return a
-    })
   }
   return (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
 });
