@@ -37,11 +37,6 @@ watch(() => props.mealData, (newVal, oldVal) => {
 
 })
 
-const show = () => {
-  if (switchFood.value === false) {
-    switchFood.value = !switchFood.value
-  }
-}
 const saveFood = (food) => {
 
   if (selectMode.value === 'add') {
