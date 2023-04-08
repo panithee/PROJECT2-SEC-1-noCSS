@@ -110,7 +110,7 @@ const beforeSave = () => {
                 <hr>
                 <div class="flex flex-row ">
                   <button class="border border-black m-[20px] rounded-lg p-1 text-green-800 hover:bg-black hover:text-green-300" @click="clickEdit(food, index)">แก้ไขอาหาร</button>
-                  <button @click="deleteMeal(index)" class="text-red-600 border-red-600 p-1 rounded-lg border hover:bg-white hover:rounded-xl  h-fit mt-5 ">ลบอาหาร</button>
+                  <button @click="deleteMeal(index)" class="text-red-600 border-red-600 p-1 rounded-lg border hover:bg-white h-fit mt-5 ">ลบอาหาร</button>
                 </div>
 
               </div>

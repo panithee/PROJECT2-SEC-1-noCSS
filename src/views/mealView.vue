@@ -109,7 +109,7 @@ const deleteMeal = (index) => {
           <button class="border border-black m-[20px] rounded-lg p-1 text-green-800 hover:bg-black hover:text-green-300"
             @click="sw('edit', meal, index)">แก้ไขรายการ</button>
           <button @click="deleteMeal(index)"
-            class="p-1 text-red-600 border-red-600 hover:bg-white hover:rounded-xl hover:border ">ลบรายการ</button>
+            class="p-1 text-red-600 border-red-600 border hover:bg-white rounded-lg  ">ลบรายการ</button>
         </div>
       </div>
       <div class=" flex justify-center m-[20px] ">
