@@ -27,19 +27,7 @@ const personsList = ref([])
 const isFoodNameValid = ref(false);
 const isFoodPriceValid = ref(false);
 const isPersonsWhoEatValid = ref(false);
-const calculatePriceByPercent = () => {
-  if (personsWhoEat.value?.length === undefined) return;
-  personsWhoEat.value.map((person) => {
-    if (foodPrice.value === undefined || foodPrice.value === 0) {
-      person.price = 0;
-      person.percentage = 0;
-      return person
-    }
-    console.log(person.percentage)
-    person.price = ((foodPrice.value * Number(person.percentage)) / 100).toFixed(2)
-    return person;
-  })
-}
+
 watchEffect(() => {
   if (props.mode === 'edit') {
     if (props.foods === undefined) return;
@@ -55,6 +43,33 @@ watchEffect(() => {
 }
 );
 
+const calculatePriceByPercent = () => {
+  if (personsWhoEat.value?.length === undefined) return;
+  personsWhoEat.value.map((person) => {
+    if (foodPrice.value === undefined || foodPrice.value === 0) {
+      person.price = 0;
+      person.percentage = 0;
+      return person
+    }
+    console.log(person.percentage)
+    person.price = ((foodPrice.value * Number(person.percentage)) / 100).toFixed(2)
+    return person;
+  })
+}
+
+const avgPricePerPerson = computed(() => {
+  if (isNaN(foodPrice.value) || foodPrice.value < 0) {
+    foodPrice.value = 0
+  }
+  return (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
+});
+
+const inputPercent = (event, index) => {
+  const percentage = event.target.value;
+  personsWhoEat.value[index].percentage = percentage > 100 || percentage < 0 ? 0 : percentage;
+  calculatePriceByPercent();
+};
+
 const saveAvgPrice = () => {
   if (foodPrice.value === undefined) return 0;
   const avg = (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
@@ -64,6 +79,37 @@ const saveAvgPrice = () => {
     return a
   })
 }
+
+const checkFoodPrice = () => {
+  if (foodPrice.value < 0) {
+    foodPrice.value = 0
+  }
+  if (page.value) {
+    saveAvgPrice();
+  } else {
+    calculatePriceByPercent();
+  }
+}
+
+const checkPercent = () => {
+  const totalPercent = calculateTotalPercent()
+  if (totalPercent <= 100) {
+    return `ขาดอีก : ${100 - totalPercent}%`
+  } else if (totalPercent > 100) {
+    return `เกินมา : ${totalPercent - 100}%`
+  }
+}
+
+const calculateTotalPercent = () => {
+  if (personsWhoEat.value?.length === undefined) return 0;
+  let totalPercent = personsWhoEat.value.reduce((totalPercent, currentPercent) => {
+    return totalPercent + Number(currentPercent.percentage)
+  }, 0)
+  return totalPercent
+}
+
+const checkPersonEating = (name) => personsWhoEat.value?.some((person) => person.name === name);
+
 const togglePersonWhoEat = (event) => {
   const index = event.target.id;
   console.log(personsList.value[index])
@@ -83,43 +129,7 @@ const togglePersonWhoEat = (event) => {
     personsWhoEat.value = personsWhoEat.value.filter((person) => person.name !== personsList.value[index].name)
   }
 }
-const avgPricePerPerson = computed(() => {
-  if (isNaN(foodPrice.value) || foodPrice.value < 0) {
-    foodPrice.value = 0
-  }
-  return (Math.ceil(foodPrice.value / personsWhoEat.value.length * 100) / 100).toFixed(2)
-});
-const inputPercent = (event, index) => {
-  const percentage = event.target.value;
-  personsWhoEat.value[index].percentage = percentage > 100 || percentage < 0 ? 0 : percentage;
-  calculatePriceByPercent();
-};
-const calculateTotalPercent = () => {
-  if (personsWhoEat.value?.length === undefined) return 0;
-  let totalPercent = personsWhoEat.value.reduce((totalPercent, currentPercent) => {
-    return totalPercent + Number(currentPercent.percentage)
-  }, 0)
-  return totalPercent
-}
-const checkPercent = () => {
-  const totalPercent = calculateTotalPercent()
-  if (totalPercent <= 100) {
-    return `ขาดอีก : ${100 - totalPercent}%`
-  } else if (totalPercent > 100) {
-    return `เกินมา : ${totalPercent - 100}%`
-  }
-}
-const checkPersonEating = (name) => personsWhoEat.value?.some((person) => person.name === name);
-const checkFoodPrice = () => {
-  if (foodPrice.value < 0) {
-    foodPrice.value = 0
-  }
-  if (page.value) {
-    saveAvgPrice();
-  } else {
-    calculatePriceByPercent();
-  }
-}
+
 const checkDataBeforeDone = () => {
   if (foodName.value.trim() === "") {
     isFoodNameValid.value = true

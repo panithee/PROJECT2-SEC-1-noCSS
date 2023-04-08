@@ -4,11 +4,7 @@
       "id": 1,
       "username": "admin",
       "password": "1",
-<<<<<<< HEAD
       "key": "0XdGu",
-=======
-      "key": "9wthU",
->>>>>>> ae652d8c27824171d2c4c69837413fd498ff24f3
       "groups": [
         {
           "name": "ยามเช้า",
@@ -647,7 +643,7 @@
           "meals": []
         }
       ],
-      "key": "8Zw4w",
+      "key": "MsQWp",
       "id": 10
     }
   ]
